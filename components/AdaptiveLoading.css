@@ -1,0 +1,61 @@
+/* AdaptiveLoading.css */
+/* Gaya untuk komponen loading adaptif berdasarkan kecepatan koneksi dan perangkat */
+
+/* Gaya dasar untuk semua koneksi */
+.hello-transition {
+  --transition-duration: 0.4s;
+  --progress-color: #3A29FF;
+  --progress-glow: rgba(58, 41, 255, 0.5);
+}
+
+/* Gaya untuk koneksi lambat */
+.hello-transition.slow-connection {
+  --transition-duration: 0.6s;
+  --progress-color: #FF9900;
+  --progress-glow: rgba(255, 153, 0, 0.5);
+}
+
+/* Gaya untuk mode hemat data */
+.hello-transition.data-saver {
+  --transition-duration: 0.3s;
+  --progress-color: #00C853;
+  --progress-glow: rgba(0, 200, 83, 0.5);
+}
+
+/* Gaya untuk perangkat low-end */
+.hello-transition.low-end-device {
+  --transition-duration: 0.5s;
+}
+
+/* Animasi yang lebih sederhana untuk perangkat low-end dan mode hemat data */
+.hello-transition.low-end-device .hello-logo-circle,
+.hello-transition.data-saver .hello-logo-circle {
+  animation-duration: calc(var(--transition-duration) * 2);
+}
+
+/* Warna progress bar berdasarkan kelas */
+.hello-transition .hello-progress-bar {
+  background-color: var(--progress-color);
+  box-shadow: 0 0 10px var(--progress-glow);
+}
+
+/* Animasi yang lebih halus untuk koneksi cepat */
+.hello-transition:not(.slow-connection):not(.low-end-device) .hello-progress-bar {
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); /* Durasi transisi ditingkatkan */
+}
+
+/* Animasi yang lebih sederhana untuk koneksi lambat */
+.hello-transition.slow-connection .hello-progress-bar {
+  transition: width 0.8s ease-out; /* Durasi transisi ditingkatkan */
+}
+
+/* Tambahkan efek pulse pada progress bar untuk meningkatkan visibilitas */
+@keyframes progressPulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+.hello-transition .hello-progress-bar {
+  animation: progressPulse 1.5s infinite ease-in-out;
+}

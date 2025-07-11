@@ -1,0 +1,38 @@
+.shiny-text {
+  color: #b5b5b5a4;
+  display: inline-block;
+}
+
+/* Variasi warna untuk tombol */
+.shiny-text.button-text {
+  color: white;
+  font-weight: bold;
+}
+
+/* Variasi untuk tombol pada ProfileCard */
+.pc-contact-btn .shiny-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Variasi untuk tombol pada Hero */
+.button-primary .shiny-text,
+.button-secondary .shiny-text {
+  color: white;
+  font-weight: 500;
+}
+
+/* Variasi untuk link di footer */
+.shiny-text.footer-text {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Variasi khusus untuk tombol pada background gelap (About section) */
+.bg-gray-900 .button-text,
+.bg-blue-600 .button-text {
+  color: #ffffff;
+  font-weight: 700;
+}

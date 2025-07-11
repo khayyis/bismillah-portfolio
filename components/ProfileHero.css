@@ -1,0 +1,59 @@
+/* ProfileHero.css */
+
+/* Styling untuk container utama */
+.profile-hero-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Styling untuk layout responsif */
+@media (max-width: 768px) {
+  .profile-content-wrapper {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  
+  .profile-text-container {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  
+  .profile-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Animasi untuk elemen dekoratif */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Memastikan gambar profil selalu terlihat */
+.profile-image {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Optimasi untuk perangkat mobile */
+@media (max-width: 640px) {
+  .profile-image-wrapper {
+    width: 240px;
+    height: 240px;
+  }
+}

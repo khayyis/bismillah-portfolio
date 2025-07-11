@@ -1,0 +1,57 @@
+/* CSS to fix hydration mismatches by providing consistent styles */
+
+/* Fix untuk TiltedCard hydration mismatch */
+.tilted-card-inner,
+.tilted-card-img {
+  outline: none !important;
+  outline-color: transparent !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+}
+
+/* Image container styles */
+.relative.w-full.h-40.mb-4.overflow-hidden.rounded-lg {
+  position: relative !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: hidden !important;
+  min-height: 160px !important;
+  width: 100% !important;
+  z-index: 5 !important;
+}
+
+/* Placeholder image styles */
+.w-full.h-full.object-cover.absolute.inset-0 {
+  display: block !important;
+  opacity: 0.1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  z-index: 1 !important;
+}
+
+/* Main image styles */
+.w-full.h-full.object-cover.transition-opacity {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  position: relative !important;
+  z-index: 5 !important;
+  visibility: visible !important;
+}
+
+/* Ensure consistent styles for loading and error states */
+.absolute.inset-0.flex.items-center.justify-center.bg-gray-800.animate-pulse,
+.absolute.inset-0.flex.items-center.justify-center.bg-gray-800.image-error-container {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgb(31, 41, 55) !important; /* bg-gray-800 */
+  z-index: 10 !important;
+}

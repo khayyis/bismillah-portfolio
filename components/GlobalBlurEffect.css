@@ -1,0 +1,42 @@
+/* Global Blur Effect CSS - DINONAKTIFKAN */
+
+/* Transisi halus untuk semua elemen - DINONAKTIFKAN */
+/* * {
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+} */
+
+/* Efek blur global saat class blur-active ditambahkan ke body - DINONAKTIFKAN */
+/* body.blur-active > *:not(.no-blur) {
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+} */
+
+/* body.blur-active > *:not(.hovered):not(.no-blur) {
+  filter: blur(5px) brightness(0.7);
+  pointer-events: none;
+} */
+
+/* Pastikan elemen yang dihover tetap jelas - DINONAKTIFKAN */
+/* .hovered {
+  position: relative;
+  z-index: 100;
+  filter: blur(0) brightness(1) !important;
+  opacity: 1 !important;
+} */
+
+/* Overlay gelap untuk background saat ada elemen yang dihover - DINONAKTIFKAN */
+/* .blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+} */
+
+/* .blur-overlay.active {
+  opacity: 1;
+} */

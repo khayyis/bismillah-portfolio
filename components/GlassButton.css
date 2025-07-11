@@ -1,0 +1,114 @@
+.glass-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.glass-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(0, 0, 0, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Warna teks untuk dark mode */
+.dark .glass-button,
+.theme-dark .glass-button {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.glass-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.glass-button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.glass-button-blue {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: rgba(0, 0, 0, 1);
+}
+
+.glass-button-blue:hover {
+  background-color: rgba(59, 130, 246, 0.3);
+}
+
+.glass-button-green {
+  background-color: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: rgba(0, 0, 0, 1);
+}
+
+.glass-button-green:hover {
+  background-color: rgba(16, 185, 129, 0.3);
+}
+
+.glass-button-red {
+  background-color: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: rgba(0, 0, 0, 1);
+}
+
+.glass-button-red:hover {
+  background-color: rgba(239, 68, 68, 0.3);
+}
+
+.glass-button-transparent {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: rgba(0, 0, 0, 1);
+}
+
+.glass-button-transparent:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.glass-button-transparent.active {
+  background-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: rgba(0, 0, 0, 1);
+}
+
+/* Warna teks untuk tombol aktif di dark mode */
+.dark .glass-button-transparent.active,
+.theme-dark .glass-button-transparent.active {
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* Specific styles for filter buttons */
+.filter-btns .glass-button {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}
+
+/* Specific styles for project detail button */
+.project-detail-btn .glass-button {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+}

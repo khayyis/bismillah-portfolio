@@ -1,0 +1,98 @@
+/* Force Image Display CSS - Updated */
+
+/* Aturan global untuk semua gambar */
+img {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Aturan khusus untuk gambar proyek */
+.project-card img,
+[class*="project"] img,
+.relative.w-full.h-40 img,
+.h-40 img {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  min-height: 100% !important;
+  min-width: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  transform: translateZ(0) !important; /* Hardware acceleration */
+  backface-visibility: hidden !important; /* Mencegah flickering */
+  -webkit-backface-visibility: hidden !important;
+  -webkit-transform: translateZ(0) scale(1.0, 1.0) !important;
+}
+
+/* Pastikan container gambar terlihat */
+.project-card .relative.w-full.h-40,
+.relative.w-full.h-40 {
+  position: relative !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: hidden !important;
+  min-height: 160px !important;
+  width: 100% !important;
+  z-index: 5 !important;
+}
+
+/* Pastikan gambar dengan error tetap ditampilkan */
+.project-card img.error {
+  opacity: 0.5 !important;
+}
+
+/* Nonaktifkan sementara animasi dan efek yang mungkin mengganggu */
+.project-card .animate-pulse,
+.project-card .image-error-container,
+.animate-pulse,
+.image-error-container {
+  display: none !important;
+  opacity: 0 !important;
+  z-index: 1 !important;
+}
+
+/* Pastikan gambar tidak tersembunyi oleh elemen lain */
+.project-card,
+[class*="project"] {
+  overflow: visible !important;
+}
+
+/* Hapus batasan yang mungkin menyembunyikan gambar */
+.project-card img[src=""],
+.project-card img:not([src]) {
+  visibility: hidden !important;
+}
+
+/* Aturan untuk mengatasi masalah hydration */
+.project-card img[style*="display: none"],
+.project-card img[style*="opacity: 0"],
+.project-card img[style*="visibility: hidden"],
+[class*="project"] img[style*="display: none"],
+[class*="project"] img[style*="opacity: 0"],
+[class*="project"] img[style*="visibility: hidden"] {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Aturan untuk mengatasi masalah loading */
+.project-card .opacity-0,
+[class*="project"] .opacity-0 {
+  opacity: 1 !important;
+}
+
+/* Mencegah duplikasi gambar */
+.project-card img:not([class]),
+[class*="project"] img:not([class]) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}

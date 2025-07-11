@@ -1,0 +1,76 @@
+/* Dark Theme CSS */
+
+/* Variabel tema gelap */
+:root {
+  --dark-card-bg: rgba(0, 0, 0, 0.5);
+  --dark-card-border: rgba(75, 85, 99, 0.5);
+  --dark-text-primary: rgb(249, 250, 251);
+  --dark-text-secondary: rgb(209, 213, 219);
+  --dark-button-bg: rgb(30, 58, 138);
+  --dark-button-hover: rgb(30, 64, 175);
+  --dark-button-border: rgb(37, 99, 235);
+  --dark-badge-bg: rgba(31, 41, 55, 0.8);
+  --dark-badge-text: rgb(147, 197, 253);
+  --dark-badge-border: rgba(30, 58, 138, 0.5);
+  --dark-placeholder-bg: rgb(31, 41, 55);
+  --dark-placeholder-text: rgb(156, 163, 175);
+  --dark-loading-bg: rgb(31, 41, 55);
+  --dark-loading-text: rgb(156, 163, 175);
+}
+
+/* Kelas untuk komponen dengan tema gelap */
+.dark-theme {
+  background-color: rgb(17, 24, 39);
+  color: var(--dark-text-primary);
+}
+
+/* Card dengan tema gelap */
+.dark-theme-card {
+  background-color: var(--dark-card-bg);
+  border-color: var(--dark-card-border);
+  color: var(--dark-text-primary);
+}
+
+/* Button dengan tema gelap */
+.dark-theme-button {
+  background-color: var(--dark-button-bg);
+  color: white;
+  border: 1px solid var(--dark-button-border);
+}
+
+.dark-theme-button:hover {
+  background-color: var(--dark-button-hover);
+}
+
+/* Badge dengan tema gelap */
+.dark-theme-badge {
+  background-color: var(--dark-badge-bg);
+  color: var(--dark-badge-text);
+  border: 1px solid var(--dark-badge-border);
+}
+
+/* Placeholder dengan tema gelap */
+.dark-theme-placeholder {
+  background-color: var(--dark-placeholder-bg);
+  color: var(--dark-placeholder-text);
+}
+
+/* Loading dengan tema gelap */
+.dark-theme-loading {
+  background-color: var(--dark-loading-bg);
+  color: var(--dark-loading-text);
+}
+
+/* Media query untuk preferensi tema gelap sistem */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 17, 24, 39;
+    --background-end-rgb: 17, 24, 39;
+  }
+  
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+  }
+}

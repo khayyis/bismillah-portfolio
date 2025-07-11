@@ -1,0 +1,150 @@
+/* ProfileInfo.css */
+
+.profile-info-section {
+  padding-top: 100px; /* Memberikan ruang untuk navbar */
+  min-height: calc(100vh - 100px); /* Mengurangi tinggi footer */
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+/* Memastikan foto di kanan dan teks di kiri pada desktop dengan jarak yang fleksibel */
+.profile-info-container {
+  display: grid;
+  grid-template-columns: 45% 45%; /* Membagi menjadi dua kolom dengan ruang di tengah */
+  gap: 10%; /* Memberikan jarak yang lebih besar antara teks dan gambar */
+  align-items: center;
+  margin: 0 auto;
+}
+
+.profile-info-text {
+  grid-column: 1; /* Teks di kolom pertama (kiri) */
+  text-align: left;
+  padding-right: 2rem; /* Tambahan padding untuk memisahkan dari gambar */
+}
+
+.profile-info-image {
+  grid-column: 2; /* Gambar di kolom kedua (kanan) */
+  display: flex;
+  justify-content: center; /* Posisi gambar di tengah kolom */
+}
+
+/* Styling untuk layout responsif */
+@media (max-width: 768px) {
+  .profile-info-section {
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+  
+  .profile-info-container {
+    grid-template-columns: 90%; /* Satu kolom dengan margin di kedua sisi */
+    grid-template-rows: auto auto; /* Dua baris otomatis */
+    gap: 4rem; /* Jarak antar elemen pada mobile */
+    justify-content: center; /* Pusatkan grid di container */
+  }
+  
+  .profile-info-text {
+    grid-row: 2; /* Teks di baris kedua (bawah) */
+    grid-column: 1; /* Menggunakan kolom penuh */
+    padding-right: 0; /* Hapus padding kanan */
+    text-align: center;
+    margin: 0 auto;
+    max-width: 500px; /* Batasi lebar maksimum teks */
+  }
+  
+  .profile-info-image {
+    grid-row: 1; /* Gambar di baris pertama (atas) */
+    grid-column: 1; /* Menggunakan kolom penuh */
+    justify-content: center;
+    margin: 0 auto;
+  }
+}
+
+/* Styling untuk tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .profile-info-container {
+    grid-template-columns: 48% 48%; /* Sedikit lebih besar pada tablet */
+    gap: 4%; /* Jarak lebih kecil pada tablet */
+  }
+}
+
+/* Animasi untuk elemen dekoratif */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Efek hover pada elemen */
+.profile-info-text:hover h2 {
+  color: #3B82F6;
+  transition: color 0.3s ease;
+}
+
+.profile-info-text h2 {
+  transition: color 0.3s ease;
+}
+
+/* Animasi untuk gambar profil */
+.profile-info-image:hover .floating-element:first-child {
+  animation: float 3s ease-in-out infinite;
+}
+
+.profile-info-image:hover .floating-element:last-child {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Memastikan gambar profil selalu terlihat */
+.profile-image {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Optimasi untuk perangkat mobile kecil */
+@media (max-width: 640px) {
+  .profile-info-section {
+    padding-top: 60px;
+    padding-bottom: 30px;
+  }
+  
+  .profile-info-container {
+    grid-template-columns: 95%; /* Hampir penuh pada mobile kecil */
+    gap: 3rem; /* Jarak lebih kecil pada mobile kecil */
+  }
+  
+  .profile-info-text {
+    max-width: 100%; /* Gunakan lebar penuh */
+  }
+  
+  /* Ukuran gambar lebih kecil pada mobile */
+  .profile-info-image > div {
+    width: 240px !important;
+  }
+}
+
+/* Optimasi untuk print */
+@media print {
+  .profile-info-container {
+    grid-template-columns: 50% 50%;
+    gap: 0;
+  }
+  
+  .profile-info-section {
+    padding-top: 20px;
+  }
+  
+  .floating-element {
+    display: none; /* Sembunyikan elemen dekoratif saat print */
+  }
+}

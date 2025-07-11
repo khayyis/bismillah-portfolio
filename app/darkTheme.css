@@ -1,0 +1,116 @@
+/* Efek khusus untuk tema gelap - Terinspirasi dari hikeys1977.com */
+
+/* Glow effect untuk elemen tertentu dalam tema gelap */
+.theme-dark .glow-effect {
+  box-shadow: 0 0 15px rgba(120, 180, 255, 0.5);
+  transition: box-shadow 0.3s ease;
+}
+
+.theme-dark .glow-effect:hover {
+  box-shadow: 0 0 25px rgba(120, 180, 255, 0.7);
+}
+
+/* Efek gradient untuk background dalam tema gelap */
+.theme-dark .gradient-bg {
+  background: linear-gradient(to bottom right, rgb(16, 16, 16), rgb(24, 24, 24));
+}
+
+/* Efek teks untuk heading dalam tema gelap */
+.theme-dark .heading-effect {
+  text-shadow: 0 0 8px rgba(120, 180, 255, 0.4);
+}
+
+/* Efek border untuk card dalam tema gelap */
+.theme-dark .card-border-effect {
+  border: 1px solid rgba(40, 40, 40, 0.8);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Efek scrollbar untuk tema gelap */
+.theme-dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.theme-dark ::-webkit-scrollbar-track {
+  background: rgb(24, 24, 24);
+}
+
+.theme-dark ::-webkit-scrollbar-thumb {
+  background: rgb(40, 40, 40);
+  border-radius: 4px;
+}
+
+.theme-dark ::-webkit-scrollbar-thumb:hover {
+  background: rgb(60, 60, 60);
+}
+
+/* Efek selection untuk tema gelap */
+.theme-dark ::selection {
+  background: rgba(59, 130, 246, 0.7);
+  color: rgb(250, 250, 250);
+}
+
+/* Efek focus untuk elemen input dalam tema gelap */
+.theme-dark input:focus,
+.theme-dark textarea:focus,
+.theme-dark select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  border-color: rgba(59, 130, 246, 0.8);
+}
+
+/* Efek hover untuk link dalam tema gelap */
+.theme-dark a:not(.button-primary):not(.button-secondary) {
+  color: rgb(120, 180, 255);
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.theme-dark a:not(.button-primary):not(.button-secondary):hover {
+  color: rgb(180, 210, 255);
+  text-decoration: underline;
+}
+
+/* Efek backdrop untuk modal dalam tema gelap */
+.theme-dark .modal-backdrop {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Efek untuk code blocks dalam tema gelap */
+.theme-dark pre,
+.theme-dark code {
+  background-color: rgb(12, 12, 12);
+  border: 1px solid rgb(40, 40, 40);
+  color: rgb(230, 230, 230);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Efek untuk blockquote dalam tema gelap */
+.theme-dark blockquote {
+  border-left: 4px solid rgb(59, 130, 246);
+  background-color: rgba(16, 16, 16, 0.6);
+  color: rgb(230, 230, 230);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Efek untuk table dalam tema gelap */
+.theme-dark table th {
+  background-color: rgb(24, 24, 24);
+  color: rgb(250, 250, 250);
+  border-bottom: 2px solid rgb(40, 40, 40);
+}
+
+.theme-dark table tr:nth-child(even) {
+  background-color: rgba(24, 24, 24, 0.6);
+}
+
+.theme-dark table tr:hover {
+  background-color: rgba(40, 40, 40, 0.8);
+}
+
+/* Efek untuk placeholder dalam tema gelap */
+.theme-dark ::placeholder {
+  color: rgb(180, 180, 180);
+  opacity: 0.7;
+}

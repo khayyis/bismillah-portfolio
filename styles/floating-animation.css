@@ -1,0 +1,29 @@
+/* Animasi untuk elemen dekoratif mengambang (floating) */
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-5px) translateX(3px);
+  }
+  50% {
+    transform: translateY(0px) translateX(5px);
+  }
+  75% {
+    transform: translateY(5px) translateX(3px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+/* Kelas untuk elemen yang mengambang */
+.floating-element {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Variasi animasi untuk elemen kedua */
+.floating-element:nth-child(2) {
+  animation-delay: 1s;
+  animation-duration: 8s;
+}

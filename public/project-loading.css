@@ -1,0 +1,42 @@
+/* CSS untuk animasi loading proyek */
+
+#project-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Pastikan animasi progress bar berjalan dengan mulus */
+#project-loading .hello-progress-bar {
+  transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Animasi pulse untuk logo */
+@keyframes project-loading-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+#project-loading .hello-logo-circle {
+  animation: project-loading-pulse 2s infinite;
+}

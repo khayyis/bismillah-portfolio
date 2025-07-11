@@ -1,0 +1,148 @@
+/* Fix untuk gambar proyek yang tidak muncul */
+.project-card img {
+  display: block !important;
+  transition: transform 0.3s ease-in-out, opacity 0.5s ease-in-out;
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Aturan khusus untuk mengatasi hydration mismatch */
+.project-card img.opacity-100 {
+  opacity: 1 !important;
+}
+
+.project-card img.opacity-0 {
+  opacity: 0 !important;
+}
+
+.project-card .relative.w-full.h-40 {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  min-height: 160px; /* Pastikan tinggi minimum */
+}
+
+/* Perbaikan untuk loading state */
+.project-card .animate-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+  background-size: 200% 100%;
+  animation: pulse 1.5s infinite;
+  z-index: 1;
+}
+
+/* Aturan untuk mengatasi hydration mismatch pada loading dan error container */
+/* Tidak perlu menyembunyikan elemen dengan suppressHydrationWarning karena kita menggunakan opacity */
+/* [suppresshydrationwarning="true"],
+[suppresshydrationwarning=""] {
+  display: none !important;
+} */
+
+/* Pastikan container error hanya muncul di client-side */
+.image-error-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1e293b;
+  color: #94a3b8;
+  font-size: 14px;
+  text-align: center;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Aturan untuk mengatasi hydration mismatch pada container gambar */
+.project-card .relative.w-full.h-40 {
+  min-height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pastikan container loading dan error hanya muncul di client-side */
+.project-card .animate-pulse,
+.project-card .image-error-container {
+  opacity: 0;
+  animation: fadeIn 0.3s forwards 0.2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Tambahkan z-index untuk gambar */
+.project-card img {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -200% 0%;
+  }
+}
+
+/* Pastikan gambar memiliki ukuran yang benar */
+.project-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  max-width: none; /* Mencegah batasan max-width dari Tailwind */
+  max-height: none; /* Mencegah batasan max-height dari Tailwind */
+  backface-visibility: hidden; /* Mencegah flickering pada beberapa browser */
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0); /* Memaksa hardware acceleration */
+  -webkit-transform: translateZ(0);
+  will-change: opacity; /* Memberitahu browser untuk mengoptimalkan perubahan opacity */
+}
+
+/* Tambahkan fallback jika gambar gagal dimuat */
+.project-card img[src=""],
+.project-card img:not([src]) {
+  visibility: hidden;
+}
+
+/* Pastikan gambar dengan error tetap ditampilkan */
+.project-card img.error {
+  visibility: visible !important;
+  opacity: 0.5 !important;
+}
+
+/* Tambahkan class untuk menangani gambar yang gagal dimuat */
+.project-card .image-error-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #1e293b !important;
+  color: #94a3b8 !important;
+  font-size: 14px !important;
+  text-align: center !important;
+  z-index: 3 !important;
+}
+
+/* Tambahkan aturan untuk memastikan container gambar selalu terlihat */
+.project-card .relative.w-full.h-40 {
+  display: block !important;
+  visibility: visible !important;
+}

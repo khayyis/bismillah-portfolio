@@ -1,0 +1,225 @@
+{
+  "//": "╔═══════════════════════════════════════════════════════════════════════════╗",
+  "///": "║                  PAYROT FINANCIAL SERVICES DESIGN SYSTEM                  ║",
+  "////": "║                             Version 1.0                                  ║",
+  "/////": "╚═══════════════════════════════════════════════════════════════════════════╝",
+  
+  "designSystem": {
+    "name": "Payrot Financial Services Design System",
+    "version": "1.0",
+    "description": "Modern fintech design system with emphasis on trust, accessibility, and global reach"
+  },
+  
+  "//1": "╔═══════════════════════════ 🎨 COLOR SYSTEM ═══════════════════════════════╗",
+  "colorPalette": {
+    "primary": {
+      "blue": "#2563EB",      /* Primary brand color */
+      "darkBlue": "#1E40AF", /* For hover states and emphasis */
+      "lightBlue": "#3B82F6" /* For backgrounds and accents */
+    },
+    "secondary": {
+      "white": "#FFFFFF",     /* Clean backgrounds */
+      "lightGray": "#F8FAFC", /* Subtle backgrounds */
+      "mediumGray": "#E2E8F0", /* Borders and dividers */
+      "darkGray": "#64748B"   /* Secondary text */
+    },
+    "accent": {
+      "brightBlue": "#0EA5E9",    /* Call to action elements */
+      "gradientStart": "#3B82F6", /* Start of gradient */
+      "gradientEnd": "#1D4ED8"    /* End of gradient */
+    }
+  },
+  
+  "//2": "╔═══════════════════════════ 📝 TYPOGRAPHY ════════════════════════════════╗",
+  "typography": {
+    "fontFamily": {
+      "primary": "Inter, system-ui, sans-serif",
+      "fallback": "-apple-system, BlinkMacSystemFont, sans-serif"
+    },
+    "hierarchy": {
+      "hero": {
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "1.1",
+        "letterSpacing": "-0.02em"
+      },
+      "h1": {
+        "fontSize": "36px",
+        "fontWeight": "600",
+        "lineHeight": "1.2"
+      },
+      "h2": {
+        "fontSize": "24px",
+        "fontWeight": "600",
+        "lineHeight": "1.3"
+      },
+      "body": {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "1.6"
+      },
+      "caption": {
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "1.4"
+      }
+    },
+    "treatment": {
+      "heroText": "Large, bold, often overlaid on graphics",
+      "sectionHeaders": "Clean, minimal spacing, often centered",
+      "bodyText": "Well-spaced, readable, neutral color"
+    }
+  },
+  
+  "//3": "╔═══════════════════════════ 📏 LAYOUT SYSTEM ══════════════════════════════╗",
+  "layout": {
+    "structure": {
+      "type": "Single-page application with vertical scrolling",
+      "maxWidth": "1200px",
+      "padding": "20px",
+      "sections": "Distinct, full-width sections with alternating backgrounds"
+    },
+    "grid": {
+      "system": "CSS Grid and Flexbox hybrid",
+      "columns": "12-column responsive grid",
+      "gutters": "24px",
+      "breakpoints": {
+        "mobile": "320px",   /* Small phones */
+        "tablet": "768px",   /* Tablets and large phones */
+        "desktop": "1024px", /* Small laptops and desktops */
+        "large": "1200px"    /* Large screens */
+      }
+    },
+    "spacing": {
+      "scale": [4, 8, 16, 24, 32, 48, 64, 96, 128],
+      "sectionPadding": "80px 0",
+      "componentMargin": "24px",
+      "elementPadding": "16px"
+    }
+  },
+  
+  "//4": "╔═══════════════════════════ 🧩 COMPONENTS ═══════════════════════════════╗",
+  "components": {
+    "navigation": {
+      "type": "Top horizontal navbar",
+      "background": "Semi-transparent white with blur",
+      "position": "Fixed/sticky",
+      "height": "60px",
+      "elements": ["Logo", "Navigation links", "CTA button"]
+    },
+    "hero": {
+      "layout": "Split layout with text and visual elements",
+      "background": "Light gradient or solid color",
+      "elements": ["Large headline", "Descriptive text", "CTA buttons", "Hero graphic/illustration"]
+    },
+    "cards": {
+      "style": "Clean, minimal with subtle shadows",
+      "corners": "8px border radius",
+      "shadow": "0 4px 6px rgba(0, 0, 0, 0.05)",
+      "padding": "24px",
+      "background": "White or light background"
+    },
+    "buttons": {
+      "primary": {
+        "background": "Primary blue gradient",
+        "color": "White",
+        "padding": "12px 24px",
+        "borderRadius": "6px",
+        "fontWeight": "500"
+      },
+      "secondary": {
+        "background": "Transparent",
+        "border": "1px solid primary blue",
+        "color": "Primary blue",
+        "padding": "12px 24px",
+        "borderRadius": "6px"
+      }
+    },
+    "forms": {
+      "inputs": {
+        "borderRadius": "6px",
+        "border": "1px solid light gray",
+        "padding": "12px 16px",
+        "focusState": "Blue border with shadow"
+      }
+    }
+  },
+  
+  "//5": "╔═══════════════════════════ 🖼️ VISUAL ELEMENTS ═══════════════════════════╗",
+  "visualElements": {
+    "illustrations": {
+      "style": "3D rendered, modern, tech-focused",
+      "colors": "Consistent with brand palette",
+      "subjects": ["Abstract tech objects", "Globes/earth", "Financial symbols", "Mobile devices"]
+    },
+    "icons": {
+      "style": "Minimalist, outline or filled",
+      "size": "16px, 24px, 32px standard sizes",
+      "strokeWidth": "1.5px for outline icons"
+    },
+    "graphics": {
+      "gradients": "Subtle, blue-toned gradients",
+      "shapes": "Rounded rectangles, circles, organic blob shapes",
+      "effects": "Subtle drop shadows, soft glows"
+    }
+  },
+  
+  "//6": "╔═══════════════════════════ 📋 DESIGN PATTERNS ════════════════════════════╗",
+  "patterns": {
+    "sectioning": {
+      "alternatingBackgrounds": "White and light gray/blue sections",
+      "fullWidth": "Sections span full viewport width",
+      "contentConstraint": "Content constrained to max-width container"
+    },
+    "contentFlow": {
+      "textImageSplit": "Text on one side, visual on other",
+      "centeredContent": "Important sections centered with symmetrical layout",
+      "listSections": "Feature lists with icons and descriptions"
+    },
+    "responsivePatterns": {
+      "mobileFirst": "Design scales down from desktop",
+      "stackingOrder": "Side-by-side elements stack vertically on mobile",
+      "navigationCollapse": "Horizontal nav becomes hamburger menu"
+    }
+  },
+  
+  "//7": "╔═══════════════════════════ ✨ ANIMATIONS ═════════════════════════════════╗",
+  "animations": {
+    "transitions": {
+      "duration": "0.2s to 0.3s",
+      "easing": "ease-in-out",
+      "properties": ["opacity", "transform", "color"]
+    },
+    "microInteractions": {
+      "hoverStates": "Subtle scale or color changes",
+      "buttonPress": "Slight scale down effect",
+      "loading": "Smooth fade transitions"
+    }
+  },
+  
+  "//8": "╔═══════════════════════════ ♿ ACCESSIBILITY ═══════════════════════════════╗",
+  "accessibility": {
+    "colorContrast": "WCAG AA compliant",
+    "focusStates": "Visible focus indicators",
+    "textScaling": "Supports browser text scaling",
+    "semanticHTML": "Proper heading hierarchy and landmarks"
+  },
+  
+  "//9": "╔═══════════════════════════ 🔍 DESIGN PRINCIPLES ═══════════════════════════╗",
+  "designPrinciples": {
+    "trust": "Clean, professional aesthetic builds user confidence",
+    "clarity": "Information hierarchy is clear and scannable",
+    "efficiency": "Quick access to key actions and information",
+    "global": "Design accommodates international users",
+    "modern": "Contemporary visual language with subtle tech elements"
+  },
+  
+  "//10": "╔═══════════════════════════ 🛠️ IMPLEMENTATION ════════════════════════════╗",
+  "implementationGuidelines": {
+    "framework": "React/Next.js recommended",
+    "styling": "Tailwind CSS or styled-components",
+    "responsive": "Mobile-first responsive design",
+    "performance": "Optimized images and lazy loading",
+    "seo": "Semantic HTML and proper meta tags"
+  }
+}

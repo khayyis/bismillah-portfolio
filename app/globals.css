@@ -1,0 +1,279 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import '../components/ProfileCard.css';
+@import '../components/ShinyText.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Variabel tema terang (default) */
+  --bg-primary: 249, 250, 251; /* gray-50 */
+  --bg-secondary: 243, 244, 246; /* gray-100 */
+  --text-primary: 31, 41, 55; /* gray-800 */
+  --text-secondary: 75, 85, 99; /* gray-600 */
+  --border-color: 229, 231, 235; /* gray-200 */
+  --card-bg: 255, 255, 255; /* white */
+  --card-border: 229, 231, 235; /* gray-200 */
+  --button-primary-bg: 59, 130, 246; /* blue-500 */
+  --button-primary-text: 255, 255, 255; /* white */
+  --button-secondary-bg: 255, 255, 255; /* white */
+  --button-secondary-text: 37, 99, 235; /* blue-600 */
+  --button-secondary-border: 37, 99, 235; /* blue-600 */
+  --badge-bg: 243, 244, 246; /* gray-100 */
+  --badge-text: 37, 99, 235; /* blue-600 */
+  --badge-border: 229, 231, 235; /* gray-200 */
+  --section-alt-bg: 248, 250, 252; /* gray-50 */
+  --nav-bg: 255, 255, 255; /* white */
+  --nav-text: 31, 41, 55; /* gray-800 */
+  --nav-active: 59, 130, 246; /* blue-500 */
+  --shadow-color: 0, 0, 0; /* black */
+  --shadow-opacity: 0.05;
+  
+  /* Untuk kompatibilitas dengan kode lama */
+  --foreground-rgb: var(--text-primary);
+  --background-start-rgb: var(--bg-primary);
+  --background-end-rgb: var(--bg-primary);
+}
+
+/* Tema gelap - Terinspirasi dari hikeys1977.com */
+.theme-dark {
+  --bg-primary: 16, 16, 16; /* #101010 - hampir hitam */
+  --bg-secondary: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
+  --text-primary: 250, 250, 250; /* #fafafa - putih keabu-abuan */
+  --text-secondary: 230, 230, 230; /* #e6e6e6 - abu-abu sangat terang */
+  --border-color: 40, 40, 40; /* #282828 - abu-abu gelap */
+  --card-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
+  --card-border: 40, 40, 40; /* #282828 - abu-abu gelap */
+  --button-primary-bg: 59, 130, 246; /* blue-500 */
+  --button-primary-text: 255, 255, 255; /* white */
+  --button-secondary-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
+  --button-secondary-text: 200, 200, 255; /* #c8c8ff - biru sangat terang */
+  --button-secondary-border: 59, 130, 246; /* blue-500 */
+  --badge-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
+  --badge-text: 200, 200, 255; /* #c8c8ff - biru sangat terang */
+  --badge-border: 40, 40, 40; /* #282828 - abu-abu gelap */
+  --section-alt-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
+  --nav-bg: 16, 16, 16; /* #101010 - hampir hitam */
+  --nav-text: 250, 250, 250; /* #fafafa - putih keabu-abuan */
+  --nav-active: 120, 180, 255; /* #78b4ff - biru terang */
+  --shadow-color: 0, 0, 0; /* black */
+  --shadow-opacity: 0.3;
+  
+  /* Untuk kompatibilitas dengan kode lama */
+  --foreground-rgb: var(--text-primary);
+  --background-start-rgb: var(--bg-primary);
+  --background-end-rgb: var(--bg-primary);
+  
+  /* Untuk kompatibilitas dengan kode lama */
+  --dark-bg-primary: 17, 24, 39;
+  --dark-bg-secondary: 31, 41, 55;
+  --dark-text-primary: 249, 250, 251;
+  --dark-text-secondary: 229, 231, 235;
+  --dark-border: 55, 65, 81;
+  --light-bg-primary: 249, 250, 251;
+  --light-bg-secondary: 243, 244, 246;
+  --light-text-primary: 31, 41, 55;
+  --light-text-secondary: 75, 85, 99;
+  --light-border: 229, 231, 235;
+}
+
+/* Transisi halus untuk perubahan tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+  color: rgb(var(--text-primary));
+  background: rgb(var(--bg-primary));
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+/* Styling placeholder */
+::placeholder {
+  color: #64748B !important;
+  opacity: 0.8 !important;
+}
+
+:-ms-input-placeholder {
+  color: #64748B !important;
+  opacity: 0.8 !important;
+}
+
+::-ms-input-placeholder {
+  color: #64748B !important;
+  opacity: 0.8 !important;
+}
+
+.section-padding {
+  padding: 60px 0;
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 80px 0;
+  }
+}
+
+.gradient-bg {
+  background: linear-gradient(45deg, #3B82F6, #1D4ED8);
+}
+
+.card {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(var(--shadow-color), var(--shadow-opacity));
+  padding: 16px;
+  background: rgb(var(--card-bg));
+  border: 1px solid rgb(var(--card-border));
+  color: rgb(var(--text-primary));
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 24px;
+  }
+}
+
+.button-primary {
+  background: rgb(var(--button-primary-bg));
+  color: rgb(var(--button-primary-text));
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+@media (min-width: 768px) {
+  .button-primary {
+    padding: 12px 24px;
+  }
+}
+
+/* Memastikan teks pada button primary selalu putih */
+.button-primary span,
+.button-primary {
+  color: white !important;
+}
+
+.button-secondary {
+  background: rgb(var(--button-secondary-bg));
+  border: 1px solid rgb(var(--button-secondary-border));
+  color: rgb(var(--button-secondary-text));
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+@media (min-width: 768px) {
+  .button-secondary {
+    padding: 12px 24px;
+  }
+}
+
+.button-secondary .button-text {
+  font-weight: 600;
+  color: #2563EB;
+}
+
+.section-alt {
+  background-color: rgb(var(--section-alt-bg));
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+  h1, .text-hero {
+    font-size: 36px !important;
+  }
+  
+  h2, .text-h1 {
+    font-size: 28px !important;
+  }
+  
+  h3, .text-h2 {
+    font-size: 20px !important;
+  }
+  
+  p, .text-body {
+    font-size: 14px !important;
+  }
+}
+
+/* Fix for mobile overflow issues */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global Blur Effect CSS - Dinonaktifkan sesuai permintaan pengguna */
+
+/* Transisi halus untuk semua elemen - dinonaktifkan */
+/* * {
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+} */
+
+/* Efek blur global - dinonaktifkan */
+/* body.blur-active > *:not(.no-blur) {
+  transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.blur-active > *:not(.hovered):not(.no-blur) {
+  filter: blur(5px) brightness(0.7);
+  pointer-events: none;
+} */
+
+/* Pastikan elemen yang dihover tetap jelas - dinonaktifkan */
+/* .hovered {
+  position: relative;
+  z-index: 100;
+  filter: blur(0) brightness(1) !important;
+  opacity: 1 !important;
+} */
+
+/* Overlay gelap untuk background - dinonaktifkan */
+/* .blur-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+}
+
+.blur-overlay.active {
+  opacity: 1;
+} */

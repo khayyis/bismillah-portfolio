@@ -1,0 +1,148 @@
+/* Styles untuk optimasi gambar */
+
+/* Efek blur untuk loading progresif */
+.image-blur {
+  filter: blur(10px);
+  transition: filter 0.5s ease-out;
+}
+
+/* Indikator loading untuk gambar */
+.image-loading {
+  position: relative;
+}
+
+.image-loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.image-loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #5227FF;
+  border-radius: 50%;
+  animation: image-loading-spinner 0.8s linear infinite;
+  z-index: 2;
+}
+
+@keyframes image-loading-spinner {
+  to { transform: rotate(360deg); }
+}
+
+/* Indikator error untuk gambar */
+.image-error {
+  position: relative;
+  background-color: #f8f9fa;
+}
+
+.image-error::before {
+  content: '🖼️';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #6c757d;
+  z-index: 1;
+}
+
+/* Optimasi untuk koneksi lambat */
+@media (prefers-reduced-data: reduce) {
+  img:not([loading]) {
+    loading: lazy;
+  }
+  
+  video {
+    preload: none;
+  }
+  
+  .bg-image {
+    background-image: none !important;
+  }
+}
+
+/* Optimasi untuk perangkat low-end */
+@media (prefers-reduced-motion: reduce) {
+  .image-loading::after {
+    animation: none;
+  }
+  
+  .image-blur {
+    transition: none;
+  }
+}
+
+/* Optimasi untuk viewport */
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+}
+
+/* Placeholder untuk gambar */
+.image-placeholder {
+  background-color: #f0f0f0;
+  background-image: linear-gradient(
+    45deg,
+    #f0f0f0 25%,
+    #e0e0e0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 50%,
+    #f0f0f0 75%,
+    #e0e0e0 75%,
+    #e0e0e0
+  );
+  background-size: 20px 20px;
+  position: relative;
+}
+
+/* Optimasi untuk AuroraCard images */
+.aurora-card-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-in !important;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* Optimasi untuk dark mode */
+@media (prefers-color-scheme: dark) {
+  .image-error {
+    background-color: #2d3748;
+  }
+  
+  .image-error::before {
+    color: #a0aec0;
+  }
+  
+  .image-placeholder {
+    background-color: #2d3748;
+    background-image: linear-gradient(
+      45deg,
+      #2d3748 25%,
+      #1a202c 25%,
+      #1a202c 50%,
+      #2d3748 50%,
+      #2d3748 75%,
+      #1a202c 75%,
+      #1a202c
+    );
+  }
+}

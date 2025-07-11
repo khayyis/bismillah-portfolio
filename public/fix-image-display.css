@@ -1,0 +1,40 @@
+/* Fix untuk masalah tampilan gambar pada kartu proyek */
+
+/* Pastikan gambar selalu ditampilkan */
+.project-card img {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  min-height: 100%;
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Pastikan container gambar selalu terlihat */
+.project-card .relative.w-full.h-40 {
+  display: block !important;
+  visibility: visible !important;
+  min-height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Tambahkan z-index untuk gambar */
+.project-card img {
+  position: relative;
+  z-index: 2;
+}
+
+/* Pastikan gambar memiliki ukuran yang benar */
+.project-card img {
+  max-width: none; /* Mencegah batasan max-width dari Tailwind */
+  max-height: none; /* Mencegah batasan max-height dari Tailwind */
+  backface-visibility: hidden; /* Mencegah flickering pada beberapa browser */
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0); /* Memaksa hardware acceleration */
+  -webkit-transform: translateZ(0);
+  will-change: opacity; /* Memberitahu browser untuk mengoptimalkan perubahan opacity */
+}

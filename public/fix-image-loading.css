@@ -1,0 +1,67 @@
+/* Fix for image loading issues */
+
+/* Ensure images are visible */
+img {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Fix for AuroraCard images */
+[class*="AuroraCard"] img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+/* Error container styling */
+.image-error-container {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgba(31, 41, 55, 0.9) !important; /* bg-gray-800 with opacity */
+  z-index: 20 !important;
+  border-radius: 0.375rem !important; /* rounded-md */
+}
+
+.image-error-container span {
+  color: rgb(209, 213, 219) !important; /* text-gray-300 */
+  text-align: center !important;
+  padding: 0.5rem !important;
+}
+
+/* Ensure placeholder images are properly displayed */
+.placeholder-image {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  z-index: 5 !important;
+}
+
+/* Ensure main images are properly displayed when loaded */
+.main-image {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  z-index: 10 !important;
+  transition: opacity 0.5s ease !important;
+}
+
+/* Loading indicator styling */
+.image-loading-indicator {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: rgba(31, 41, 55, 0.7) !important;
+  z-index: 15 !important;
+  transition: opacity 0.3s ease !important;
+}

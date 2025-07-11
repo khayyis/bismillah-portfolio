@@ -1,0 +1,98 @@
+.projects-container {
+  position: relative;
+}
+
+.project-card {
+  transition: all 0.5s ease-in-out;
+}
+
+.project-card.blurred {
+  /* Efek blur dinonaktifkan */
+  /* filter: blur(4px) brightness(0.7); */
+  transform: scale(0.98);
+  transition: all 0.5s ease-in-out;
+  opacity: 0.8;
+}
+
+/* Efek blur pada semua card saat ada card yang dihover - dinonaktifkan */
+.projects-grid:has(.project-card.hovered) .project-card:not(.hovered) {
+  /* filter: blur(4px) brightness(0.5); */
+  transform: scale(0.98);
+  transition: all 0.5s ease-in-out;
+  opacity: 0.7;
+}
+
+.project-card.hovered {
+  /* filter: blur(0) brightness(1) !important; */
+  transform: scale(1.05) !important;
+  z-index: 30 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(59, 130, 246, 0.5) !important;
+  position: relative;
+  opacity: 1 !important;
+}
+
+.project-card.hovered::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 16px;
+  background: linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(14, 165, 233, 0.2), rgba(99, 102, 241, 0.2));
+  z-index: -1;
+  animation: gradientMove 3s ease infinite;
+  pointer-events: none;
+}
+
+/* Ensure smooth transitions */
+.projects-grid {
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+
+.projects-grid.has-hovered-card {
+  padding: 10px;
+  margin: -10px;
+}
+
+/* Smooth transition for all project cards */
+.project-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, filter, opacity;
+}
+
+/* Add a subtle overlay when a card is hovered - efek blur dinonaktifkan */
+.projects-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 5;
+  /* backdrop-filter: blur(2px); */
+}
+
+.projects-overlay.active {
+  opacity: 1;
+}
+
+/* Ensure the hovered card stays above the overlay */
+.project-card.hovered {
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure the :has() selector works in all browsers with a fallback - dinonaktifkan */
+@supports not (selector(:has(*))) {
+  .has-hovered-card .project-card:not(.hovered) {
+    /* filter: blur(4px) brightness(0.5); */
+    transform: scale(0.98);
+    transition: all 0.5s ease-in-out;
+    opacity: 0.7;
+  }
+}
