@@ -78,4 +78,4 @@ Cara termudah untuk men-deploy portofolio ini adalah dengan menggunakan Vercel:
 
 ## Lisensi
 
-Hak cipta © 2024 Khayyis Billawal Rozikin. Hak cipta dilindungi.
+Hak cipta © 2025 Khayyis Billawal Rozikin. Hak cipta dilindungi.
