@@ -6,7 +6,7 @@
 const projectsData = {
   // Gambar proyek
   projectImages: {
-    robotics: "/images/Dalam-Tahap-Pengembangan.jpeg",
+    robotics: "/images/placeholder-project.jpg",
     chatbot: "/images/CHATBOT-WHATSAPP.png",
     design3d: "/images/Dalam-Tahap-Pengembangan.jpeg",
     photography: "/images/Dalam-Tahap-Pengembangan.jpeg"
@@ -19,7 +19,7 @@ const projectsData = {
       title: "LKS AUTONOMOUS MOBILE ROBOTIC",
       category: "Robotik",
       description: "Pengembangan robot autonomous mobile untuk kompetisi LKS. Robot ini dapat bergerak dan mengambil keputusan secara mandiri berdasarkan sensor-sensor yang terpasang.",
-      image: "/images/Dalam-Tahap-Pengembangan.jpeg",
+      image: "/images/placeholder-project.jpg",
       status: "Sedang Dikembangkan",
       colorStops: ["#3A29FF", "#9D4EDD", "#FF3232"]
     },
