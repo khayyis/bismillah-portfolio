@@ -6,7 +6,7 @@
 const optimizedProjectsData = {
   // Gambar proyek
   projectImages: {
-    robotics: "/images/Dalam-Tahap-Pengembangan.jpeg",
+    robotics: "/images/placeholder-project.jpg",
     chatbot: "/images/CHATBOT-WHATSAPP.png",
     design3d: "/images/Dalam-Tahap-Pengembangan.jpeg",
     photography: "/images/Dalam-Tahap-Pengembangan.jpeg"
