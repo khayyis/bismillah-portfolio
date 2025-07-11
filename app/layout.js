@@ -22,6 +22,7 @@ export default function RootLayout({ children }) {
     <html lang="id" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="msvalidate.01" content="80186E6FB990AC76A1CF39A553D015A7" />
         <link rel="icon" href="/images/cropped-khayyis-profile.jpg" type="image/jpeg" />
         <link rel="stylesheet" href="/fix-profile-image.css" />
         <link rel="stylesheet" href="/fix-project-images.css" />
