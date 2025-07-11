@@ -2,6 +2,7 @@ import './globals.css'
 import './darkTheme.css'
 import OptimizedLayout from './optimized-layout'
 import './optimized-imports' // Import stylesheet untuk optimasi
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata = {
   title: 'Khayyis Billawal Rozikin | Portofolio',
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
         <OptimizedLayout>
           {children}
         </OptimizedLayout>
+        <SpeedInsights />
       </body>
     </html>
   )
