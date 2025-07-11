@@ -29,7 +29,13 @@
 
 4. **Menambahkan sitemap.xml**
    - File `sitemap.xml` telah ditambahkan ke folder `public/`
-   - Berisi URL utama website untuk membantu mesin pencari mengindeks halaman
+   - Berisi URL utama website dan halaman-halaman penting seperti:
+     - Halaman utama (`/`)
+     - Halaman profil yang dioptimalkan (`/optimized-profile`)
+     - Halaman proyek yang dioptimalkan (`/optimized-projects`)
+     - Halaman proyek dengan tampilan tilted (`/tilted-projects`)
+     - Halaman detail untuk setiap proyek (`/optimized-projects/1` hingga `/optimized-projects/5`)
+     - Halaman detail untuk proyek reguler (`/projects/1` hingga `/projects/4`)
 
 5. **Commit dan Push ke GitHub**
    - Semua perubahan telah di-commit dan di-push ke repository GitHub
