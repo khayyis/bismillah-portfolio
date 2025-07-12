@@ -19,12 +19,12 @@
    - File `robots.txt` telah ditambahkan ke folder `public/`
    - Isi file:
      ```
-     # robots.txt for khayyis-portfolio.vercel.app
+     # robots.txt for khayyis.vercel.app
      User-agent: *
      Allow: /
      
      # Sitemap location
-     Sitemap: https://khayyis-portfolio.vercel.app/sitemap.xml
+     Sitemap: https://khayyis.vercel.app/sitemap.xml
      ```
 
 4. **Menambahkan sitemap.xml**

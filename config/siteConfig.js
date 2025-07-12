@@ -7,7 +7,7 @@ const siteConfig = {
   // Informasi dasar situs
   title: "Portfolio",
   description: "Portfolio personal Khayyis Billawal Rozikin, siswa Teknik Mekatronika SMKN 4 Jakarta dengan fokus pada robotik, desain 3D, dan teknologi AI.",
-  siteUrl: "https://khayyis-portfolio.vercel.app", // Ganti dengan URL situs Anda
+  siteUrl: "https://khayyis.vercel.app", // URL situs Anda
   language: "id-ID",
   locale: "id_ID",
   

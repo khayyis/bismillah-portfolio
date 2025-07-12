@@ -36,7 +36,7 @@ const socialConfig = {
   // Tautan eksternal
   externalLinks: {
     portfolio: {
-      url: "https://khayyis-portfolio.vercel.app",
+      url: "https://khayyis.vercel.app",
       label: "Portfolio Website",
       enabled: true,
     },
