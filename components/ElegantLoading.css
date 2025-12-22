@@ -10,12 +10,12 @@
 
 /* Animasi masuk: slide dari bawah ke atas */
 .loading-wrapper.loading-enter {
-  animation: slideInUp 0.5s ease-out forwards;
+  animation: slideInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 /* Animasi keluar: slide dari atas ke bawah */
 .loading-wrapper.loading-exit {
-  animation: slideOutDown 0.5s ease-in forwards;
+  animation: slideOutDown 0.8s cubic-bezier(0.55, 0, 1, 0.45) forwards;
 }
 
 @keyframes slideInUp {

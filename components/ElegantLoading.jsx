@@ -19,7 +19,7 @@ const ElegantLoading = ({ isNavigating = false, isFirstLoad = false }) => {
       const timer = setTimeout(() => {
         setIsVisible(false);
         setIsExiting(false);
-      }, 500); // Durasi animasi keluar
+      }, 800); // Durasi animasi keluar
       return () => clearTimeout(timer);
     }
   }, [shouldShow]);
