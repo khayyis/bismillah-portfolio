@@ -17,7 +17,7 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative min-h-screen flex items-center pt-[60px] bg-transparent"
+      className="relative min-h-screen flex items-center pt-[60px] bg-black/30 backdrop-blur-md"
     >
 
       <div className="container mx-auto px-4 py-12 overflow-visible">
