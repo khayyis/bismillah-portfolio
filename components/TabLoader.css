@@ -1,21 +1,11 @@
-.loading-wrapper {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #111;
-  z-index: 9999;
-}
-
-.loading-card {
+.tab-loader-card {
   --bg-color: #111;
   background-color: var(--bg-color);
   padding: 1rem 2rem;
   border-radius: 1.25rem;
 }
 
-.loading-loader {
+.tab-loader {
   color: rgb(124, 124, 124);
   font-family: "Poppins", sans-serif;
   font-weight: 500;
@@ -27,59 +17,54 @@
   border-radius: 8px;
 }
 
-.loading-words {
+.tab-loader-words {
   overflow: hidden;
   position: relative;
 }
 
-.loading-words::after {
+.tab-loader-words::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(var(--bg-color) 10%,
-      transparent 30%,
-      transparent 70%,
-      var(--bg-color) 90%);
+  background: linear-gradient(
+    var(--bg-color) 10%,
+    transparent 30%,
+    transparent 70%,
+    var(--bg-color) 90%
+  );
   z-index: 20;
 }
 
-.loading-word {
+.tab-loader-word {
   display: block;
   height: 100%;
   padding-left: 6px;
   color: #956afa;
-  animation: spin_words 4s infinite;
+  animation: tabLoaderSpin 4s infinite;
 }
 
-@keyframes spin_words {
+@keyframes tabLoaderSpin {
   10% {
     transform: translateY(-102%);
   }
-
   25% {
     transform: translateY(-100%);
   }
-
   35% {
     transform: translateY(-202%);
   }
-
   50% {
     transform: translateY(-200%);
   }
-
   60% {
     transform: translateY(-302%);
   }
-
   75% {
     transform: translateY(-300%);
   }
-
   85% {
     transform: translateY(-402%);
   }
-
   100% {
     transform: translateY(-400%);
   }

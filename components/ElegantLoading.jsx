@@ -11,14 +11,14 @@ const ElegantLoading = ({ isNavigating = false, isFirstLoad = false }) => {
   return (
     <div className="loading-wrapper">
       <div className="loading-card">
-        <div className="loader">
+        <div className="loading-loader">
           <p>loading</p>
-          <div className="words">
-            <span className="word">portfolio</span>
-            <span className="word">projects</span>
-            <span className="word">skills</span>
-            <span className="word">about</span>
-            <span className="word">portfolio</span>
+          <div className="loading-words">
+            <span className="loading-word">portfolio</span>
+            <span className="loading-word">projects</span>
+            <span className="loading-word">skills</span>
+            <span className="loading-word">about</span>
+            <span className="loading-word">portfolio</span>
           </div>
         </div>
       </div>
