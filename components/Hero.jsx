@@ -8,7 +8,6 @@ import './GlareHover.css';
 import Image from 'next/image';
 import userInfo from '../config/userInfo';
 import '../styles/floating-animation.css';
-import FloatingLines from './FloatingLines';
 
 export default function Hero() {
   const handleAnimationComplete = () => {
@@ -18,22 +17,8 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative min-h-screen flex items-center pt-[60px]"
+      className="relative min-h-screen flex items-center pt-[60px] bg-transparent"
     >
-      {/* FloatingLines Background */}
-      <div className="absolute inset-0 z-[-1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)' }}>
-        <FloatingLines
-          linesGradient={['#3B82F6', '#1E40AF', '#6366F1', '#4F46E5']}
-          enabledWaves={['top', 'middle', 'bottom']}
-          lineCount={[10, 15, 20]}
-          lineDistance={[8, 6, 4]}
-          bendRadius={5.0}
-          bendStrength={-0.5}
-          interactive={true}
-          parallax={true}
-          animationSpeed={0.8}
-        />
-      </div>
 
       <div className="container mx-auto px-4 py-12 overflow-visible">
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-center overflow-visible">
