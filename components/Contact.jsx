@@ -19,8 +19,7 @@ export default function Contact() {
           >
             Hubungi Saya
           </ScrollReveal>
-          <div className="w-16 md:w-20 h-1 bg-white mx-auto mt-2 mb-4 md:mb-6"></div>
-          <p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300">
+          <p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300 mt-4">
             Tertarik untuk berkolaborasi atau memiliki pertanyaan? Jangan ragu untuk menghubungi saya!
           </p>
         </div>

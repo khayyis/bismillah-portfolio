@@ -93,8 +93,7 @@ export default function ProjectTiltedCards() {
           >
             {projectsData.projectPageText.title}
           </ScrollReveal>
-          <div className="w-16 md:w-20 h-1 bg-primary-blue mx-auto mt-2 mb-4 md:mb-6"></div>
-          <p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300 px-2">
+          <p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300 px-2 mt-4">
             {projectsData.projectPageText.description}
           </p>
         </div>

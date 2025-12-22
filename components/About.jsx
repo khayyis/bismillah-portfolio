@@ -33,7 +33,6 @@ const About = () => {
           >
             Tentang Saya
           </ScrollReveal>
-          <div className="h-1 w-20 bg-blue-500 mx-auto mt-2"></div>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10 lg:gap-14">
