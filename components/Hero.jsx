@@ -8,6 +8,7 @@ import './GlareHover.css';
 import Image from 'next/image';
 import userInfo from '../config/userInfo';
 import '../styles/floating-animation.css';
+import FloatingLines from './FloatingLines';
 
 export default function Hero() {
   const handleAnimationComplete = () => {
@@ -15,14 +16,24 @@ export default function Hero() {
   };
 
   return (
-    <section 
-      id="beranda" 
+    <section
+      id="beranda"
       className="relative min-h-screen flex items-center pt-[60px]"
     >
-      <div 
-        className="absolute inset-0 bg-gradient-to-br from-secondary-lightGray to-white dark:from-gray-900 dark:to-gray-800 theme-dark:from-gray-900 theme-dark:to-gray-800 z-[-1]"
-        style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)' }}
-      ></div>
+      {/* FloatingLines Background */}
+      <div className="absolute inset-0 z-[-1]" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)' }}>
+        <FloatingLines
+          linesGradient={['#3B82F6', '#1E40AF', '#6366F1', '#4F46E5']}
+          enabledWaves={['top', 'middle', 'bottom']}
+          lineCount={[10, 15, 20]}
+          lineDistance={[8, 6, 4]}
+          bendRadius={5.0}
+          bendStrength={-0.5}
+          interactive={true}
+          parallax={true}
+          animationSpeed={0.8}
+        />
+      </div>
 
       <div className="container mx-auto px-4 py-12 overflow-visible">
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-center overflow-visible">
@@ -37,7 +48,7 @@ export default function Hero() {
                 Khayyis Billawal Rozikin
               </h1>
             </div>
-            
+
             <div className="mb-8 max-w-md">
               <div className="flex flex-wrap items-center gap-2 text-lg md:text-xl font-medium text-secondary-darkGray dark:text-gray-300 theme-dark:text-gray-300">
                 <span>Siswa SMKN 4 Jakarta</span>
@@ -47,7 +58,7 @@ export default function Hero() {
                 Berfokus pada pengembangan robotik, desain 3D, dan teknologi AI. Aktif dalam kompetisi LKS Autonomous Mobile Robotic.
               </p>
             </div>
-            
+
             <div className="flex flex-row gap-4">
               <GlareHover
                 height="48px"
@@ -60,8 +71,8 @@ export default function Hero() {
                 glareSize={300}
                 transitionDuration={800}
               >
-                <a 
-                  href="#projects" 
+                <a
+                  href="#projects"
                   className="px-6 h-full flex items-center justify-center text-white font-semibold text-sm md:text-base no-underline select-none bg-transparent border-none relative group"
                   title="Lihat proyek saya"
                 >
@@ -76,7 +87,7 @@ export default function Hero() {
                   </span>
                 </a>
               </GlareHover>
-              
+
               <GlareHover
                 height="48px"
                 width="auto"
@@ -89,8 +100,8 @@ export default function Hero() {
                 glareSize={300}
                 transitionDuration={800}
               >
-                <a 
-                  href="#kontak" 
+                <a
+                  href="#kontak"
                   className="px-6 h-full flex items-center justify-center text-blue-600 font-semibold text-sm md:text-base no-underline select-none bg-transparent border-none relative group"
                   title="Hubungi saya"
                 >
@@ -107,8 +118,8 @@ export default function Hero() {
               </GlareHover>
             </div>
           </motion.div>
-          
-          {/* Foto profil dan elemen dekoratif */} 
+
+          {/* Foto profil dan elemen dekoratif */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -119,9 +130,9 @@ export default function Hero() {
               <div className="aspect-square rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-primary-blue to-accent-brightBlue p-1">
                 <div className="bg-secondary-white dark:bg-gray-800 theme-dark:bg-gray-800 h-full w-full rounded-2xl overflow-hidden">
                   <div className="relative w-full h-full">
-                    <Image 
-                      src={userInfo.avatarUrl} 
-                      alt={userInfo.name} 
+                    <Image
+                      src={userInfo.avatarUrl}
+                      alt={userInfo.name}
                       fill
                       sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 380px"
                       style={{ objectFit: 'cover', display: 'block', minHeight: '100%', minWidth: '100%' }}
@@ -131,7 +142,7 @@ export default function Hero() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Floating decorative elements */}
               <div className="absolute -top-6 -right-6 w-16 md:w-24 h-16 md:h-24 bg-accent-brightBlue/10 rounded-xl z-[-1] floating-element"></div>
               <div className="absolute -bottom-6 -left-6 w-24 md:w-32 h-24 md:h-32 bg-primary-blue/10 rounded-full z-[-1] floating-element"></div>
