@@ -35,21 +35,37 @@
   transform: translate3d(0, 0, 0.1px);
   position: relative;
   touch-action: none;
-  padding: 3px;
-  border-radius: calc(var(--card-radius) + 3px);
-  background: linear-gradient(var(--border-angle, 0deg),
-      var(--sunpillar-1),
-      var(--sunpillar-2),
-      var(--sunpillar-3),
-      var(--sunpillar-4),
-      var(--sunpillar-5),
-      var(--sunpillar-6),
-      var(--sunpillar-1));
-  animation: rainbow-border 4s linear infinite;
-  box-shadow:
-    0 0 15px rgba(125, 190, 255, 0.3),
-    0 0 30px rgba(125, 190, 255, 0.2),
-    0 0 45px rgba(125, 190, 255, 0.1);
+  border-radius: var(--card-radius);
+}
+
+/* Animated border glow - subtle smoke effect */
+.pc-card-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--card-radius) + 2px);
+  background: conic-gradient(from var(--border-angle, 0deg),
+      transparent 0deg,
+      var(--sunpillar-5) 60deg,
+      var(--sunpillar-4) 120deg,
+      transparent 180deg,
+      var(--sunpillar-6) 240deg,
+      var(--sunpillar-1) 300deg,
+      transparent 360deg);
+  animation: smoke-border 6s linear infinite;
+  opacity: 0.6;
+  filter: blur(4px);
+  z-index: -1;
+}
+
+.pc-card-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 10;
 }
 
 @property --border-angle {
@@ -58,7 +74,7 @@
   initial-value: 0deg;
 }
 
-@keyframes rainbow-border {
+@keyframes smoke-border {
   0% {
     --border-angle: 0deg;
   }
@@ -70,7 +86,7 @@
 
 .pc-behind {
   position: absolute;
-  inset: 3px;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
   background: radial-gradient(circle at var(--pointer-x) var(--pointer-y),
@@ -85,10 +101,11 @@
 .pc-card-wrapper:hover,
 .pc-card-wrapper.active {
   --card-opacity: 1;
-  box-shadow:
-    0 0 20px rgba(125, 190, 255, 0.5),
-    0 0 40px rgba(125, 190, 255, 0.3),
-    0 0 60px rgba(125, 190, 255, 0.2);
+}
+
+.pc-card-wrapper:hover::before {
+  opacity: 0.9;
+  filter: blur(6px);
 }
 
 .pc-card {
