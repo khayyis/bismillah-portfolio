@@ -7,8 +7,6 @@ import { motion } from 'framer-motion';
 import { VscHome, VscPerson, VscTools, VscCode, VscMail, VscAccount } from 'react-icons/vsc';
 import Dock from './Dock';
 import GlareHover from "./GlareHover";
-import ThemeToggle from "./ThemeToggle";
-import { useTheme } from "./ThemeProvider";
 import "./GlareHover.css";
 
 const Navbar = () => {
@@ -52,8 +50,6 @@ const Navbar = () => {
       section.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const { theme } = useTheme();
 
   const getIconColor = (isActive) => {
     if (isActive) return 'text-blue-400 dark:text-blue-300';
@@ -103,12 +99,6 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           <div className="flex items-center gap-4">
-            <Link href="/" className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white hidden md:block">
-              Khayyis<span className="text-blue-500 dark:text-blue-400">.dev</span>
-            </Link>
-            <div className="hidden md:block">
-              <ThemeToggle />
-            </div>
           </div>
 
           {/* Desktop Navigation */}
@@ -124,10 +114,6 @@ const Navbar = () => {
 
           {/* Mobile Navigation */}
           <div className="flex justify-around items-center w-full md:hidden relative">
-            {/* Theme Toggle untuk Mobile */}
-            <div className="absolute right-4 top-[-40px] z-10">
-              <ThemeToggle />
-            </div>
             {items.map((item, index) => (
               <GlareHover
                 key={index}
@@ -136,8 +122,8 @@ const Navbar = () => {
                 background={item.active ? 'rgb(var(--button-primary-bg))' : 'rgb(var(--bg-secondary))'}
                 borderRadius="12px"
                 borderColor={item.active ? 'rgb(var(--button-primary-bg))' : 'rgb(var(--border-color))'}
-                glareColor={theme === 'dark' ? '#fff' : '#000'}
-                glareOpacity={theme === 'dark' ? 0.3 : 0.1}
+                glareColor="#fff"
+                glareOpacity={0.3}
                 glareAngle={-30}
                 glareSize={300}
                 transitionDuration={800}
