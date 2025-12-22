@@ -19,34 +19,34 @@ export default function OptimizedHelloTransition({ isNavigating, isFirstLoad }) 
   const [progress, setProgress] = useState(0);
   const [showContent, setShowContent] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
-  
+
   // Ref untuk interval
   const progressIntervalRef = useRef(null);
-  
+
   // Gunakan context koneksi
   const { getAdaptiveLoadingConfig, shouldUseLightAnimations } = useConnection();
-  
+
   // Dapatkan konfigurasi loading yang adaptif
   const loadingConfig = getAdaptiveLoadingConfig("Memuat...");
-  
+
   // Tentukan apakah harus menggunakan animasi ringan
   const useLightAnimations = shouldUseLightAnimations();
-  
+
   // Kelas CSS berdasarkan koneksi dan perangkat
-  const connectionClass = loadingConfig.connection?.saveData 
-    ? 'data-saver-mode' 
+  const connectionClass = loadingConfig.connection?.saveData
+    ? 'data-saver-mode'
     : loadingConfig.connection?.effectiveType === 'slow-2g' || loadingConfig.connection?.effectiveType === '2g'
       ? 'slow-connection'
       : '';
-  
-  const deviceClass = loadingConfig.device?.isLowEndDevice 
-    ? 'low-end-device' 
+
+  const deviceClass = loadingConfig.device?.isLowEndDevice
+    ? 'low-end-device'
     : '';
-  
-  const motionClass = loadingConfig.device?.isReducedMotion 
-    ? 'reduced-motion' 
+
+  const motionClass = loadingConfig.device?.isReducedMotion
+    ? 'reduced-motion'
     : '';
-  
+
   // Kelas CSS gabungan
   const combinedClasses = [
     'hello-transition',
@@ -56,61 +56,71 @@ export default function OptimizedHelloTransition({ isNavigating, isFirstLoad }) 
     motionClass,
     useLightAnimations ? 'light-animations' : ''
   ].filter(Boolean).join(' ');
-  
-  // Efek untuk mengelola visibilitas loading dengan performa yang lebih baik
+
+  // Efek untuk mengelola visibilitas loading dengan fallback safety
   useEffect(() => {
-    // Referensi ke elemen yang akan dianimasikan
+    let exitTimer = null;
+    let fallbackTimer = null;
     let animationElements = null;
-    
+
     if (isNavigating || isFirstLoad) {
       // Reset progress dan tampilkan konten dengan animasi masuk
       setProgress(0);
       setIsExiting(false);
       setShowContent(true);
-      
+
       // Gunakan setTimeout untuk memastikan DOM sudah dirender
       const animationTimer = setTimeout(() => {
-        // Animasi masuk dengan GSAP - gunakan selector yang lebih spesifik
         animationElements = document.querySelectorAll('.hello-transition:not(.hello-fade-out)');
         if (animationElements.length > 0) {
-          gsap.fromTo(animationElements, 
+          gsap.fromTo(animationElements,
             { opacity: 0, y: 20 },
             { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
           );
         }
-      }, 10); // Delay kecil untuk memastikan DOM sudah dirender
-      
+      }, 10);
+
       return () => clearTimeout(animationTimer);
     } else {
       // Jika tidak sedang navigasi, mulai animasi keluar
       if (showContent) {
         setIsExiting(true);
-        
-        // Gunakan setTimeout untuk memastikan DOM sudah dirender
-        const exitTimer = setTimeout(() => {
-          // Animasi keluar dengan GSAP - gunakan selector yang lebih spesifik
-          animationElements = document.querySelectorAll('.hello-transition:not(.hello-fade-out)');
+
+        exitTimer = setTimeout(() => {
+          animationElements = document.querySelectorAll('.hello-transition');
           if (animationElements.length > 0) {
             gsap.to(animationElements, {
-              opacity: 0, 
-              y: -20, 
-              duration: 0.5, 
+              opacity: 0,
+              y: -20,
+              duration: 0.5,
               ease: 'power2.in',
               onComplete: () => {
                 setShowContent(false);
               }
             });
           } else {
-            // Jika tidak ada elemen yang ditemukan, langsung set showContent ke false
+            // Jika tidak ada elemen, langsung sembunyikan
             setShowContent(false);
           }
-        }, 10); // Delay kecil untuk memastikan DOM sudah dirender
-        
-        return () => clearTimeout(exitTimer);
+        }, 10);
       }
     }
-  }, [isNavigating, isFirstLoad]);
-  
+
+    // Fallback: paksa sembunyikan loading jika masih tampil setelah 1.5 detik
+    // Ini memastikan loading screen tidak stuck selamanya
+    if (showContent && !isNavigating && !isFirstLoad) {
+      fallbackTimer = setTimeout(() => {
+        setShowContent(false);
+        setIsExiting(false);
+      }, 1500);
+    }
+
+    return () => {
+      if (exitTimer) clearTimeout(exitTimer);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+    };
+  }, [isNavigating, isFirstLoad, showContent]);
+
   // Efek untuk mengelola progress bar dengan performa yang lebih baik
   useEffect(() => {
     // Fungsi untuk membersihkan interval
@@ -120,79 +130,71 @@ export default function OptimizedHelloTransition({ isNavigating, isFirstLoad }) 
         progressIntervalRef.current = null;
       }
     };
-    
+
     // Fungsi untuk menghitung increment berdasarkan progress saat ini
     const calculateIncrement = (currentProgress) => {
       // Percepat progress di akhir untuk pengalaman yang lebih responsif
-      // Gunakan kurva yang lebih halus
       if (currentProgress < 30) return 0.3;
       if (currentProgress < 60) return 0.5;
       if (currentProgress < 80) return 1.0;
       if (currentProgress < 90) return 1.5;
       return 2.0;
     };
-    
+
     if (isNavigating || isFirstLoad) {
       // Bersihkan interval sebelumnya jika ada
       cleanupInterval();
-      
+
       // Reset progress ke 0
       setProgress(0);
-      
+
       // Tentukan durasi berdasarkan konfigurasi
-      const duration = loadingConfig.duration || 3000; // Durasi default 3000ms
-      
+      const duration = loadingConfig.duration || 3000;
+
       // Gunakan requestAnimationFrame untuk animasi yang lebih halus
       let lastTimestamp = null;
       let accumulatedTime = 0;
-      const targetInterval = 1000 / 30; // Target 30 fps untuk update progress
-      
+      const targetInterval = 1000 / 30; // Target 30 fps
+
       const updateProgress = (timestamp) => {
         if (!lastTimestamp) lastTimestamp = timestamp;
         const deltaTime = timestamp - lastTimestamp;
         lastTimestamp = timestamp;
-        
+
         accumulatedTime += deltaTime;
-        
-        // Update progress pada interval yang ditentukan
+
         if (accumulatedTime >= targetInterval) {
           accumulatedTime = 0;
-          
+
           setProgress(prev => {
-            const increment = calculateIncrement(prev) * (deltaTime / 16.67); // Normalisasi berdasarkan 60fps
+            const increment = calculateIncrement(prev) * (deltaTime / 16.67);
             const nextProgress = prev + increment;
-            
-            // Batasi progress maksimum ke 99% sampai navigasi selesai
             return nextProgress >= 100 ? 99 : nextProgress;
           });
         }
-        
-        // Lanjutkan animasi jika masih navigasi
+
         if (isNavigating || isFirstLoad) {
           requestAnimationFrame(updateProgress);
         }
       };
-      
-      // Mulai animasi dengan requestAnimationFrame
+
       const animationId = requestAnimationFrame(updateProgress);
-      
+
       return () => {
-        // Bersihkan animasi saat unmount
         cancelAnimationFrame(animationId);
         cleanupInterval();
       };
     } else if (progress < 100) {
-      // Navigasi selesai, selesaikan progress ke 100%
       setProgress(100);
       cleanupInterval();
     }
   }, [isNavigating, isFirstLoad, loadingConfig.duration, progress]);
-  
+
   // Jika tidak perlu menampilkan konten loading, jangan render apa-apa
   if (!showContent) {
     return null;
   }
-  
+
   return (
     <AnimatedExit
       isActive={isNavigating || isFirstLoad}
@@ -239,9 +241,9 @@ export default function OptimizedHelloTransition({ isNavigating, isFirstLoad }) 
               >
                 <div className="hello-loading-text">{loadingConfig.text}</div>
               </AnimatedContent>
-              
+
               {/* Teks logo dihapus sesuai permintaan, hanya menampilkan loading dan progress bar */}
-              
+
               <AnimatedContent
                 distance={50}
                 direction="horizontal"
@@ -258,7 +260,7 @@ export default function OptimizedHelloTransition({ isNavigating, isFirstLoad }) 
               >
                 <div className="hello-progress-container">
                   <div className="hello-progress-track">
-                    <div 
+                    <div
                       className="hello-progress-bar"
                       style={{ width: `${progress}%` }}
                     ></div>
@@ -266,7 +268,7 @@ export default function OptimizedHelloTransition({ isNavigating, isFirstLoad }) 
                   </div>
                 </div>
               </AnimatedContent>
-              
+
               <AnimatedContent
                 distance={40}
                 direction="vertical"

@@ -55,6 +55,9 @@ export default function ElegantLoading({ isNavigating, isFirstLoad }) {
   
   // Efek untuk mengelola visibilitas loading
   useEffect(() => {
+    let exitTimer = null;
+    let fallbackTimer = null;
+    
     if (isNavigating || isFirstLoad) {
       // Reset progress dan tampilkan konten
       setProgress(0);
@@ -66,14 +69,26 @@ export default function ElegantLoading({ isNavigating, isFirstLoad }) {
         setIsExiting(true);
         
         // Gunakan setTimeout untuk menunggu animasi keluar selesai
-        const exitTimer = setTimeout(() => {
+        exitTimer = setTimeout(() => {
           setShowContent(false);
         }, 800); // Sesuaikan dengan durasi animasi CSS
-        
-        return () => clearTimeout(exitTimer);
       }
     }
-  }, [isNavigating, isFirstLoad]);
+    
+    // Fallback: paksa sembunyikan loading setelah 5 detik jika masih tampil
+    // Ini memastikan loading tidak stuck selamanya
+    if (showContent && !isNavigating && !isFirstLoad) {
+      fallbackTimer = setTimeout(() => {
+        setShowContent(false);
+        setIsExiting(false);
+      }, 1500);
+    }
+    
+    return () => {
+      if (exitTimer) clearTimeout(exitTimer);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+    };
+  }, [isNavigating, isFirstLoad, showContent]);
   
   // Efek untuk mengelola progress bar
   useEffect(() => {
