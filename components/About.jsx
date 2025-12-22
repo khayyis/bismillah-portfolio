@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import ProfileCard from './ProfileCard';
 import ShinyText from './ShinyText';
 import GlareHover from './GlareHover';
+import ScrollReveal from './ScrollReveal';
 import './GlareHover.css';
 import userInfo from '../config/userInfo';
 
@@ -22,18 +23,18 @@ const About = () => {
   return (
     <section id="about" className="py-16 md:py-20 lg:py-24 text-white">
       <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+        <div className="text-center mb-12">
+          <ScrollReveal
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={6}
+            textClassName="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
+          >
             Tentang Saya
-          </h2>
-          <div className="h-1 w-20 bg-blue-500 mx-auto"></div>
-        </motion.div>
+          </ScrollReveal>
+          <div className="h-1 w-20 bg-blue-500 mx-auto mt-2"></div>
+        </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10 lg:gap-14">
           <motion.div

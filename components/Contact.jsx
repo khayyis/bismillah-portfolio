@@ -2,25 +2,28 @@
 import { motion } from 'framer-motion';
 import userInfo from '../config/userInfo';
 import socialConfig from '../config/socialConfig';
+import ScrollReveal from './ScrollReveal';
 
 export default function Contact() {
 
   return (
     <section id="kontak" className="py-12 md:py-20 text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 md:mb-12"
-        >
-          <h2 className="text-2xl md:text-3xl lg:text-h1 font-heading mb-4">Hubungi Saya</h2>
-          <div className="w-16 md:w-20 h-1 bg-white mx-auto mb-4 md:mb-6"></div>
-          <p className="max-w-2xl mx-auto text-sm md:text-body">
+        <div className="text-center mb-8 md:mb-12">
+          <ScrollReveal
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={6}
+            textClassName="text-2xl md:text-3xl lg:text-4xl font-heading text-white"
+          >
+            Hubungi Saya
+          </ScrollReveal>
+          <div className="w-16 md:w-20 h-1 bg-white mx-auto mt-2 mb-4 md:mb-6"></div>
+          <p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300">
             Tertarik untuk berkolaborasi atau memiliki pertanyaan? Jangan ragu untuk menghubungi saya!
           </p>
-        </motion.div>
+        </div>
 
         <div className="flex justify-center">
           <motion.div

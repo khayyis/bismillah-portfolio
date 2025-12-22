@@ -7,6 +7,7 @@ import "./ProjectTiltedCards.css";
 import { useRouter } from 'next/navigation';
 import projectsData from '../config/projectsData';
 import AuroraProjectCard from './AuroraProjectCard';
+import ScrollReveal from './ScrollReveal';
 
 // Menggunakan data proyek dari file konfigurasi
 const { projects, categories } = projectsData;
@@ -82,21 +83,21 @@ export default function ProjectTiltedCards() {
   return (
     <section id="projects" className="py-12 md:py-20">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 md:mb-12"
-        >
-          <h2 className="text-2xl md:text-3xl lg:text-h1 font-heading text-gray-900 dark:text-gray-50 theme-dark:text-gray-50 mb-4">
+        <div className="text-center mb-8 md:mb-12">
+          <ScrollReveal
+            baseOpacity={0}
+            enableBlur={true}
+            baseRotation={3}
+            blurStrength={6}
+            textClassName="text-2xl md:text-3xl lg:text-4xl font-heading text-white"
+          >
             {projectsData.projectPageText.title}
-          </h2>
-          <div className="w-16 md:w-20 h-1 bg-primary-blue mx-auto mb-4 md:mb-6"></div>
-          <p className="max-w-2xl mx-auto text-sm md:text-body text-secondary-darkGray dark:text-gray-300 theme-dark:text-gray-300 px-2">
+          </ScrollReveal>
+          <div className="w-16 md:w-20 h-1 bg-primary-blue mx-auto mt-2 mb-4 md:mb-6"></div>
+          <p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300 px-2">
             {projectsData.projectPageText.description}
           </p>
-        </motion.div>
+        </div>
 
         <div className="filter-btns-container mb-8 md:mb-12">
           <GlassButton
