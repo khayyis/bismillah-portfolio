@@ -1,15 +1,33 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './ElegantLoading.css';
 
 const ElegantLoading = ({ isNavigating = false, isFirstLoad = false }) => {
-  // Hanya tampilkan loading jika sedang navigasi atau first load
-  const shouldShow = isNavigating || isFirstLoad;
+  const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
   
-  if (!shouldShow) return null;
+  const shouldShow = isNavigating || isFirstLoad;
+
+  useEffect(() => {
+    if (shouldShow) {
+      // Masuk: tampilkan dengan animasi slide up
+      setIsExiting(false);
+      setIsVisible(true);
+    } else if (isVisible) {
+      // Keluar: animasi slide down dulu, baru hide
+      setIsExiting(true);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        setIsExiting(false);
+      }, 500); // Durasi animasi keluar
+      return () => clearTimeout(timer);
+    }
+  }, [shouldShow]);
+
+  if (!isVisible) return null;
 
   return (
-    <div className="loading-wrapper">
+    <div className={`loading-wrapper ${isExiting ? 'loading-exit' : 'loading-enter'}`}>
       <div className="loading-card">
         <div className="loading-loader">
           <p>loading</p>

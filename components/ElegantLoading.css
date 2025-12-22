@@ -8,6 +8,38 @@
   z-index: 9999;
 }
 
+/* Animasi masuk: slide dari bawah ke atas */
+.loading-wrapper.loading-enter {
+  animation: slideInUp 0.5s ease-out forwards;
+}
+
+/* Animasi keluar: slide dari atas ke bawah */
+.loading-wrapper.loading-exit {
+  animation: slideOutDown 0.5s ease-in forwards;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
 .loading-card {
   --bg-color: #111;
   background-color: var(--bg-color);
