@@ -20,7 +20,30 @@ const categoryColors = {
 
 // Data proyek
 const projectsData = [
-  // Semua proyek telah dihapus sesuai permintaan
+  {
+    id: 1,
+    title: 'LKS Autonomous Mobile Robotic',
+    category: 'Robotik',
+    description: 'Proyek robot otonom untuk kompetisi LKS dengan kemampuan navigasi dan pengenalan objek.',
+    image: '/images/autonomous-mobile-robotic.jpeg',
+    status: 'Selesai'
+  },
+  {
+    id: 2,
+    title: 'Chatbot WhatsApp',
+    category: 'AI',
+    description: 'Chatbot pintar berbasis AI untuk WhatsApp dengan kemampuan memproses pesan dan memberikan respons otomatis.',
+    image: '/images/chatbot-whatsapp.jpeg',
+    status: 'Selesai'
+  },
+  {
+    id: 3,
+    title: 'Desain 3D',
+    category: 'Desain 3D',
+    description: 'Proyek desain 3D untuk berbagai keperluan visualisasi dan modeling.',
+    image: '/images/Dalam-Tahap-Pengembangan.jpeg',
+    status: 'Dalam Pengembangan'
+  }
 ];
 
 const categories = ['Semua', 'Robotik', 'Desain 3D', 'AI', 'Fotografi'];
