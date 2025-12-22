@@ -24,16 +24,9 @@ const About = () => {
     <section id="about" className="py-16 md:py-20 lg:py-24 text-white">
       <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="text-center mb-12">
-          <ScrollReveal
-            baseOpacity={0.3}
-            enableBlur={true}
-            baseRotation={3}
-            blurStrength={5}
-            wordAnimationEnd="center center"
-            textClassName="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
-          >
-            Tentang Saya
-          </ScrollReveal>
+          <h2 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+            TENTANG SAYA
+          </h2>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10 lg:gap-14">
