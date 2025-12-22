@@ -85,10 +85,11 @@ export default function ProjectTiltedCards() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-8 md:mb-12">
           <ScrollReveal
-            baseOpacity={0}
+            baseOpacity={0.3}
             enableBlur={true}
-            baseRotation={5}
-            blurStrength={10}
+            baseRotation={3}
+            blurStrength={5}
+            wordAnimationEnd="center center"
             textClassName="text-2xl md:text-3xl lg:text-4xl font-heading text-white"
           >
             {projectsData.projectPageText.title}

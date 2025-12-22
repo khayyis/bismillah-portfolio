@@ -25,10 +25,11 @@ const About = () => {
       <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="text-center mb-12">
           <ScrollReveal
-            baseOpacity={0}
+            baseOpacity={0.3}
             enableBlur={true}
-            baseRotation={5}
-            blurStrength={10}
+            baseRotation={3}
+            blurStrength={5}
+            wordAnimationEnd="center center"
             textClassName="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
           >
             Tentang Saya
