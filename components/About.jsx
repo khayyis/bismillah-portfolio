@@ -27,8 +27,8 @@ const About = () => {
           <ScrollReveal
             baseOpacity={0}
             enableBlur={true}
-            baseRotation={3}
-            blurStrength={6}
+            baseRotation={5}
+            blurStrength={10}
             textClassName="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600"
           >
             Tentang Saya

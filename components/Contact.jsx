@@ -13,8 +13,8 @@ export default function Contact() {
           <ScrollReveal
             baseOpacity={0}
             enableBlur={true}
-            baseRotation={3}
-            blurStrength={6}
+            baseRotation={5}
+            blurStrength={10}
             textClassName="text-2xl md:text-3xl lg:text-4xl font-heading text-white"
           >
             Hubungi Saya

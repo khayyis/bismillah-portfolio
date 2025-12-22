@@ -17,8 +17,8 @@ const ScrollReveal = ({
     blurStrength = 4,
     containerClassName = '',
     textClassName = '',
-    rotationEnd = 'center center',
-    wordAnimationEnd = 'center center'
+    rotationEnd = 'bottom bottom',
+    wordAnimationEnd = 'bottom bottom'
 }) => {
     const containerRef = useRef(null);
 
@@ -100,9 +100,9 @@ const ScrollReveal = ({
     }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
     return (
-        <div ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
+        <h2 ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
             <p className={`scroll-reveal-text ${textClassName}`}>{splitText}</p>
-        </div>
+        </h2>
     );
 };
 
