@@ -1,319 +1,86 @@
-/* ElegantLoading.css */
-/* Halaman loading elegan dengan CSS murni tanpa GSAP */
-
-/* Variabel CSS untuk memudahkan kustomisasi */
-:root {
-  --primary-color: #3b82f6;
-  --primary-glow: rgba(59, 130, 246, 0.5);
-  --background-color: #111827;
-  --text-color: #e5e7eb;
-  --animation-duration: 0.8s;
-  --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Kontainer utama */
-.elegant-loading {
+.loading-wrapper {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111;
   z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--background-color);
-  pointer-events: all;
-  overflow: hidden;
 }
 
-/* Animasi masuk */
-.elegant-loading.enter-animation {
-  animation: elegantEnter var(--animation-duration) var(--animation-timing) forwards;
+.loading-card {
+  --bg-color: #111;
+  background-color: var(--bg-color);
+  padding: 1rem 2rem;
+  border-radius: 1.25rem;
 }
 
-/* Animasi keluar */
-.elegant-loading.exit-animation {
-  animation: elegantExit var(--animation-duration) var(--animation-timing) forwards;
-}
-
-/* Overlay dan content container */
-.elegant-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--background-color);
-}
-
-.elegant-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
-  z-index: 1;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Logo dan animasi */
-.elegant-logo {
-  position: relative;
-  width: 300px;
-  height: auto;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  animation: logoReveal 1.2s var(--animation-timing) forwards;
-}
-
-.elegant-logo-circle {
-  display: none; /* Menyembunyikan lingkaran */
-}
-
-.elegant-logo-text {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--primary-color);
-  letter-spacing: 0.5px;
-  line-height: 1;
-  text-align: center;
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
-  animation: textReveal 1s var(--animation-timing) forwards;
-  white-space: nowrap;
-  order: -1;
-}
-
-/* Teks loading */
-.elegant-loading-text {
-  font-size: 16px;
+.loader {
+  color: rgb(124, 124, 124);
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
-  color: var(--text-color);
-  margin-bottom: 10px;
-  text-align: center;
-  animation: fadeUp 0.8s var(--animation-timing) forwards;
-  animation-delay: 0.2s;
-  opacity: 0;
-}
-
-/* Progress bar */
-.elegant-progress-container {
-  width: 250px;
-  padding: 10px;
+  font-size: 25px;
+  box-sizing: content-box;
+  height: 40px;
+  padding: 10px 10px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: fadeUp 0.8s var(--animation-timing) forwards;
-  animation-delay: 0.3s;
-  opacity: 0;
+  border-radius: 8px;
 }
 
-.elegant-progress-track {
-  width: 100%;
-  height: 4px;
-  background-color: rgba(203, 213, 225, 0.2);
-  border-radius: 4px;
+.words {
   overflow: hidden;
   position: relative;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
 }
 
-.elegant-progress-bar {
-  height: 100%;
-  width: 0;
-  background-color: var(--primary-color);
-  transition: width 0.3s ease-in-out;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Efek glow pada progress bar */
-.elegant-progress-bar::before {
-  content: '';
+.words::after {
+  content: "";
   position: absolute;
-  top: 0;
-  left: -50%;
-  width: 50%;
+  inset: 0;
+  background: linear-gradient(var(--bg-color) 10%,
+      transparent 30%,
+      transparent 70%,
+      var(--bg-color) 90%);
+  z-index: 20;
+}
+
+.word {
+  display: block;
   height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
-  animation: shimmer 1.5s infinite;
-  transform: skewX(-20deg);
+  padding-left: 6px;
+  color: #956afa;
+  animation: spin_words 4s infinite;
 }
 
-.elegant-progress-bar::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 30px;
-  background: linear-gradient(to right, rgba(59, 130, 246, 0), rgba(59, 130, 246, 1));
-  filter: blur(8px);
-  box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
-}
-
-.elegant-progress-glow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
-  filter: blur(5px);
-  pointer-events: none;
-  animation: progressGlow 2s infinite ease-in-out;
-}
-
-/* Status koneksi */
-.elegant-connection-status {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--primary-color);
-  margin-top: 15px;
-  text-align: center;
-  animation: fadeUp 0.8s var(--animation-timing) forwards;
-  animation-delay: 0.4s;
-  opacity: 0;
-}
-
-/* Animasi untuk lingkaran - tidak digunakan lagi */
-@keyframes circlePulse {
-  0%, 100% {
-    opacity: 0;
+@keyframes spin_words {
+  10% {
+    transform: translateY(-102%);
   }
-}
 
-/* Animasi untuk logo */
-@keyframes logoReveal {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
+  25% {
+    transform: translateY(-100%);
   }
+
+  35% {
+    transform: translateY(-202%);
+  }
+
+  50% {
+    transform: translateY(-200%);
+  }
+
+  60% {
+    transform: translateY(-302%);
+  }
+
+  75% {
+    transform: translateY(-300%);
+  }
+
+  85% {
+    transform: translateY(-402%);
+  }
+
   100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Animasi untuk teks */
-@keyframes textReveal {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animasi fade up */
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animasi shimmer untuk progress bar */
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%) skewX(-20deg);
-  }
-  100% {
-    transform: translateX(300%) skewX(-20deg);
-  }
-}
-
-/* Animasi glow untuk progress bar */
-@keyframes progressGlow {
-  0% { opacity: 0.4; }
-  50% { opacity: 1; }
-  100% { opacity: 0.4; }
-}
-
-/* Animasi masuk dan keluar untuk kontainer */
-@keyframes elegantEnter {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes elegantExit {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-}
-
-/* Gaya untuk koneksi lambat */
-.elegant-loading.slow-connection {
-  --primary-color: #FF9900;
-  --primary-glow: rgba(255, 153, 0, 0.5);
-}
-
-/* Gaya untuk mode hemat data */
-.elegant-loading.data-saver-mode {
-  --primary-color: #00C853;
-  --primary-glow: rgba(0, 200, 83, 0.5);
-}
-
-/* Gaya untuk perangkat low-end */
-.elegant-loading.low-end-device {
-  --animation-duration: 0.5s;
-}
-
-/* Gaya untuk reduced motion */
-.elegant-loading.reduced-motion {
-  --animation-duration: 0.3s;
-  --animation-timing: ease;
-}
-
-/* Animasi yang lebih sederhana untuk perangkat low-end dan mode hemat data */
-.elegant-loading.low-end-device .elegant-logo-circle,
-.elegant-loading.data-saver-mode .elegant-logo-circle {
-  animation-duration: 3s;
-}
-
-/* Animasi yang lebih sederhana untuk reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .elegant-loading {
-    --animation-duration: 0.3s;
-    --animation-timing: ease;
-  }
-  
-  .elegant-logo-circle,
-  .elegant-progress-bar::before,
-  .elegant-progress-glow {
-    animation: none;
+    transform: translateY(-400%);
   }
 }
