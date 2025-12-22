@@ -35,11 +35,42 @@
   transform: translate3d(0, 0, 0.1px);
   position: relative;
   touch-action: none;
+  padding: 3px;
+  border-radius: calc(var(--card-radius) + 3px);
+  background: linear-gradient(var(--border-angle, 0deg),
+      var(--sunpillar-1),
+      var(--sunpillar-2),
+      var(--sunpillar-3),
+      var(--sunpillar-4),
+      var(--sunpillar-5),
+      var(--sunpillar-6),
+      var(--sunpillar-1));
+  animation: rainbow-border 4s linear infinite;
+  box-shadow:
+    0 0 15px rgba(125, 190, 255, 0.3),
+    0 0 30px rgba(125, 190, 255, 0.2),
+    0 0 45px rgba(125, 190, 255, 0.1);
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes rainbow-border {
+  0% {
+    --border-angle: 0deg;
+  }
+
+  100% {
+    --border-angle: 360deg;
+  }
 }
 
 .pc-behind {
   position: absolute;
-  inset: 0;
+  inset: 3px;
   z-index: 0;
   pointer-events: none;
   background: radial-gradient(circle at var(--pointer-x) var(--pointer-y),
@@ -48,11 +79,16 @@
   filter: blur(50px) saturate(1.1);
   opacity: calc(0.8 * var(--card-opacity));
   transition: opacity 200ms ease;
+  border-radius: var(--card-radius);
 }
 
 .pc-card-wrapper:hover,
 .pc-card-wrapper.active {
   --card-opacity: 1;
+  box-shadow:
+    0 0 20px rgba(125, 190, 255, 0.5),
+    0 0 40px rgba(125, 190, 255, 0.3),
+    0 0 60px rgba(125, 190, 255, 0.2);
 }
 
 .pc-card {
