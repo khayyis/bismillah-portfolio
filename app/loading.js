@@ -1,23 +1,10 @@
-'use client';
-
-import TabLoader from '../components/TabLoader';
-
 /**
- * Loading - Komponen loading untuk Next.js App Router
+ * Loading - Next.js App Router loading file
  * 
- * Komponen ini akan ditampilkan secara otomatis oleh Next.js saat halaman sedang dimuat.
- * Menggunakan TabLoader dengan animasi text cycling.
+ * Loading state dihandle oleh OptimizedTransitionLayout dengan ElegantLoading component.
+ * File ini tetap ada untuk fallback tapi tidak menampilkan apa-apa
+ * karena ElegantLoading sudah menangani semua loading states.
  */
 export default function Loading() {
-  return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh',
-      backgroundColor: '#111'
-    }}>
-      <TabLoader />
-    </div>
-  );
+  return null;
 }

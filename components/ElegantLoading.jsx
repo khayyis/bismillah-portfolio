@@ -2,7 +2,12 @@
 import React from 'react';
 import './ElegantLoading.css';
 
-const ElegantLoading = () => {
+const ElegantLoading = ({ isNavigating = false, isFirstLoad = false }) => {
+  // Hanya tampilkan loading jika sedang navigasi atau first load
+  const shouldShow = isNavigating || isFirstLoad;
+  
+  if (!shouldShow) return null;
+
   return (
     <div className="loading-wrapper">
       <div className="loading-card">
