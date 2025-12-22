@@ -34,7 +34,7 @@ export default function Hero() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             <GradientText
               colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-              animationSpeed={3}
+              animationSpeed={8}
               showBorder={false}
               className="hero-name-gradient"
             >
