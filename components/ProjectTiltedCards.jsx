@@ -80,7 +80,7 @@ export default function ProjectTiltedCards() {
   };
 
   return (
-    <section id="projects" className="py-12 md:py-20 bg-transparent">
+    <section id="projects" className="py-12 md:py-20 bg-black/30 backdrop-blur-md">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
