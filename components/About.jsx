@@ -20,7 +20,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="py-16 md:py-20 lg:py-24 bg-gray-900 text-white">
+    <section id="about" className="py-16 md:py-20 lg:py-24 bg-transparent text-white">
       <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -71,33 +71,33 @@ const About = () => {
 
             <div className="w-[220px]">
               <GlareHover
-              height="48px"
-              width="100%"
-              background="#3B82F6"
-              borderRadius="8px"
-              glareColor="#ffffff"
-              glareOpacity={0.3}
-              glareAngle={-30}
-              glareSize={300}
-              transitionDuration={800}
-            >
-              <button
-                onClick={scrollToContact}
-                className="w-full h-full flex items-center justify-center text-white font-semibold text-sm md:text-base no-underline select-none bg-transparent border-none relative group"
-                title="Hubungi saya"
-                aria-label="Hubungi saya"
+                height="48px"
+                width="100%"
+                background="#3B82F6"
+                borderRadius="8px"
+                glareColor="#ffffff"
+                glareOpacity={0.3}
+                glareAngle={-30}
+                glareSize={300}
+                transitionDuration={800}
               >
-                <div className="button-text flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5 mr-2">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  {userInfo.contactButtonText}
-                </div>
-                <span className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
-                  Hubungi saya
-                </span>
-              </button>
-            </GlareHover>
+                <button
+                  onClick={scrollToContact}
+                  className="w-full h-full flex items-center justify-center text-white font-semibold text-sm md:text-base no-underline select-none bg-transparent border-none relative group"
+                  title="Hubungi saya"
+                  aria-label="Hubungi saya"
+                >
+                  <div className="button-text flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5 mr-2">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    {userInfo.contactButtonText}
+                  </div>
+                  <span className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                    Hubungi saya
+                  </span>
+                </button>
+              </GlareHover>
             </div>
           </motion.div>
         </div>

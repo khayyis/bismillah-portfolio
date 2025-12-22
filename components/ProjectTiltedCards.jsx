@@ -16,23 +16,23 @@ export default function ProjectTiltedCards() {
   const [loading, setLoading] = useState(true);
   const [hoveredId, setHoveredId] = useState(null);
   const router = useRouter();
-  
+
   // Efek untuk simulasi loading data
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
     }, 800);
-    
+
     return () => clearTimeout(timer);
   }, []);
-  
-  const filteredProjects = filter === 'Semua' 
-    ? projects 
+
+  const filteredProjects = filter === 'Semua'
+    ? projects
     : projects.filter(project => project.category === filter);
 
   const handleProjectClick = (id) => {
     console.log(`Navigating to project with ID: ${id}`);
-    
+
     // Tambahkan elemen loading sebelum navigasi
     const loadingElement = document.createElement('div');
     loadingElement.id = 'project-loading';
@@ -47,7 +47,7 @@ export default function ProjectTiltedCards() {
     loadingElement.style.justifyContent = 'center';
     loadingElement.style.alignItems = 'center';
     loadingElement.style.transition = 'opacity 0.5s ease';
-    
+
     // Tambahkan konten loading
     loadingElement.innerHTML = `
       <div class="hello-transition hello-fade-in">
@@ -64,23 +64,23 @@ export default function ProjectTiltedCards() {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(loadingElement);
-    
+
     // Navigasi ke halaman proyek
     router.push(`/projects/${id}`);
   };
-  
+
   const handleProjectHover = (id) => {
     setHoveredId(id);
   };
-  
+
   const handleProjectLeave = () => {
     setHoveredId(null);
   };
 
   return (
-    <section id="projects" className="section-alt py-12 md:py-20 dark:bg-gray-900 theme-dark:bg-gray-900">
+    <section id="projects" className="py-12 md:py-20 bg-transparent">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -119,7 +119,7 @@ export default function ProjectTiltedCards() {
             </p>
           </div>
         ) : (
-          <motion.div 
+          <motion.div
             className="projects-grid"
             variants={{
               hidden: { opacity: 0 },
@@ -148,9 +148,9 @@ export default function ProjectTiltedCards() {
                   transition: 'z-index 0.1s'
                 }}
               >
-                <AuroraProjectCard 
-                  project={project} 
-                  onClick={handleProjectClick} 
+                <AuroraProjectCard
+                  project={project}
+                  onClick={handleProjectClick}
                 />
               </motion.div>
             ))}
@@ -158,7 +158,7 @@ export default function ProjectTiltedCards() {
         )}
 
         {!loading && filteredProjects.length === 0 && (
-          <motion.div 
+          <motion.div
             className="text-center py-8 md:py-12"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

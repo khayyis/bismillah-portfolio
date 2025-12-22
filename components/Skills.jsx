@@ -47,16 +47,16 @@ const skillList = [
 
 export default function Skills() {
 	const router = useRouter();
-	
+
 	const navigateToProjects = () => {
 		const projectsSection = document.getElementById('projects');
 		if (projectsSection) {
 			projectsSection.scrollIntoView({ behavior: 'smooth' });
 		}
 	};
-	
+
 	return (
-		<section id="keahlian" className="py-12 md:py-20 bg-gray-50 dark:bg-gray-900 theme-dark:bg-gray-900">
+		<section id="keahlian" className="py-12 md:py-20 bg-transparent">
 			<div className="container mx-auto px-4">
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}

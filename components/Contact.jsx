@@ -6,7 +6,7 @@ import socialConfig from '../config/socialConfig';
 export default function Contact() {
 
   return (
-    <section id="kontak" className="py-12 md:py-20 gradient-bg text-white">
+    <section id="kontak" className="py-12 md:py-20 bg-transparent text-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -21,7 +21,7 @@ export default function Contact() {
             Tertarik untuk berkolaborasi atau memiliki pertanyaan? Jangan ragu untuk menghubungi saya!
           </p>
         </motion.div>
-        
+
         <div className="flex justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -32,7 +32,7 @@ export default function Contact() {
           >
             <div className="bg-white/10 backdrop-blur-sm p-6 md:p-8 rounded-xl shadow-lg border border-white/10 hover:border-white/20 transition-all duration-300">
               <h3 className="text-xl md:text-h2 font-heading mb-4 md:mb-6">Informasi Kontak</h3>
-              
+
               <div className="space-y-4 md:space-y-6">
                 <div className="flex items-start">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
@@ -42,7 +42,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-xs md:text-caption font-caption mb-1 opacity-80 font-medium">Email</h4>
-                    <a 
+                    <a
                       href={`mailto:${socialConfig.contact.email.address}?subject=${encodeURIComponent(socialConfig.contact.email.subject)}`}
                       className="text-sm md:text-body break-all hover:text-blue-300 transition-colors duration-300 flex items-center font-semibold"
                       title="Klik untuk mengirim email"
@@ -52,7 +52,7 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5">
@@ -61,7 +61,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-xs md:text-caption font-caption mb-1 opacity-80 font-medium">Instagram</h4>
-                    <a 
+                    <a
                       href={socialConfig.socialMedia.instagram.url}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -73,7 +73,7 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
-                
+
                 {socialConfig.contact.telegram.enabled && (
                   <div className="flex items-start">
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
@@ -83,7 +83,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h4 className="text-xs md:text-caption font-caption mb-1 opacity-80 font-medium">Telegram</h4>
-                      <a 
+                      <a
                         href={socialConfig.contact.telegram.url}
                         target="_blank"
                         rel="noopener noreferrer"
