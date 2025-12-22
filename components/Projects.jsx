@@ -1,13 +1,22 @@
 'use client';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import AuroraCard from './AuroraCard';
+import ElectricProjectCard from './ElectricProjectCard';
 import GlassButton from "./GlassButton";
 import "./GlassButton.css";
 import { useRef, useEffect } from 'react';
 import "./ProjectsBlurEffect.css";
 import { useRouter } from 'next/navigation';
 import { FiFilter, FiCheck } from 'react-icons/fi';
+
+// Warna electric untuk setiap kategori
+const categoryColors = {
+  'Robotik': '#7df9ff',      // Cyan electric
+  'Desain 3D': '#ff6b9d',    // Pink electric
+  'AI': '#a855f7',           // Purple electric
+  'Fotografi': '#fbbf24',    // Gold electric
+  'default': '#7df9ff'       // Default cyan
+};
 
 // Data proyek
 const projectsData = [
@@ -196,7 +205,7 @@ export default function Projects() {
               onMouseEnter={() => handleCardHover(project.id)}
               onMouseLeave={handleCardLeave}
             >
-              <AuroraCard
+              <ElectricProjectCard
                 title={project.title}
                 category={project.category}
                 description={project.description}
@@ -204,7 +213,7 @@ export default function Projects() {
                 status={project.status}
                 onClick={() => handleProjectClick(project.id)}
                 priority={project.id === 1}
-                colorStops={project.colorStops}
+                color={categoryColors[project.category] || categoryColors.default}
                 id={project.id}
               />
             </motion.div>

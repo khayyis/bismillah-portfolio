@@ -2,8 +2,17 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
-import OptimizedAuroraCard from './OptimizedAuroraCard';
+import ElectricProjectCard from './ElectricProjectCard';
 import { ConnectionContext } from './ConnectionProvider';
+
+// Warna electric untuk setiap kategori
+const categoryColors = {
+  'Robotik': '#7df9ff',      // Cyan electric
+  'Desain 3D': '#ff6b9d',    // Pink electric
+  'AI': '#a855f7',           // Purple electric
+  'Fotografi': '#fbbf24',    // Gold electric
+  'default': '#7df9ff'       // Default cyan
+};
 
 /**
  * OptimizedProjects - Versi yang dioptimalkan dari komponen Projects
@@ -50,15 +59,16 @@ export default function OptimizedProjects({ projects = [], onProjectClick, itemV
         <motion.div 
           key={project.id || index}
           variants={effectiveItemVariants}
-          className="h-[350px]"
+          className="h-[380px]"
         >
-          <OptimizedAuroraCard
+          <ElectricProjectCard
             title={project.title}
+            category={project.category}
             description={project.description}
-            image={project.image}
-            colorStops={project.colorStops}
+            imageSrc={project.image}
             status={project.status}
             onClick={() => onProjectClick && onProjectClick(project)}
+            color={categoryColors[project.category] || categoryColors.default}
           />
         </motion.div>
       ))}
