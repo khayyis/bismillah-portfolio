@@ -1,14 +1,13 @@
 'use client';
 
 import ThemeProvider from '../components/ThemeProvider';
-import SplashCursor from '../components/SplashCursor';
 import OptimizedTransitionLayout from '../components/OptimizedTransitionLayout';
 import ClickSpark from '../components/ClickSpark';
 
 /**
  * OptimizedLayout - Layout yang dioptimalkan untuk performa
  * 
- * Komponen ini menggabungkan ThemeProvider, SplashCursor, ClickSpark, dan OptimizedTransitionLayout
+ * Komponen ini menggabungkan ThemeProvider, ClickSpark, dan OptimizedTransitionLayout
  * untuk memberikan pengalaman pengguna yang optimal dengan mempertimbangkan
  * kecepatan koneksi dan kemampuan perangkat.
  * 
@@ -25,7 +24,6 @@ export default function OptimizedLayout({ children }) {
         sparkCount={10}
         duration={500}
       >
-        <SplashCursor />
         <OptimizedTransitionLayout>
           {children}
         </OptimizedTransitionLayout>
