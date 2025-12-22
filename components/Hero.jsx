@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import GlareHover from './GlareHover';
+import GradientText from './GradientText';
 import './GlareHover.css';
 import userInfo from '../config/userInfo';
 
@@ -30,8 +31,15 @@ export default function Hero() {
           </motion.div>
 
           {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Khayyis Billawal Rozikin
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+            <GradientText
+              colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+              animationSpeed={3}
+              showBorder={false}
+              className="hero-name-gradient"
+            >
+              Khayyis Billawal Rozikin
+            </GradientText>
           </h1>
 
           {/* Subtitle */}
