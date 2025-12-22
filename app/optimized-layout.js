@@ -8,11 +8,8 @@ import FloatingLines from '../components/FloatingLines';
 /**
  * OptimizedLayout - Layout yang dioptimalkan untuk performa
  * 
- * Komponen ini menggabungkan ThemeProvider, ClickSpark, FloatingLines, dan OptimizedTransitionLayout
- * untuk memberikan pengalaman pengguna yang optimal dengan mempertimbangkan
- * kecepatan koneksi dan kemampuan perangkat.
- * 
- * FloatingLines sebagai background full-page yang unified.
+ * FloatingLines sebagai background full-page.
+ * Glass overlay unified untuk semua konten tanpa batas antar section.
  */
 export default function OptimizedLayout({ children }) {
   return (
@@ -31,6 +28,9 @@ export default function OptimizedLayout({ children }) {
           animationSpeed={0.8}
         />
       </div>
+
+      {/* Unified Glass Overlay - satu layer untuk semua konten */}
+      <div className="fixed inset-0 z-[-5] bg-black/30 backdrop-blur-sm pointer-events-none" />
 
       <ClickSpark
         sparkColor="#6366f1"
