@@ -5,6 +5,7 @@ import ProfileCard from './ProfileCard';
 import ShinyText from './ShinyText';
 import GlareHover from './GlareHover';
 import ScrollReveal from './ScrollReveal';
+import StarBorder from './StarBorder';
 import './GlareHover.css';
 import userInfo from '../config/userInfo';
 
@@ -43,18 +44,25 @@ const About = () => {
             viewport={{ once: true }}
             className="w-full md:w-2/5 lg:w-5/12 flex justify-center md:justify-start"
           >
-            <ProfileCard
-              name={userInfo.name}
-              title={userInfo.title}
-              handle={userInfo.handle}
-              status={userInfo.status}
-              contactText={userInfo.contactText}
-              avatarUrl={userInfo.avatarUrl}
-              miniAvatarUrl={userInfo.miniAvatarUrl}
-              showUserInfo={true}
-              enableTilt={true}
-              onContactClick={handleContactClick}
-            />
+            <StarBorder
+              color="#3B82F6"
+              speed="5s"
+              thickness={2}
+              className="profile-star-border"
+            >
+              <ProfileCard
+                name={userInfo.name}
+                title={userInfo.title}
+                handle={userInfo.handle}
+                status={userInfo.status}
+                contactText={userInfo.contactText}
+                avatarUrl={userInfo.avatarUrl}
+                miniAvatarUrl={userInfo.miniAvatarUrl}
+                showUserInfo={true}
+                enableTilt={true}
+                onContactClick={handleContactClick}
+              />
+            </StarBorder>
           </motion.div>
 
           <motion.div
