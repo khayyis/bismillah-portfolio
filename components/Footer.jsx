@@ -2,12 +2,13 @@
 import { motion } from 'framer-motion';
 import ShinyText from './ShinyText';
 import socialConfig from '../config/socialConfig';
-import userInfo from '../config/userInfo';
+import { useProfile } from '../hooks/useProfile';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const isAnimationReady = useAnimationReady(500);
+  const { profile } = useProfile();
 
   return (
     <footer className="text-white py-8 md:py-12 pb-24 md:pb-12">
@@ -20,14 +21,14 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-xl md:text-h2 font-heading mb-3 md:mb-4">{userInfo.name}</h3>
+              <h3 className="text-xl md:text-h2 font-heading mb-3 md:mb-4">{profile.name}</h3>
               <p className="text-sm md:text-body text-secondary-lightGray mb-4 md:mb-6">
-                {userInfo.title}<br />
-                {userInfo.school}
+                {profile.title}<br />
+                {profile.school}
               </p>
               <div className="flex space-x-3 md:space-x-4">
                 <a
-                  href={`https://instagram.com/${userInfo.instagram.replace('@', '')}`}
+                  href={`https://instagram.com/${profile.instagram?.replace('@', '') || ''}`}
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-500 transition-colors"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="w-4 h-4 md:w-5 md:h-5 bi bi-instagram" viewBox="0 0 16 16">
@@ -109,8 +110,8 @@ export default function Footer() {
                 </li>
                 <li className="text-sm md:text-body text-secondary-lightGray">
                   <span className="block">Instagram:</span>
-                  <a href={`https://instagram.com/${userInfo.instagram.replace('@', '')}`} className="text-blue-400 hover:underline text-sm md:text-body">
-                    <div className="footer-text">{userInfo.instagram}</div>
+                  <a href={`https://instagram.com/${profile.instagram?.replace('@', '') || ''}`} className="text-blue-400 hover:underline text-sm md:text-body">
+                    <div className="footer-text">{profile.instagram}</div>
                   </a>
                 </li>
               </ul>
@@ -126,7 +127,7 @@ export default function Footer() {
           className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8 pb-4 md:pb-0 text-center"
         >
           <p className="text-secondary-lightGray text-xs md:text-caption">
-            © {currentYear} {userInfo.name.split(' ')[0]} {userInfo.name.split(' ')[1]}. Hak Cipta Dilindungi.
+            © {currentYear} {profile.name?.split(' ')[0]} {profile.name?.split(' ')[1]}. Hak Cipta Dilindungi.
           </p>
         </motion.div>
       </div>

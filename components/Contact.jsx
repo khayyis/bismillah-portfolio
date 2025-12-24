@@ -1,12 +1,14 @@
 'use client';
 import { motion } from 'framer-motion';
-import userInfo from '../config/userInfo';
+import { useProfile, useSocial } from '../hooks/useProfile';
 import socialConfig from '../config/socialConfig';
 import ScrollReveal from './ScrollReveal';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 
 export default function Contact() {
   const isAnimationReady = useAnimationReady(400);
+  const { profile } = useProfile();
+  const { social } = useSocial();
 
   return (
     <section id="kontak" className="py-12 md:py-20 text-white">
@@ -111,7 +113,7 @@ export default function Contact() {
                   <div>
                     <h4 className="text-xs md:text-caption font-caption mb-1 opacity-80 font-medium">Sekolah</h4>
                     <p className="text-sm md:text-body font-semibold">{socialConfig.externalLinks.school.label}</p>
-                    <p className="text-xs md:text-caption opacity-70 font-normal">{userInfo.department}</p>
+                    <p className="text-xs md:text-caption opacity-70 font-normal">{profile.department}</p>
                   </div>
                 </div>
 

@@ -6,11 +6,12 @@ import ShinyText from './ShinyText';
 import GlareHover from './GlareHover';
 import ScrollReveal from './ScrollReveal';
 import './GlareHover.css';
-import userInfo from '../config/userInfo';
+import { useProfile } from '../hooks/useProfile';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 
 const About = () => {
-  const isAnimationReady = useAnimationReady(100); // Delay 100ms setelah Hero
+  const isAnimationReady = useAnimationReady(100);
+  const { profile, isLoaded } = useProfile();
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('kontak');
@@ -41,13 +42,13 @@ const About = () => {
             className="w-full md:w-2/5 lg:w-5/12 flex justify-center md:justify-start"
           >
             <ProfileCard
-              name={userInfo.name}
-              title={userInfo.title}
-              handle={userInfo.handle}
-              status={userInfo.status}
-              contactText={userInfo.contactText}
-              avatarUrl={userInfo.avatarUrl}
-              miniAvatarUrl={userInfo.miniAvatarUrl}
+              name={profile.name}
+              title={profile.title}
+              handle={profile.handle}
+              status={profile.status}
+              contactText={profile.contactText}
+              avatarUrl={profile.avatarUrl}
+              miniAvatarUrl={profile.miniAvatarUrl}
               showUserInfo={true}
               enableTilt={true}
               onContactClick={handleContactClick}
@@ -61,9 +62,9 @@ const About = () => {
             viewport={{ once: true }}
             className="w-full md:w-3/5 lg:w-7/12 md:pl-6 lg:pl-10"
           >
-            <h3 className="text-2xl font-bold mb-4">{userInfo.school}</h3>
+            <h3 className="text-2xl font-bold mb-4">{profile.school}</h3>
             <p className="text-gray-300 mb-6 text-lg leading-relaxed text-justify">
-              {userInfo.about}
+              {profile.about}
             </p>
 
             <div className="w-[220px]">
@@ -88,7 +89,7 @@ const About = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5 mr-2">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    {userInfo.contactButtonText}
+                    {profile.contactButtonText}
                   </div>
                   <span className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
                     Hubungi saya
