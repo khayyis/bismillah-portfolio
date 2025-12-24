@@ -34,11 +34,11 @@ export default function Contact() {
             {sectionTitle}
           </ScrollFloat>
           <ScrollReveal
-            baseOpacity={1}
+            baseOpacity={0.5}
             enableBlur={true}
-            baseRotation={2}
-            blurStrength={15}
-            wordAnimationEnd="center center"
+            baseRotation={1}
+            blurStrength={8}
+            wordAnimationEnd="top center"
             textClassName="max-w-2xl mx-auto text-sm md:text-body text-gray-300 mt-4"
           >
             {sectionSubtitle}
