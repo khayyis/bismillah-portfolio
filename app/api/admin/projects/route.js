@@ -103,28 +103,36 @@ export async function PUT(request) {
         const body = await request.json();
         const supabase = getAdminSupabase();
 
+        // Build update object only with defined fields
+        const updateData = {
+            updated_at: new Date().toISOString()
+        };
+
+        if (body.title !== undefined) updateData.title = body.title;
+        if (body.subtitle !== undefined) updateData.subtitle = body.subtitle;
+        if (body.description !== undefined) updateData.description = body.description;
+        if (body.category !== undefined) updateData.category = body.category;
+        if (body.status !== undefined) updateData.status = body.status;
+        if (body.image !== undefined) updateData.image = body.image;
+        if (body.handle !== undefined) updateData.handle = body.handle;
+        if (body.url !== undefined) updateData.url = body.url;
+        if (body.borderColor !== undefined) updateData.border_color = body.borderColor;
+        if (body.gradient !== undefined) updateData.gradient = body.gradient;
+
+        console.log('Updating project:', body.id, 'with:', updateData);
+
         const { data, error } = await supabase
             .from('projects')
-            .update({
-                title: body.title,
-                subtitle: body.subtitle,
-                description: body.description,
-                category: body.category,
-                status: body.status,
-                image: body.image,
-                handle: body.handle,
-                url: body.url,
-                border_color: body.borderColor,
-                gradient: body.gradient,
-                updated_at: new Date().toISOString()
-            })
+            .update(updateData)
             .eq('id', body.id)
             .select()
             .single();
 
         if (error) throw error;
+        console.log('Update result:', data);
         return NextResponse.json({ success: true, data });
     } catch (error) {
+        console.error('Update error:', error);
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }
