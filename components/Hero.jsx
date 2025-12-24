@@ -1,8 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import GlareHover from './GlareHover';
-import GradientText from './GradientText';
-import './GlareHover.css';
+import BlurGradientText from './BlurGradientText';
 import { useProfile } from '../hooks/useProfile';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 
@@ -18,26 +16,21 @@ export default function Hero() {
       <div className="container mx-auto px-4 py-12">
         {/* Centered Content */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isAnimationReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0 }}
+          animate={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.3 }}
           className="text-center max-w-3xl mx-auto"
         >
-
-
-          {/* Main Heading */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-            <GradientText
-              colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-              animationSpeed={8}
-              showBorder={false}
-              className="hero-name-gradient"
-            >
-              {profile.name}
-            </GradientText>
-          </h1>
-
-
+          {/* Main Heading with Blur + Gradient Animation */}
+          <BlurGradientText
+            text={profile.name}
+            delay={120}
+            animateBy="words"
+            direction="top"
+            colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+            animationSpeed={8}
+            className="hero-name-gradient"
+          />
         </motion.div>
       </div>
     </section>
