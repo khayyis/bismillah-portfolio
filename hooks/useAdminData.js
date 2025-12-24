@@ -145,8 +145,20 @@ export function useAdminData() {
     }, [projects]);
 
     const updateProject = useCallback(async (id, updates) => {
-        await apiCall('/api/admin/projects', 'PUT', { id, ...updates });
-        setProjects(projects.map(p => p.id === id ? { ...p, ...updates } : p));
+        console.log('updateProject called with:', { id, updates });
+        try {
+            const res = await apiCall('/api/admin/projects', 'PUT', { id, ...updates });
+            console.log('updateProject response:', res);
+            if (res.success) {
+                setProjects(projects.map(p => p.id === id ? { ...p, ...updates } : p));
+            } else {
+                console.error('updateProject failed:', res.error);
+                alert('Update gagal: ' + (res.error || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('updateProject error:', error);
+            alert('Update error: ' + error.message);
+        }
     }, [projects]);
 
     const deleteProject = useCallback(async (id) => {
