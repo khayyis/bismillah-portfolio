@@ -14,12 +14,15 @@ import ShinyText from '../components/ShinyText'
 
 export default function Home() {
   useEffect(() => {
+    // Scroll ke atas saat halaman di-refresh
+    window.scrollTo(0, 0);
+
     const htmlElement = document.documentElement;
     if (htmlElement.hasAttribute('webcrx')) {
       htmlElement.removeAttribute('webcrx');
     }
   }, []);
-  
+
   return (
     <main>
       <Hero />
