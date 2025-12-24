@@ -234,8 +234,8 @@ function hexToVec3(hex) {
 export default function FloatingLines({
   linesGradient,
   enabledWaves = ['top', 'middle', 'bottom'],
-  lineCount = [6],
-  lineDistance = [5],
+  lineCount = [10, 15, 20],
+  lineDistance = [8, 6, 4],
   topWavePosition,
   middleWavePosition,
   bottomWavePosition = { x: 2.0, y: -0.7, rotate: -1 },
@@ -367,7 +367,7 @@ export default function FloatingLines({
 
     const setSize = () => {
       const el = containerRef.current;
-      if (!el) return; // Guard against null element
+      if (!el) return;
       const width = el.clientWidth || 1;
       const height = el.clientHeight || 1;
 
@@ -437,7 +437,6 @@ export default function FloatingLines({
 
     return () => {
       cancelAnimationFrame(raf);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       if (ro && containerRef.current) {
         ro.disconnect();
       }
