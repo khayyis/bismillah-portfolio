@@ -1,11 +1,11 @@
 .scroll-reveal {
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .scroll-reveal-text {
-    font-size: clamp(1.6rem, 4vw, 3rem);
-    line-height: 1.5;
-    font-weight: 600;
+    /* Font size controlled by textClassName prop, not here */
+    line-height: 1.6;
+    display: inline;
 }
 
 .word {
