@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import ProfileCard from './ProfileCard';
 import ShinyText from './ShinyText';
 import GlareHover from './GlareHover';
+import ScrollFloat from './ScrollFloat';
 import ScrollReveal from './ScrollReveal';
 import './GlareHover.css';
 import { useProfile } from '../hooks/useProfile';
@@ -28,9 +29,16 @@ const About = () => {
     <section id="about" className="py-16 md:py-20 lg:py-24 text-white">
       <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white">
+          <ScrollFloat
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="center bottom+=50%"
+            scrollEnd="bottom bottom-=40%"
+            stagger={0.1}
+            textClassName="text-3xl md:text-4xl lg:text-5xl font-bold text-white"
+          >
             TENTANG SAYA
-          </h2>
+          </ScrollFloat>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10 lg:gap-14">
@@ -63,9 +71,16 @@ const About = () => {
             className="w-full md:w-3/5 lg:w-7/12 md:pl-6 lg:pl-10"
           >
             <h3 className="text-2xl font-bold mb-4">{profile.school}</h3>
-            <p className="text-gray-300 mb-6 text-lg leading-relaxed text-justify">
+            <ScrollReveal
+              baseOpacity={1}
+              enableBlur={true}
+              baseRotation={2}
+              blurStrength={15}
+              wordAnimationEnd="center center"
+              textClassName="text-gray-300 text-lg leading-relaxed text-justify"
+            >
               {profile.about}
-            </p>
+            </ScrollReveal>
 
             <div className="w-[220px]">
               <GlareHover

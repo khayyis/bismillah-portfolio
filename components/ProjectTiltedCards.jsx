@@ -7,6 +7,7 @@ import "./ProjectTiltedCards.css";
 import { useRouter } from 'next/navigation';
 import projectsData from '../config/projectsData';
 import ElectricProjectCard from './ElectricProjectCard';
+import ScrollFloat from './ScrollFloat';
 import ScrollReveal from './ScrollReveal';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 
@@ -86,19 +87,26 @@ export default function ProjectTiltedCards() {
     <section id="projects" className="py-12 md:py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8 md:mb-12">
-          <ScrollReveal
-            baseOpacity={0.3}
-            enableBlur={true}
-            baseRotation={3}
-            blurStrength={5}
-            wordAnimationEnd="center center"
+          <ScrollFloat
+            animationDuration={1}
+            ease="back.inOut(2)"
+            scrollStart="center bottom+=50%"
+            scrollEnd="bottom bottom-=40%"
+            stagger={0.1}
             textClassName="text-2xl md:text-3xl lg:text-4xl font-heading text-white"
           >
             {projectsData.projectPageText.title}
-          </ScrollReveal>
-          <p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300 px-2 mt-4">
+          </ScrollFloat>
+          <ScrollReveal
+            baseOpacity={1}
+            enableBlur={true}
+            baseRotation={2}
+            blurStrength={15}
+            wordAnimationEnd="center center"
+            textClassName="max-w-2xl mx-auto text-sm md:text-body text-gray-300 px-2 mt-4"
+          >
             {projectsData.projectPageText.description}
-          </p>
+          </ScrollReveal>
         </div>
 
         <div className="filter-btns-container mb-8 md:mb-12">

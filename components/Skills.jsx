@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import Carousel from './Carousel';
 import { FiCpu, FiCodesandbox, FiCommand, FiMessageSquare, FiStar } from 'react-icons/fi';
+import ScrollFloat from './ScrollFloat';
 import ScrollReveal from './ScrollReveal';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 import { useSkills } from '../hooks/useProfile';
@@ -80,20 +81,26 @@ export default function Skills() {
 		<section id="keahlian" className="py-12 md:py-20">
 			<div className="container mx-auto px-4">
 				<div className="text-center mb-10 md:mb-16">
-					<ScrollReveal
-						baseOpacity={0.3}
-						enableBlur={true}
-						baseRotation={3}
-						blurStrength={5}
-						wordAnimationEnd="center center"
+					<ScrollFloat
+						animationDuration={1}
+						ease="back.inOut(2)"
+						scrollStart="center bottom+=50%"
+						scrollEnd="bottom bottom-=40%"
+						stagger={0.1}
 						textClassName="text-2xl md:text-3xl lg:text-4xl font-heading text-white"
 					>
 						Keahlian
+					</ScrollFloat>
+					<ScrollReveal
+						baseOpacity={1}
+						enableBlur={true}
+						baseRotation={2}
+						blurStrength={15}
+						wordAnimationEnd="center center"
+						textClassName="max-w-2xl mx-auto text-sm md:text-body text-gray-300 px-2 mt-4"
+					>
+						Berikut adalah bidang keahlian yang saya tekuni dan kembangkan dalam perjalanan karir saya di bidang teknologi.
 					</ScrollReveal>
-					<p className="max-w-2xl mx-auto text-sm md:text-body text-gray-300 px-2 mt-4">
-						Berikut adalah bidang keahlian yang saya tekuni dan kembangkan dalam
-						perjalanan karir saya di bidang teknologi.
-					</p>
 				</div>
 
 				<motion.div
