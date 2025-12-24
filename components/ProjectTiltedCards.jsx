@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlassButton from "./GlassButton";
 import "./GlassButton.css";
@@ -10,25 +10,30 @@ import ElectricProjectCard from './ElectricProjectCard';
 import ScrollFloat from './ScrollFloat';
 import ScrollReveal from './ScrollReveal';
 import { useAnimationReady } from '../hooks/useAnimationReady';
-
-// Menggunakan data proyek dari file konfigurasi
-const { projects, categories } = projectsData;
+import { useProjects } from '../hooks/useProfile';
 
 export default function ProjectTiltedCards() {
   const [filter, setFilter] = useState('Semua');
-  const [loading, setLoading] = useState(true);
   const [hoveredId, setHoveredId] = useState(null);
   const router = useRouter();
   const isAnimationReady = useAnimationReady(300);
 
-  // Efek untuk simulasi loading data
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
+  // Menggunakan data proyek dari database
+  const { projects: dbProjects, isLoaded } = useProjects();
 
-    return () => clearTimeout(timer);
-  }, []);
+  // Combine database projects with fallback static projects
+  const projects = dbProjects.length > 0 ? dbProjects : projectsData.projects;
+
+  // Generate categories dynamically from projects
+  const categories = useMemo(() => {
+    const cats = ['Semua'];
+    projects.forEach(p => {
+      if (p.category && !cats.includes(p.category)) {
+        cats.push(p.category);
+      }
+    });
+    return cats.length > 1 ? cats : projectsData.categories;
+  }, [projects]);
 
   const filteredProjects = filter === 'Semua'
     ? projects
@@ -122,7 +127,7 @@ export default function ProjectTiltedCards() {
           />
         </div>
 
-        {loading ? (
+        {!isLoaded ? (
           <div className="loading-container">
             <div className="loading-spinner"></div>
             <p className="text-sm md:text-body text-secondary-darkGray dark:text-gray-300 theme-dark:text-gray-300">
@@ -175,7 +180,7 @@ export default function ProjectTiltedCards() {
           </motion.div>
         )}
 
-        {!loading && filteredProjects.length === 0 && (
+        {isLoaded && filteredProjects.length === 0 && (
           <motion.div
             className="text-center py-8 md:py-12"
             initial={{ opacity: 0 }}
