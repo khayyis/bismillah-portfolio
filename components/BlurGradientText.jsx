@@ -89,8 +89,8 @@ const BlurGradientText = ({
     return (
         <h1
             ref={ref}
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold leading-tight ${className}`}
-            style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+            className={`text-5xl md:text-6xl lg:text-7xl font-bold leading-tight ${className}`}
+            style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.25em' }}
         >
             {elements.map((segment, index) => {
                 const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
@@ -104,16 +104,15 @@ const BlurGradientText = ({
 
                 return (
                     <motion.span
-                        className="inline-block will-change-[transform,filter,opacity]"
+                        className="inline-block will-change-[transform,filter,opacity] text-inherit"
                         key={index}
                         initial={fromSnapshot}
                         animate={inView ? animateKeyframes : fromSnapshot}
                         transition={spanTransition}
-                        style={gradientStyle}
+                        style={{ ...gradientStyle, fontSize: 'inherit' }}
                         onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
                     >
                         {segment === ' ' ? '\u00A0' : segment}
-                        {animateBy === 'words' && index < elements.length - 1 && '\u00A0'}
                     </motion.span>
                 );
             })}
