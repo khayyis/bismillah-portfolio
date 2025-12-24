@@ -409,8 +409,9 @@ export default function FloatingLines({
     };
 
     if (interactive) {
-      renderer.domElement.addEventListener('pointermove', handlePointerMove);
-      renderer.domElement.addEventListener('pointerleave', handlePointerLeave);
+      // Listen on document to capture mouse even when behind other elements
+      document.addEventListener('pointermove', handlePointerMove);
+      document.addEventListener('pointerleave', handlePointerLeave);
     }
 
     let raf = 0;
@@ -442,8 +443,8 @@ export default function FloatingLines({
       }
 
       if (interactive) {
-        renderer.domElement.removeEventListener('pointermove', handlePointerMove);
-        renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
+        document.removeEventListener('pointermove', handlePointerMove);
+        document.removeEventListener('pointerleave', handlePointerLeave);
       }
 
       geometry.dispose();
