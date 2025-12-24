@@ -25,6 +25,7 @@ export default function RootLayout({ children }) {
         <meta name="msvalidate.01" content="80186E6FB990AC76A1CF39A553D015A7" />
         <meta name="google-site-verification" content="1d9885586a9031b9" />
         <link rel="icon" href="/images/cropped-khayyis-profile.jpg" type="image/jpeg" />
+        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/lemon-milk" />
         <link rel="stylesheet" href="/fix-profile-image.css" />
         <link rel="stylesheet" href="/fix-project-images.css" />
         <link rel="stylesheet" href="/fix-image-display.css" />
