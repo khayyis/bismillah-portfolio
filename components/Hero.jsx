@@ -51,9 +51,7 @@ export default function Hero() {
             Siswa {profile.school}
           </p>
 
-          <p className="text-base md:text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
-            {profile.about?.substring(0, 150)}...
-          </p>
+
 
           {/* Buttons */}
           <div className="flex flex-row gap-4 justify-center">
