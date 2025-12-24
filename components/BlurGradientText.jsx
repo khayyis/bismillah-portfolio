@@ -89,8 +89,14 @@ const BlurGradientText = ({
     return (
         <h1
             ref={ref}
-            className={`text-5xl md:text-6xl lg:text-7xl font-bold leading-tight ${className}`}
-            style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.25em' }}
+            className={`font-bold leading-tight ${className}`}
+            style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                gap: '0.15em',
+                fontSize: 'clamp(2.5rem, 8vw, 5rem)'
+            }}
         >
             {elements.map((segment, index) => {
                 const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
