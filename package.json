@@ -11,6 +11,7 @@
   "dependencies": {
     "@splinetool/react-spline": "^4.0.0",
     "@splinetool/runtime": "^1.10.21",
+    "@supabase/supabase-js": "^2.89.0",
     "@vercel/speed-insights": "^1.2.0",
     "autoprefixer": "^10.4.16",
     "framer-motion": "^12.23.0",

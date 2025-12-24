@@ -1,27 +1,11 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '../lib/supabase';
 
-const SKILLS_KEY = 'portfolio_skills';
-const PROJECTS_KEY = 'portfolio_projects';
-const PROFILE_KEY = 'portfolio_profile';
-const SOCIAL_KEY = 'portfolio_social';
 const AUTH_KEY = 'portfolio_admin_auth';
 
-// Default skills data
-const defaultSkills = [
-    { id: '1', name: 'JavaScript', icon: '🟨', level: 90, category: 'Programming' },
-    { id: '2', name: 'React', icon: '⚛️', level: 85, category: 'Framework' },
-    { id: '3', name: 'Node.js', icon: '🟩', level: 80, category: 'Backend' },
-    { id: '4', name: 'Python', icon: '🐍', level: 75, category: 'Programming' },
-    { id: '5', name: 'Arduino', icon: '🔌', level: 85, category: 'Hardware' },
-    { id: '6', name: 'Blender', icon: '🎨', level: 70, category: '3D Design' },
-];
-
-// Default projects data
-const defaultProjects = [];
-
-// Default profile data
+// Default data (fallback)
 const defaultProfile = {
     name: "Khayyis Billawal Rozikin",
     title: "Teknik Mekatronika",
@@ -35,13 +19,12 @@ const defaultProfile = {
     department: "Jurusan Teknik Mekatronika",
     avatarUrl: "/images/khayyis-profile.jpg",
     miniAvatarUrl: "/images/khayyis-profile.jpg",
-    about: "seorang siswa Teknik Mekatronika, antusias pada pengembangan robotik, desain 3D, dan teknologi AI. pernah berpartisipasi dalam Lomba Kompetensi Siswa bidang Autonomous Mobile Robotic. Selalu mencari peluang, serta mengembangkan keterampilan dalam bidang teknologi.",
+    about: "seorang siswa Teknik Mekatronika, antusias pada pengembangan robotik, desain 3D, dan teknologi AI.",
     contactText: "Kontak Saya",
     contactButtonText: "Hubungi Saya",
     sendMessageText: "Kirim Pesan",
 };
 
-// Default social data
 const defaultSocial = {
     instagram: { url: "https://instagram.com/Khayyis_Billawal", username: "@Khayyis_Billawal", enabled: true },
     github: { url: "https://github.com/khayyis", username: "khayyis", enabled: true },
@@ -52,9 +35,9 @@ const defaultSocial = {
     telegram: { username: "KhayyisBillawal", url: "http://t.me/KhayyisBillawal", enabled: true },
 };
 
-// Generate unique ID
-const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
-
+// ============================================
+// useAdminData - For Admin Panel (CRUD operations)
+// ============================================
 export function useAdminData() {
     const [skills, setSkills] = useState([]);
     const [projects, setProjects] = useState([]);
@@ -62,113 +45,225 @@ export function useAdminData() {
     const [social, setSocial] = useState(defaultSocial);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // Load data from localStorage on mount
+    // Load all data from Supabase
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const savedSkills = localStorage.getItem(SKILLS_KEY);
-            const savedProjects = localStorage.getItem(PROJECTS_KEY);
-            const savedProfile = localStorage.getItem(PROFILE_KEY);
-            const savedSocial = localStorage.getItem(SOCIAL_KEY);
+        loadAllData();
+    }, []);
 
-            setSkills(savedSkills ? JSON.parse(savedSkills) : defaultSkills);
-            setProjects(savedProjects ? JSON.parse(savedProjects) : defaultProjects);
-            setProfile(savedProfile ? JSON.parse(savedProfile) : defaultProfile);
-            setSocial(savedSocial ? JSON.parse(savedSocial) : defaultSocial);
+    const loadAllData = async () => {
+        try {
+            // Load profile & social settings
+            const { data: settings } = await supabase
+                .from('portfolio_settings')
+                .select('*');
+
+            if (settings) {
+                const profileData = settings.find(s => s.type === 'profile');
+                const socialData = settings.find(s => s.type === 'social');
+                if (profileData) setProfile(profileData.data);
+                if (socialData) setSocial(socialData.data);
+            }
+
+            // Load skills
+            const { data: skillsData } = await supabase
+                .from('skills')
+                .select('*')
+                .order('sort_order', { ascending: true });
+
+            if (skillsData) {
+                setSkills(skillsData.map(s => ({
+                    id: s.id,
+                    name: s.name,
+                    icon: s.icon,
+                    level: s.level,
+                    category: s.category
+                })));
+            }
+
+            // Load projects
+            const { data: projectsData } = await supabase
+                .from('projects')
+                .select('*')
+                .order('sort_order', { ascending: true });
+
+            if (projectsData) {
+                setProjects(projectsData.map(p => ({
+                    id: p.id,
+                    title: p.title,
+                    subtitle: p.subtitle,
+                    image: p.image,
+                    handle: p.handle,
+                    url: p.url,
+                    borderColor: p.border_color,
+                    gradient: p.gradient
+                })));
+            }
+
+            setIsLoaded(true);
+        } catch (error) {
+            console.error('Error loading data:', error);
             setIsLoaded(true);
         }
-    }, []);
+    };
 
-    // Save skills to localStorage
-    const saveSkills = useCallback((newSkills) => {
-        setSkills(newSkills);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(SKILLS_KEY, JSON.stringify(newSkills));
-        }
-    }, []);
-
-    // Save projects to localStorage
-    const saveProjects = useCallback((newProjects) => {
-        setProjects(newProjects);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(PROJECTS_KEY, JSON.stringify(newProjects));
-        }
-    }, []);
-
-    // Save profile to localStorage
-    const saveProfile = useCallback((newProfile) => {
+    // Profile update
+    const updateProfile = useCallback(async (updates) => {
+        const newProfile = { ...profile, ...updates };
         setProfile(newProfile);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(PROFILE_KEY, JSON.stringify(newProfile));
-        }
-    }, []);
 
-    // Save social to localStorage
-    const saveSocial = useCallback((newSocial) => {
+        await supabase
+            .from('portfolio_settings')
+            .upsert({
+                type: 'profile',
+                data: newProfile,
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'type' });
+    }, [profile]);
+
+    // Social update
+    const updateSocial = useCallback(async (platform, updates) => {
+        const newSocial = { ...social, [platform]: { ...social[platform], ...updates } };
         setSocial(newSocial);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(SOCIAL_KEY, JSON.stringify(newSocial));
-        }
-    }, []);
+
+        await supabase
+            .from('portfolio_settings')
+            .upsert({
+                type: 'social',
+                data: newSocial,
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'type' });
+    }, [social]);
 
     // Skills CRUD
-    const addSkill = useCallback((skill) => {
-        const newSkill = { ...skill, id: generateId() };
-        saveSkills([...skills, newSkill]);
-        return newSkill;
-    }, [skills, saveSkills]);
+    const addSkill = useCallback(async (skill) => {
+        const { data, error } = await supabase
+            .from('skills')
+            .insert({
+                name: skill.name,
+                icon: skill.icon || '⚡',
+                level: skill.level || 80,
+                category: skill.category || '',
+                sort_order: skills.length
+            })
+            .select()
+            .single();
 
-    const updateSkill = useCallback((id, updates) => {
-        const newSkills = skills.map(s => s.id === id ? { ...s, ...updates } : s);
-        saveSkills(newSkills);
-    }, [skills, saveSkills]);
+        if (data) {
+            const newSkill = {
+                id: data.id,
+                name: data.name,
+                icon: data.icon,
+                level: data.level,
+                category: data.category
+            };
+            setSkills([...skills, newSkill]);
+            return newSkill;
+        }
+    }, [skills]);
 
-    const deleteSkill = useCallback((id) => {
-        saveSkills(skills.filter(s => s.id !== id));
-    }, [skills, saveSkills]);
+    const updateSkill = useCallback(async (id, updates) => {
+        await supabase
+            .from('skills')
+            .update({
+                name: updates.name,
+                icon: updates.icon,
+                level: updates.level,
+                category: updates.category,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', id);
 
-    const reorderSkills = useCallback((fromIndex, toIndex) => {
+        setSkills(skills.map(s => s.id === id ? { ...s, ...updates } : s));
+    }, [skills]);
+
+    const deleteSkill = useCallback(async (id) => {
+        await supabase.from('skills').delete().eq('id', id);
+        setSkills(skills.filter(s => s.id !== id));
+    }, [skills]);
+
+    const reorderSkills = useCallback(async (fromIndex, toIndex) => {
         const newSkills = [...skills];
         const [removed] = newSkills.splice(fromIndex, 1);
         newSkills.splice(toIndex, 0, removed);
-        saveSkills(newSkills);
-    }, [skills, saveSkills]);
+        setSkills(newSkills);
+
+        // Update sort_order in database
+        const updates = newSkills.map((skill, index) =>
+            supabase.from('skills').update({ sort_order: index }).eq('id', skill.id)
+        );
+        await Promise.all(updates);
+    }, [skills]);
 
     // Projects CRUD
-    const addProject = useCallback((project) => {
-        const newProject = { ...project, id: generateId() };
-        saveProjects([...projects, newProject]);
-        return newProject;
-    }, [projects, saveProjects]);
+    const addProject = useCallback(async (project) => {
+        const { data, error } = await supabase
+            .from('projects')
+            .insert({
+                title: project.title,
+                subtitle: project.subtitle || '',
+                image: project.image || '/images/Dalam-Tahap-Pengembangan.jpeg',
+                handle: project.handle || '',
+                url: project.url || '',
+                border_color: project.borderColor || '#3B82F6',
+                gradient: project.gradient || 'linear-gradient(145deg, #3B82F6, transparent)',
+                sort_order: projects.length
+            })
+            .select()
+            .single();
 
-    const updateProject = useCallback((id, updates) => {
-        const newProjects = projects.map(p => p.id === id ? { ...p, ...updates } : p);
-        saveProjects(newProjects);
-    }, [projects, saveProjects]);
+        if (data) {
+            const newProject = {
+                id: data.id,
+                title: data.title,
+                subtitle: data.subtitle,
+                image: data.image,
+                handle: data.handle,
+                url: data.url,
+                borderColor: data.border_color,
+                gradient: data.gradient
+            };
+            setProjects([...projects, newProject]);
+            return newProject;
+        }
+    }, [projects]);
 
-    const deleteProject = useCallback((id) => {
-        saveProjects(projects.filter(p => p.id !== id));
-    }, [projects, saveProjects]);
+    const updateProject = useCallback(async (id, updates) => {
+        await supabase
+            .from('projects')
+            .update({
+                title: updates.title,
+                subtitle: updates.subtitle,
+                image: updates.image,
+                handle: updates.handle,
+                url: updates.url,
+                border_color: updates.borderColor,
+                gradient: updates.gradient,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', id);
 
-    const reorderProjects = useCallback((fromIndex, toIndex) => {
+        setProjects(projects.map(p => p.id === id ? { ...p, ...updates } : p));
+    }, [projects]);
+
+    const deleteProject = useCallback(async (id) => {
+        await supabase.from('projects').delete().eq('id', id);
+        setProjects(projects.filter(p => p.id !== id));
+    }, [projects]);
+
+    const reorderProjects = useCallback(async (fromIndex, toIndex) => {
         const newProjects = [...projects];
         const [removed] = newProjects.splice(fromIndex, 1);
         newProjects.splice(toIndex, 0, removed);
-        saveProjects(newProjects);
-    }, [projects, saveProjects]);
+        setProjects(newProjects);
 
-    // Profile update
-    const updateProfile = useCallback((updates) => {
-        const newProfile = { ...profile, ...updates };
-        saveProfile(newProfile);
-    }, [profile, saveProfile]);
+        // Update sort_order in database
+        const updates = newProjects.map((project, index) =>
+            supabase.from('projects').update({ sort_order: index }).eq('id', project.id)
+        );
+        await Promise.all(updates);
+    }, [projects]);
 
-    // Social update
-    const updateSocial = useCallback((platform, updates) => {
-        const newSocial = { ...social, [platform]: { ...social[platform], ...updates } };
-        saveSocial(newSocial);
-    }, [social, saveSocial]);
-
-    // Export data as JSON
+    // Export data
     const exportData = useCallback(() => {
         const data = { skills, projects, profile, social, exportedAt: new Date().toISOString() };
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -180,20 +275,24 @@ export function useAdminData() {
         URL.revokeObjectURL(url);
     }, [skills, projects, profile, social]);
 
-    // Import data from JSON
-    const importData = useCallback((jsonData) => {
+    // Import data
+    const importData = useCallback(async (jsonData) => {
         try {
             const data = JSON.parse(jsonData);
-            if (data.skills) saveSkills(data.skills);
-            if (data.projects) saveProjects(data.projects);
-            if (data.profile) saveProfile(data.profile);
-            if (data.social) saveSocial(data.social);
+            if (data.profile) await updateProfile(data.profile);
+            if (data.social) {
+                for (const [platform, value] of Object.entries(data.social)) {
+                    await updateSocial(platform, value);
+                }
+            }
+            // Reload all data
+            await loadAllData();
             return true;
         } catch (e) {
             console.error('Import failed:', e);
             return false;
         }
-    }, [saveSkills, saveProjects, saveProfile, saveSocial]);
+    }, [updateProfile, updateSocial]);
 
     return {
         skills,
@@ -201,26 +300,25 @@ export function useAdminData() {
         profile,
         social,
         isLoaded,
-        // Skills
         addSkill,
         updateSkill,
         deleteSkill,
         reorderSkills,
-        // Projects
         addProject,
         updateProject,
         deleteProject,
         reorderProjects,
-        // Profile & Social
         updateProfile,
         updateSocial,
-        // Import/Export
         exportData,
         importData,
+        refreshData: loadAllData,
     };
 }
 
-// Auth hook
+// ============================================
+// useAdminAuth - Authentication
+// ============================================
 export function useAdminAuth() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isChecking, setIsChecking] = useState(true);
@@ -234,7 +332,6 @@ export function useAdminAuth() {
     }, []);
 
     const login = useCallback((password) => {
-        // Simple password check - in production use env variable
         const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123';
         if (password === adminPassword) {
             sessionStorage.setItem(AUTH_KEY, 'true');
@@ -253,4 +350,3 @@ export function useAdminAuth() {
 }
 
 export default useAdminData;
-

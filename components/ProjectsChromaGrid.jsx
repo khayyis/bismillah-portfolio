@@ -1,24 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ChromaGrid from './ChromaGrid';
-
-const PROJECTS_KEY = 'portfolio_projects';
-
-// Default projects jika tidak ada di localStorage
-const defaultProjects = [];
+import { useProjects } from '../hooks/useProfile';
 
 const ProjectsChromaGrid = () => {
-    const [projects, setProjects] = useState([]);
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const savedProjects = localStorage.getItem(PROJECTS_KEY);
-            setProjects(savedProjects ? JSON.parse(savedProjects) : defaultProjects);
-            setIsLoaded(true);
-        }
-    }, []);
+    const { projects, isLoaded } = useProjects();
 
     if (!isLoaded) {
         return (
