@@ -104,9 +104,7 @@ export async function PUT(request) {
         const supabase = getAdminSupabase();
 
         // Build update object only with defined fields
-        const updateData = {
-            updated_at: new Date().toISOString()
-        };
+        const updateData = {};
 
         if (body.title !== undefined) updateData.title = body.title;
         if (body.subtitle !== undefined) updateData.subtitle = body.subtitle;
