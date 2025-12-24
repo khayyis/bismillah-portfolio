@@ -27,7 +27,8 @@ export async function GET() {
             name: s.name,
             icon: s.icon,
             level: s.level,
-            category: s.category
+            category: s.category,
+            description: s.description
         }));
 
         return NextResponse.json({ success: true, data: skills });
@@ -56,6 +57,7 @@ export async function POST(request) {
                 icon: body.icon || '⚡',
                 level: body.level || 80,
                 category: body.category || '',
+                description: body.description || '',
                 sort_order: count || 0
             })
             .select()
@@ -68,7 +70,8 @@ export async function POST(request) {
                 name: data.name,
                 icon: data.icon,
                 level: data.level,
-                category: data.category
+                category: data.category,
+                description: data.description
             }
         });
     } catch (error) {
@@ -93,6 +96,7 @@ export async function PUT(request) {
                 icon: body.icon,
                 level: body.level,
                 category: body.category,
+                description: body.description,
                 updated_at: new Date().toISOString()
             })
             .eq('id', body.id)

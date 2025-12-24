@@ -12,7 +12,7 @@ export default function AdminSkills() {
 
     const [editingId, setEditingId] = useState(null);
     const [showForm, setShowForm] = useState(false);
-    const [formData, setFormData] = useState({ name: '', icon: '⚡', level: 80, category: '' });
+    const [formData, setFormData] = useState({ name: '', icon: '⚡', level: 80, category: '', description: '' });
     const [draggedIndex, setDraggedIndex] = useState(null);
 
     useEffect(() => {
@@ -29,12 +29,12 @@ export default function AdminSkills() {
         } else {
             addSkill(formData);
         }
-        setFormData({ name: '', icon: '⚡', level: 80, category: '' });
+        setFormData({ name: '', icon: '⚡', level: 80, category: '', description: '' });
         setShowForm(false);
     };
 
     const handleEdit = (skill) => {
-        setFormData({ name: skill.name, icon: skill.icon, level: skill.level, category: skill.category });
+        setFormData({ name: skill.name, icon: skill.icon, level: skill.level, category: skill.category, description: skill.description || '' });
         setEditingId(skill.id);
         setShowForm(true);
     };
@@ -91,7 +91,7 @@ export default function AdminSkills() {
                         <h1 className="text-2xl font-bold text-white">Kelola Skills</h1>
                     </div>
                     <button
-                        onClick={() => { setShowForm(true); setEditingId(null); setFormData({ name: '', icon: '⚡', level: 80, category: '' }); }}
+                        onClick={() => { setShowForm(true); setEditingId(null); setFormData({ name: '', icon: '⚡', level: 80, category: '', description: '' }); }}
                         className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2"
                     >
                         <span className="text-xl">+</span> Tambah Skill
@@ -148,6 +148,16 @@ export default function AdminSkills() {
                                         placeholder="Programming, Framework, dll"
                                     />
                                 </div>
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">Deskripsi</label>
+                                    <textarea
+                                        value={formData.description}
+                                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                                        className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        placeholder="Penjelasan singkat tentang skill ini"
+                                        rows={3}
+                                    />
+                                </div>
                                 <div className="flex gap-3 pt-2">
                                     <button
                                         type="button"
@@ -201,7 +211,7 @@ export default function AdminSkills() {
                                     <div className="text-2xl">{skill.icon}</div>
                                     <div className="flex-1">
                                         <h3 className="text-white font-medium">{skill.name}</h3>
-                                        <p className="text-gray-500 text-sm">{skill.category}</p>
+                                        <p className="text-gray-400 text-sm line-clamp-1">{skill.description || skill.category}</p>
                                     </div>
                                     <div className="w-24">
                                         <div className="h-2 bg-gray-700 rounded-full overflow-hidden">

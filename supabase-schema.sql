@@ -11,13 +11,14 @@ CREATE TABLE IF NOT EXISTS portfolio_settings (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Table: skills
+-- Table: skills (with description field)
 CREATE TABLE IF NOT EXISTS skills (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     name TEXT NOT NULL,
     icon TEXT DEFAULT '⚡',
     level INTEGER DEFAULT 80,
     category TEXT DEFAULT '',
+    description TEXT DEFAULT '',
     sort_order INTEGER DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -43,16 +44,14 @@ ALTER TABLE portfolio_settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE skills ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 
--- Policy: Allow everyone to READ (for public website)
-CREATE POLICY "Allow public read" ON portfolio_settings FOR SELECT USING (true);
-CREATE POLICY "Allow public read" ON skills FOR SELECT USING (true);
-CREATE POLICY "Allow public read" ON projects FOR SELECT USING (true);
+-- Policy: Allow everyone to READ and WRITE (controlled by app-level password)
+DROP POLICY IF EXISTS "Allow all" ON portfolio_settings;
+DROP POLICY IF EXISTS "Allow all" ON skills;
+DROP POLICY IF EXISTS "Allow all" ON projects;
 
--- Policy: Allow authenticated users to INSERT/UPDATE/DELETE (for admin)
--- Note: For now, we allow anon to write too (controlled by app-level password)
-CREATE POLICY "Allow anon write" ON portfolio_settings FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow anon write" ON skills FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow anon write" ON projects FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all" ON portfolio_settings FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all" ON skills FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "Allow all" ON projects FOR ALL USING (true) WITH CHECK (true);
 
 -- Insert default profile data
 INSERT INTO portfolio_settings (type, data) VALUES 
@@ -85,11 +84,10 @@ INSERT INTO portfolio_settings (type, data) VALUES
 }'::jsonb)
 ON CONFLICT (type) DO NOTHING;
 
--- Insert default skills
-INSERT INTO skills (name, icon, level, category, sort_order) VALUES
-('JavaScript', '🟨', 90, 'Programming', 1),
-('React', '⚛️', 85, 'Framework', 2),
-('Node.js', '🟩', 80, 'Backend', 3),
-('Python', '🐍', 75, 'Programming', 4),
-('Arduino', '🔌', 85, 'Hardware', 5),
-('Blender', '🎨', 70, '3D Design', 6);
+-- Insert default skills with descriptions
+INSERT INTO skills (name, icon, level, category, description, sort_order) VALUES
+('Autonomous Mobile Robotic', '🤖', 90, 'Robotik', 'Pengalaman dalam kompetisi LKS bidang robotik dan otomasi. Memahami pemrograman dan kontrol perangkat robotik.', 1),
+('Desain 3D', '🎨', 85, 'Design', 'Keahlian dalam pembuatan model 3D menggunakan berbagai software desain untuk prototyping dan visualisasi proyek.', 2),
+('Prompt Engineering AI', '💻', 80, 'AI', 'Kemampuan dalam membuat prompt yang efektif untuk berbagai model AI, mengoptimalkan hasil generasi konten dan kode.', 3),
+('Pengembangan Chatbot', '💬', 85, 'Development', 'Pengalaman dalam membuat dan mengembangkan chatbot WhatsApp dengan integrasi berbagai API dan fungsi otomatisasi.', 4),
+('Fotografi', '📷', 75, 'Creative', 'Keahlian dalam fotografi landscape dan potret dengan penguasaan teknik pencahayaan, komposisi, dan editing foto profesional.', 5);
