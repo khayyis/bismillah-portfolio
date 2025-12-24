@@ -25,7 +25,7 @@ const userInfo = {
   miniAvatarUrl: "/images/khayyis-profile.jpg",
 
   // Informasi Tentang
-  about: "Saya adalah seorang siswa Teknik Mekatronika dengan fokus pada pengembangan robotik, desain 3D, dan teknologi AI. Aktif dalam kompetisi LKS Autonomous Mobile Robotic dan selalu mencari peluang untuk mengembangkan keterampilan dalam bidang teknologi.",
+  about: "seorang siswa Teknik Mekatronika, antusias pada pengembangan robotik, desain 3D, dan teknologi AI. pernah berpartisipasi dalam Lomba Kompetensi Siswa bidang Autonomous Mobile Robotic. Selalu mencari peluang, serta mengembangkan keterampilan dalam bidang teknologi.",
 
   // Teks Tombol
   contactText: "Kontak Saya",
