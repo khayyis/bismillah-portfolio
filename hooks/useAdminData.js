@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 
 const SKILLS_KEY = 'portfolio_skills';
 const PROJECTS_KEY = 'portfolio_projects';
+const PROFILE_KEY = 'portfolio_profile';
+const SOCIAL_KEY = 'portfolio_social';
 const AUTH_KEY = 'portfolio_admin_auth';
 
 // Default skills data
@@ -19,12 +21,45 @@ const defaultSkills = [
 // Default projects data
 const defaultProjects = [];
 
+// Default profile data
+const defaultProfile = {
+    name: "Khayyis Billawal Rozikin",
+    title: "Teknik Mekatronika",
+    handle: "Khayyis_Billawal",
+    status: "Available for Hire",
+    availability: "Freelance / Pelajar",
+    email: "khayyis8@gmail.com",
+    instagram: "@Khayyis_Billawal",
+    location: "Jakarta, Indonesia",
+    school: "SMKN 4 Jakarta",
+    department: "Jurusan Teknik Mekatronika",
+    avatarUrl: "/images/khayyis-profile.jpg",
+    miniAvatarUrl: "/images/khayyis-profile.jpg",
+    about: "seorang siswa Teknik Mekatronika, antusias pada pengembangan robotik, desain 3D, dan teknologi AI. pernah berpartisipasi dalam Lomba Kompetensi Siswa bidang Autonomous Mobile Robotic. Selalu mencari peluang, serta mengembangkan keterampilan dalam bidang teknologi.",
+    contactText: "Kontak Saya",
+    contactButtonText: "Hubungi Saya",
+    sendMessageText: "Kirim Pesan",
+};
+
+// Default social data
+const defaultSocial = {
+    instagram: { url: "https://instagram.com/Khayyis_Billawal", username: "@Khayyis_Billawal", enabled: true },
+    github: { url: "https://github.com/khayyis", username: "khayyis", enabled: true },
+    linkedin: { url: "https://linkedin.com/in/khayyis-billawal", username: "khayyis-billawal", enabled: true },
+    twitter: { url: "", username: "", enabled: false },
+    youtube: { url: "", username: "", enabled: false },
+    whatsapp: { number: "+6281234567890", message: "Halo, saya melihat portfolio Anda.", enabled: true },
+    telegram: { username: "KhayyisBillawal", url: "http://t.me/KhayyisBillawal", enabled: true },
+};
+
 // Generate unique ID
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
 
 export function useAdminData() {
     const [skills, setSkills] = useState([]);
     const [projects, setProjects] = useState([]);
+    const [profile, setProfile] = useState(defaultProfile);
+    const [social, setSocial] = useState(defaultSocial);
     const [isLoaded, setIsLoaded] = useState(false);
 
     // Load data from localStorage on mount
@@ -32,9 +67,13 @@ export function useAdminData() {
         if (typeof window !== 'undefined') {
             const savedSkills = localStorage.getItem(SKILLS_KEY);
             const savedProjects = localStorage.getItem(PROJECTS_KEY);
+            const savedProfile = localStorage.getItem(PROFILE_KEY);
+            const savedSocial = localStorage.getItem(SOCIAL_KEY);
 
             setSkills(savedSkills ? JSON.parse(savedSkills) : defaultSkills);
             setProjects(savedProjects ? JSON.parse(savedProjects) : defaultProjects);
+            setProfile(savedProfile ? JSON.parse(savedProfile) : defaultProfile);
+            setSocial(savedSocial ? JSON.parse(savedSocial) : defaultSocial);
             setIsLoaded(true);
         }
     }, []);
@@ -52,6 +91,22 @@ export function useAdminData() {
         setProjects(newProjects);
         if (typeof window !== 'undefined') {
             localStorage.setItem(PROJECTS_KEY, JSON.stringify(newProjects));
+        }
+    }, []);
+
+    // Save profile to localStorage
+    const saveProfile = useCallback((newProfile) => {
+        setProfile(newProfile);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(PROFILE_KEY, JSON.stringify(newProfile));
+        }
+    }, []);
+
+    // Save social to localStorage
+    const saveSocial = useCallback((newSocial) => {
+        setSocial(newSocial);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(SOCIAL_KEY, JSON.stringify(newSocial));
         }
     }, []);
 
@@ -101,9 +156,21 @@ export function useAdminData() {
         saveProjects(newProjects);
     }, [projects, saveProjects]);
 
+    // Profile update
+    const updateProfile = useCallback((updates) => {
+        const newProfile = { ...profile, ...updates };
+        saveProfile(newProfile);
+    }, [profile, saveProfile]);
+
+    // Social update
+    const updateSocial = useCallback((platform, updates) => {
+        const newSocial = { ...social, [platform]: { ...social[platform], ...updates } };
+        saveSocial(newSocial);
+    }, [social, saveSocial]);
+
     // Export data as JSON
     const exportData = useCallback(() => {
-        const data = { skills, projects, exportedAt: new Date().toISOString() };
+        const data = { skills, projects, profile, social, exportedAt: new Date().toISOString() };
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -111,7 +178,7 @@ export function useAdminData() {
         a.download = `portfolio-data-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
-    }, [skills, projects]);
+    }, [skills, projects, profile, social]);
 
     // Import data from JSON
     const importData = useCallback((jsonData) => {
@@ -119,16 +186,20 @@ export function useAdminData() {
             const data = JSON.parse(jsonData);
             if (data.skills) saveSkills(data.skills);
             if (data.projects) saveProjects(data.projects);
+            if (data.profile) saveProfile(data.profile);
+            if (data.social) saveSocial(data.social);
             return true;
         } catch (e) {
             console.error('Import failed:', e);
             return false;
         }
-    }, [saveSkills, saveProjects]);
+    }, [saveSkills, saveProjects, saveProfile, saveSocial]);
 
     return {
         skills,
         projects,
+        profile,
+        social,
         isLoaded,
         // Skills
         addSkill,
@@ -140,6 +211,9 @@ export function useAdminData() {
         updateProject,
         deleteProject,
         reorderProjects,
+        // Profile & Social
+        updateProfile,
+        updateSocial,
         // Import/Export
         exportData,
         importData,
@@ -179,3 +253,4 @@ export function useAdminAuth() {
 }
 
 export default useAdminData;
+

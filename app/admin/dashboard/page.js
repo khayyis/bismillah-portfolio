@@ -70,6 +70,44 @@ export default function AdminDashboard() {
                 {/* Quick Actions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                     <Link
+                        href="/admin/profile"
+                        className="bg-gradient-to-br from-green-600 to-green-800 rounded-xl p-6 border border-green-600/50 hover:border-green-500 transition-all hover:scale-[1.02] group"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center text-3xl">
+                                👤
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-white group-hover:text-green-200 transition-colors">
+                                    Profil & Info
+                                </h3>
+                                <p className="text-green-200/70">
+                                    Edit nama, bio, kontak, dan foto profil
+                                </p>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link
+                        href="/admin/social"
+                        className="bg-gradient-to-br from-pink-600 to-pink-800 rounded-xl p-6 border border-pink-600/50 hover:border-pink-500 transition-all hover:scale-[1.02] group"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center text-3xl">
+                                🔗
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-white group-hover:text-pink-200 transition-colors">
+                                    Sosial Media
+                                </h3>
+                                <p className="text-pink-200/70">
+                                    Atur link Instagram, GitHub, LinkedIn, dll
+                                </p>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link
                         href="/admin/skills"
                         className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-6 border border-blue-600/50 hover:border-blue-500 transition-all hover:scale-[1.02] group"
                     >
