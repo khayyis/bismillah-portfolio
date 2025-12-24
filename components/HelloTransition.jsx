@@ -5,9 +5,9 @@ import './HelloTransitionEffect.css';
 import './AdaptiveLoading.css';
 import { detectConnectionSpeed, detectDeviceInfo } from '@/utils/connectionDetector';
 
-export default function HelloTransition({ 
-  isNavigating, 
-  onAnimationComplete, 
+export default function HelloTransition({
+  isNavigating,
+  onAnimationComplete,
   customText = null,
   isPageLoading = false
 }) {
@@ -37,10 +37,10 @@ export default function HelloTransition({
 
       // Simulasi progress loading dengan percepatan di awal dan perlambatan di akhir
       const startTime = Date.now();
-      
+
       // Sesuaikan durasi berdasarkan koneksi dan perangkat
       let duration = isPageLoading ? 2000 : 1000; // Durasi default
-      
+
       // Jika informasi koneksi tersedia, sesuaikan durasi
       if (connectionInfo) {
         if (connectionInfo.effectiveType === 'slow-2g' || connectionInfo.effectiveType === '2g') {
@@ -48,40 +48,40 @@ export default function HelloTransition({
         } else if (connectionInfo.effectiveType === '3g') {
           duration = isPageLoading ? 2500 : 1200;
         }
-        
+
         // Jika mode hemat data aktif, percepat animasi
         if (connectionInfo.saveData) {
           duration = Math.max(duration * 0.7, 800);
         }
       }
-      
+
       // Jika informasi perangkat tersedia, sesuaikan durasi
       if (deviceInfo) {
         // Untuk perangkat low-end, tambahkan waktu
         if (deviceInfo.isLowEndDevice) {
           duration += 500;
         }
-        
+
         // Untuk preferensi reduced motion, kurangi durasi
         if (deviceInfo.isReducedMotion) {
           duration = Math.min(duration, isPageLoading ? 1500 : 800);
         }
       }
-      
+
       // Fungsi easing untuk membuat animasi lebih alami
       const easeOutQuart = (x) => {
         return 1 - Math.pow(1 - x, 4);
       };
-      
+
       const updateProgress = () => {
         const elapsed = Date.now() - startTime;
         const rawProgress = Math.min(1, elapsed / duration);
-        
+
         // Aplikasikan fungsi easing untuk progress yang lebih alami
         const easedProgress = easeOutQuart(rawProgress) * 100;
-        
+
         setProgress(easedProgress);
-        
+
         if (rawProgress < 1) {
           requestAnimationFrame(updateProgress);
         } else {
@@ -91,10 +91,10 @@ export default function HelloTransition({
           }, 200);
         }
       };
-      
+
       requestAnimationFrame(updateProgress);
     }
-  }, [isNavigating, isPageLoading]);
+  }, [isNavigating, isPageLoading, connectionInfo, deviceInfo]);
 
   // Tangani penyelesaian animasi
   useEffect(() => {
@@ -106,10 +106,10 @@ export default function HelloTransition({
           setIsActive(false);
           onAnimationComplete && onAnimationComplete();
         }, 400); // Durasi animasi fade out
-        
+
         return () => clearTimeout(fadeOutTimer);
       }, 200); // Delay sebelum memulai fade out
-      
+
       return () => clearTimeout(timer);
     }
   }, [isComplete, isActive, onAnimationComplete, isPageLoading]);
@@ -118,27 +118,27 @@ export default function HelloTransition({
 
   // Tentukan teks yang akan ditampilkan - diganti dengan string kosong
   const displayText = customText || '';
-  
+
   // Tentukan kelas CSS berdasarkan informasi koneksi dan perangkat
   const getAdaptiveClasses = () => {
     const classes = [];
-    
+
     // Kelas dasar
     classes.push(isComplete && !isPageLoading ? 'hello-fade-out' : 'hello-fade-in');
-    
+
     // Tambahkan kelas berdasarkan informasi koneksi
     if (connectionInfo) {
       // Untuk koneksi lambat
       if (connectionInfo.effectiveType === 'slow-2g' || connectionInfo.effectiveType === '2g') {
         classes.push('slow-connection');
       }
-      
+
       // Untuk mode hemat data
       if (connectionInfo.saveData) {
         classes.push('data-saver');
       }
     }
-    
+
     // Tambahkan kelas berdasarkan informasi perangkat
     if (deviceInfo) {
       // Untuk perangkat low-end
@@ -146,10 +146,10 @@ export default function HelloTransition({
         classes.push('low-end-device');
       }
     }
-    
+
     return classes.join(' ');
   };
-  
+
   // Tentukan teks status koneksi - diganti dengan teks portofolio
   const getConnectionStatusText = () => {
     // Teks logo dihapus sesuai permintaan, hanya menampilkan loading dan progress bar
@@ -169,15 +169,15 @@ export default function HelloTransition({
           </div>
         )}
         <div className="hello-progress hello-logo-reveal" style={{ animationDelay: '0.2s' }}>
-          <div 
+          <div
             className="hello-progress-bar"
-            style={{ 
+            style={{
               width: `${progress}%`,
               transition: progress < 10 ? 'none' : 'width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
             }}
           ></div>
         </div>
-        
+
         {/* Tampilkan teks portofolio */}
         <div className="connection-status">
           {getConnectionStatusText()}
