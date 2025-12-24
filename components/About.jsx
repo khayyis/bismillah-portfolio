@@ -17,7 +17,23 @@ const About = () => {
   const scrollToContact = () => {
     const contactSection = document.getElementById('kontak');
     if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
+      const targetPosition = contactSection.offsetTop;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = Math.min(Math.abs(distance) / 2, 1200);
+
+      let start = null;
+      const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      const animation = (currentTime) => {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const progress = Math.min(timeElapsed / duration, 1);
+        window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      };
+
+      requestAnimationFrame(animation);
     }
   };
 
