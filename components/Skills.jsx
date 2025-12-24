@@ -2,14 +2,16 @@
 import { motion } from 'framer-motion';
 import ShinyText from './ShinyText';
 import Carousel from './Carousel';
-import { FiCpu, FiCodesandbox, FiCommand, FiMessageSquare } from 'react-icons/fi';
+import { FiCpu, FiCodesandbox, FiCommand, FiMessageSquare, FiStar } from 'react-icons/fi';
 import GlareHover from './GlareHover';
 import ScrollReveal from './ScrollReveal';
 import './GlareHover.css';
 import { useRouter } from 'next/navigation';
 import { useAnimationReady } from '../hooks/useAnimationReady';
+import { useSkills } from '../hooks/useProfile';
 
-const skillList = [
+// Default skills jika database kosong
+const defaultSkillList = [
 	{
 		title: 'Autonomous Mobile Robotic',
 		description:
@@ -47,9 +49,35 @@ const skillList = [
 	},
 ];
 
+// Map emoji to React icons
+const iconMap = {
+	'🟨': <FiCommand className="carousel-icon" />,
+	'⚛️': <FiCodesandbox className="carousel-icon" />,
+	'🟩': <FiCpu className="carousel-icon" />,
+	'🐍': <FiCommand className="carousel-icon" />,
+	'🔌': <FiCpu className="carousel-icon" />,
+	'🎨': <FiCodesandbox className="carousel-icon" />,
+	'⚡': <FiStar className="carousel-icon" />,
+	'💻': <FiCommand className="carousel-icon" />,
+	'🤖': <FiCpu className="carousel-icon" />,
+	'📷': <FiCodesandbox className="carousel-icon" />,
+	'💬': <FiMessageSquare className="carousel-icon" />,
+};
+
 export default function Skills() {
 	const router = useRouter();
 	const isAnimationReady = useAnimationReady(200);
+	const { skills, isLoaded } = useSkills();
+
+	// Convert database skills to carousel format
+	const skillList = skills.length > 0
+		? skills.map((skill, index) => ({
+			id: index + 1,
+			title: skill.name,
+			description: skill.category ? `${skill.category} - Level ${skill.level}%` : `Skill Level: ${skill.level}%`,
+			icon: iconMap[skill.icon] || <FiStar className="carousel-icon" />,
+		}))
+		: defaultSkillList;
 
 	const navigateToProjects = () => {
 		const projectsSection = document.getElementById('projects');
