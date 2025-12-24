@@ -5,7 +5,7 @@ import './ElegantLoading.css';
 const ElegantLoading = ({ isNavigating = false, isFirstLoad = false }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
-  
+
   const shouldShow = isNavigating || isFirstLoad;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const ElegantLoading = ({ isNavigating = false, isFirstLoad = false }) => {
       }, 800); // Durasi animasi keluar
       return () => clearTimeout(timer);
     }
-  }, [shouldShow]);
+  }, [shouldShow, isVisible]);
 
   if (!isVisible) return null;
 
