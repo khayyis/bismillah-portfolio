@@ -60,6 +60,8 @@ export function useAdminData() {
     const [projects, setProjects] = useState([]);
     const [profile, setProfile] = useState(defaultProfile);
     const [social, setSocial] = useState(defaultSocial);
+    const [contact, setContact] = useState({});
+    const [customLinks, setCustomLinks] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
 
     // Load all data
@@ -69,17 +71,21 @@ export function useAdminData() {
 
     const loadAllData = async () => {
         try {
-            const [profileRes, socialRes, skillsRes, projectsRes] = await Promise.all([
+            const [profileRes, socialRes, skillsRes, projectsRes, contactRes, customLinksRes] = await Promise.all([
                 fetch('/api/admin/profile').then(r => r.json()),
                 fetch('/api/admin/social').then(r => r.json()),
                 fetch('/api/admin/skills').then(r => r.json()),
-                fetch('/api/admin/projects').then(r => r.json())
+                fetch('/api/admin/projects').then(r => r.json()),
+                fetch('/api/admin/contact').then(r => r.json()),
+                fetch('/api/admin/custom-links').then(r => r.json())
             ]);
 
             if (profileRes.success && profileRes.data) setProfile({ ...defaultProfile, ...profileRes.data });
             if (socialRes.success && socialRes.data) setSocial({ ...defaultSocial, ...socialRes.data });
             if (skillsRes.success) setSkills(skillsRes.data || []);
             if (projectsRes.success) setProjects(projectsRes.data || []);
+            if (contactRes.success) setContact(contactRes.data || {});
+            if (customLinksRes.success) setCustomLinks(customLinksRes.data || []);
         } catch (error) {
             console.error('Error loading data:', error);
         }
@@ -158,9 +164,45 @@ export function useAdminData() {
         await apiCall('/api/admin/projects', 'PATCH', updates);
     }, [projects]);
 
+    // Contact update
+    const updateContact = useCallback(async (updates) => {
+        const newContact = { ...contact, ...updates };
+        setContact(newContact);
+        await apiCall('/api/admin/contact', 'PUT', newContact);
+    }, [contact]);
+
+    // Custom Links CRUD
+    const addCustomLink = useCallback(async (link) => {
+        const res = await apiCall('/api/admin/custom-links', 'POST', link);
+        if (res.success && res.data) {
+            setCustomLinks([...customLinks, res.data]);
+            return res.data;
+        }
+    }, [customLinks]);
+
+    const updateCustomLink = useCallback(async (id, updates) => {
+        await apiCall('/api/admin/custom-links', 'PUT', { id, ...updates });
+        setCustomLinks(customLinks.map(l => l.id === id ? { ...l, ...updates } : l));
+    }, [customLinks]);
+
+    const deleteCustomLink = useCallback(async (id) => {
+        await apiCall(`/api/admin/custom-links?id=${id}`, 'DELETE');
+        setCustomLinks(customLinks.filter(l => l.id !== id));
+    }, [customLinks]);
+
+    const reorderCustomLinks = useCallback(async (fromIndex, toIndex) => {
+        const newLinks = [...customLinks];
+        const [removed] = newLinks.splice(fromIndex, 1);
+        newLinks.splice(toIndex, 0, removed);
+        setCustomLinks(newLinks);
+
+        const updates = newLinks.map((link, index) => ({ id: link.id, sort_order: index }));
+        await apiCall('/api/admin/custom-links', 'PATCH', updates);
+    }, [customLinks]);
+
     // Export data
     const exportData = useCallback(() => {
-        const data = { skills, projects, profile, social, exportedAt: new Date().toISOString() };
+        const data = { skills, projects, profile, social, contact, customLinks, exportedAt: new Date().toISOString() };
         const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -168,7 +210,7 @@ export function useAdminData() {
         a.download = `portfolio-data-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
-    }, [skills, projects, profile, social]);
+    }, [skills, projects, profile, social, contact, customLinks]);
 
     // Import data
     const importData = useCallback(async (jsonData) => {
@@ -180,19 +222,22 @@ export function useAdminData() {
                     await updateSocial(platform, value);
                 }
             }
+            if (data.contact) await updateContact(data.contact);
             await loadAllData();
             return true;
         } catch (e) {
             console.error('Import failed:', e);
             return false;
         }
-    }, [updateProfile, updateSocial]);
+    }, [updateProfile, updateSocial, updateContact]);
 
     return {
         skills,
         projects,
         profile,
         social,
+        contact,
+        customLinks,
         isLoaded,
         addSkill,
         updateSkill,
@@ -204,6 +249,11 @@ export function useAdminData() {
         reorderProjects,
         updateProfile,
         updateSocial,
+        updateContact,
+        addCustomLink,
+        updateCustomLink,
+        deleteCustomLink,
+        reorderCustomLinks,
         exportData,
         importData,
         refreshData: loadAllData,
