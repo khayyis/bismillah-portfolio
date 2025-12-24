@@ -1,0 +1,161 @@
+import { NextResponse } from 'next/server';
+import { getAdminSupabase } from '../../../../lib/supabase';
+
+function verifyPassword(request) {
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return false;
+    }
+    const password = authHeader.substring(7);
+    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123';
+    return password === adminPassword;
+}
+
+// GET - Read all projects
+export async function GET() {
+    try {
+        const supabase = getAdminSupabase();
+        const { data, error } = await supabase
+            .from('projects')
+            .select('*')
+            .order('sort_order', { ascending: true });
+
+        if (error) throw error;
+
+        const projects = (data || []).map(p => ({
+            id: p.id,
+            title: p.title,
+            subtitle: p.subtitle,
+            image: p.image,
+            handle: p.handle,
+            url: p.url,
+            borderColor: p.border_color,
+            gradient: p.gradient
+        }));
+
+        return NextResponse.json({ success: true, data: projects });
+    } catch (error) {
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    }
+}
+
+// POST - Add new project
+export async function POST(request) {
+    if (!verifyPassword(request)) {
+        return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+        const body = await request.json();
+        const supabase = getAdminSupabase();
+
+        const { count } = await supabase.from('projects').select('*', { count: 'exact', head: true });
+
+        const { data, error } = await supabase
+            .from('projects')
+            .insert({
+                title: body.title,
+                subtitle: body.subtitle || '',
+                image: body.image || '/images/Dalam-Tahap-Pengembangan.jpeg',
+                handle: body.handle || '',
+                url: body.url || '',
+                border_color: body.borderColor || '#3B82F6',
+                gradient: body.gradient || 'linear-gradient(145deg, #3B82F6, transparent)',
+                sort_order: count || 0
+            })
+            .select()
+            .single();
+
+        if (error) throw error;
+        return NextResponse.json({
+            success: true, data: {
+                id: data.id,
+                title: data.title,
+                subtitle: data.subtitle,
+                image: data.image,
+                handle: data.handle,
+                url: data.url,
+                borderColor: data.border_color,
+                gradient: data.gradient
+            }
+        });
+    } catch (error) {
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    }
+}
+
+// PUT - Update project
+export async function PUT(request) {
+    if (!verifyPassword(request)) {
+        return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+        const body = await request.json();
+        const supabase = getAdminSupabase();
+
+        const { data, error } = await supabase
+            .from('projects')
+            .update({
+                title: body.title,
+                subtitle: body.subtitle,
+                image: body.image,
+                handle: body.handle,
+                url: body.url,
+                border_color: body.borderColor,
+                gradient: body.gradient,
+                updated_at: new Date().toISOString()
+            })
+            .eq('id', body.id)
+            .select()
+            .single();
+
+        if (error) throw error;
+        return NextResponse.json({ success: true, data });
+    } catch (error) {
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    }
+}
+
+// DELETE - Delete project
+export async function DELETE(request) {
+    if (!verifyPassword(request)) {
+        return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+        const { searchParams } = new URL(request.url);
+        const id = searchParams.get('id');
+
+        const supabase = getAdminSupabase();
+        const { error } = await supabase.from('projects').delete().eq('id', id);
+
+        if (error) throw error;
+        return NextResponse.json({ success: true });
+    } catch (error) {
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    }
+}
+
+// PATCH - Reorder projects
+export async function PATCH(request) {
+    if (!verifyPassword(request)) {
+        return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+    }
+
+    try {
+        const body = await request.json();
+        const supabase = getAdminSupabase();
+
+        for (const item of body) {
+            await supabase
+                .from('projects')
+                .update({ sort_order: item.sort_order })
+                .eq('id', item.id);
+        }
+
+        return NextResponse.json({ success: true });
+    } catch (error) {
+        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    }
+}

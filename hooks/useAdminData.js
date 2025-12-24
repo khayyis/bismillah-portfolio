@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../lib/supabase';
 
 const AUTH_KEY = 'portfolio_admin_auth';
+const PASSWORD_KEY = 'portfolio_admin_password';
 
 // Default data (fallback)
 const defaultProfile = {
@@ -35,8 +35,25 @@ const defaultSocial = {
     telegram: { username: "KhayyisBillawal", url: "http://t.me/KhayyisBillawal", enabled: true },
 };
 
+// Helper untuk API calls dengan auth
+const apiCall = async (url, method = 'GET', body = null) => {
+    const password = sessionStorage.getItem(PASSWORD_KEY) || '';
+    const options = {
+        method,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${password}`
+        }
+    };
+    if (body) {
+        options.body = JSON.stringify(body);
+    }
+    const res = await fetch(url, options);
+    return res.json();
+};
+
 // ============================================
-// useAdminData - For Admin Panel (CRUD operations)
+// useAdminData - For Admin Panel (via API Routes)
 // ============================================
 export function useAdminData() {
     const [skills, setSkills] = useState([]);
@@ -45,139 +62,60 @@ export function useAdminData() {
     const [social, setSocial] = useState(defaultSocial);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    // Load all data from Supabase
+    // Load all data
     useEffect(() => {
         loadAllData();
     }, []);
 
     const loadAllData = async () => {
         try {
-            // Load profile & social settings
-            const { data: settings } = await supabase
-                .from('portfolio_settings')
-                .select('*');
+            const [profileRes, socialRes, skillsRes, projectsRes] = await Promise.all([
+                fetch('/api/admin/profile').then(r => r.json()),
+                fetch('/api/admin/social').then(r => r.json()),
+                fetch('/api/admin/skills').then(r => r.json()),
+                fetch('/api/admin/projects').then(r => r.json())
+            ]);
 
-            if (settings) {
-                const profileData = settings.find(s => s.type === 'profile');
-                const socialData = settings.find(s => s.type === 'social');
-                if (profileData) setProfile(profileData.data);
-                if (socialData) setSocial(socialData.data);
-            }
-
-            // Load skills
-            const { data: skillsData } = await supabase
-                .from('skills')
-                .select('*')
-                .order('sort_order', { ascending: true });
-
-            if (skillsData) {
-                setSkills(skillsData.map(s => ({
-                    id: s.id,
-                    name: s.name,
-                    icon: s.icon,
-                    level: s.level,
-                    category: s.category
-                })));
-            }
-
-            // Load projects
-            const { data: projectsData } = await supabase
-                .from('projects')
-                .select('*')
-                .order('sort_order', { ascending: true });
-
-            if (projectsData) {
-                setProjects(projectsData.map(p => ({
-                    id: p.id,
-                    title: p.title,
-                    subtitle: p.subtitle,
-                    image: p.image,
-                    handle: p.handle,
-                    url: p.url,
-                    borderColor: p.border_color,
-                    gradient: p.gradient
-                })));
-            }
-
-            setIsLoaded(true);
+            if (profileRes.success && profileRes.data) setProfile({ ...defaultProfile, ...profileRes.data });
+            if (socialRes.success && socialRes.data) setSocial({ ...defaultSocial, ...socialRes.data });
+            if (skillsRes.success) setSkills(skillsRes.data || []);
+            if (projectsRes.success) setProjects(projectsRes.data || []);
         } catch (error) {
             console.error('Error loading data:', error);
-            setIsLoaded(true);
         }
+        setIsLoaded(true);
     };
 
     // Profile update
     const updateProfile = useCallback(async (updates) => {
         const newProfile = { ...profile, ...updates };
         setProfile(newProfile);
-
-        await supabase
-            .from('portfolio_settings')
-            .upsert({
-                type: 'profile',
-                data: newProfile,
-                updated_at: new Date().toISOString()
-            }, { onConflict: 'type' });
+        await apiCall('/api/admin/profile', 'PUT', newProfile);
     }, [profile]);
 
     // Social update
     const updateSocial = useCallback(async (platform, updates) => {
         const newSocial = { ...social, [platform]: { ...social[platform], ...updates } };
         setSocial(newSocial);
-
-        await supabase
-            .from('portfolio_settings')
-            .upsert({
-                type: 'social',
-                data: newSocial,
-                updated_at: new Date().toISOString()
-            }, { onConflict: 'type' });
+        await apiCall('/api/admin/social', 'PUT', newSocial);
     }, [social]);
 
     // Skills CRUD
     const addSkill = useCallback(async (skill) => {
-        const { data, error } = await supabase
-            .from('skills')
-            .insert({
-                name: skill.name,
-                icon: skill.icon || '⚡',
-                level: skill.level || 80,
-                category: skill.category || '',
-                sort_order: skills.length
-            })
-            .select()
-            .single();
-
-        if (data) {
-            const newSkill = {
-                id: data.id,
-                name: data.name,
-                icon: data.icon,
-                level: data.level,
-                category: data.category
-            };
-            setSkills([...skills, newSkill]);
-            return newSkill;
+        const res = await apiCall('/api/admin/skills', 'POST', skill);
+        if (res.success && res.data) {
+            setSkills([...skills, res.data]);
+            return res.data;
         }
     }, [skills]);
 
     const updateSkill = useCallback(async (id, updates) => {
-        await supabase
-            .from('skills')
-            .update({
-                name: updates.name,
-                icon: updates.icon,
-                level: updates.level,
-                category: updates.category,
-                updated_at: new Date().toISOString()
-            })
-            .eq('id', id);
-
+        await apiCall('/api/admin/skills', 'PUT', { id, ...updates });
         setSkills(skills.map(s => s.id === id ? { ...s, ...updates } : s));
     }, [skills]);
 
     const deleteSkill = useCallback(async (id) => {
-        await supabase.from('skills').delete().eq('id', id);
+        await apiCall(`/api/admin/skills?id=${id}`, 'DELETE');
         setSkills(skills.filter(s => s.id !== id));
     }, [skills]);
 
@@ -187,66 +125,26 @@ export function useAdminData() {
         newSkills.splice(toIndex, 0, removed);
         setSkills(newSkills);
 
-        // Update sort_order in database
-        const updates = newSkills.map((skill, index) =>
-            supabase.from('skills').update({ sort_order: index }).eq('id', skill.id)
-        );
-        await Promise.all(updates);
+        const updates = newSkills.map((skill, index) => ({ id: skill.id, sort_order: index }));
+        await apiCall('/api/admin/skills', 'PATCH', updates);
     }, [skills]);
 
     // Projects CRUD
     const addProject = useCallback(async (project) => {
-        const { data, error } = await supabase
-            .from('projects')
-            .insert({
-                title: project.title,
-                subtitle: project.subtitle || '',
-                image: project.image || '/images/Dalam-Tahap-Pengembangan.jpeg',
-                handle: project.handle || '',
-                url: project.url || '',
-                border_color: project.borderColor || '#3B82F6',
-                gradient: project.gradient || 'linear-gradient(145deg, #3B82F6, transparent)',
-                sort_order: projects.length
-            })
-            .select()
-            .single();
-
-        if (data) {
-            const newProject = {
-                id: data.id,
-                title: data.title,
-                subtitle: data.subtitle,
-                image: data.image,
-                handle: data.handle,
-                url: data.url,
-                borderColor: data.border_color,
-                gradient: data.gradient
-            };
-            setProjects([...projects, newProject]);
-            return newProject;
+        const res = await apiCall('/api/admin/projects', 'POST', project);
+        if (res.success && res.data) {
+            setProjects([...projects, res.data]);
+            return res.data;
         }
     }, [projects]);
 
     const updateProject = useCallback(async (id, updates) => {
-        await supabase
-            .from('projects')
-            .update({
-                title: updates.title,
-                subtitle: updates.subtitle,
-                image: updates.image,
-                handle: updates.handle,
-                url: updates.url,
-                border_color: updates.borderColor,
-                gradient: updates.gradient,
-                updated_at: new Date().toISOString()
-            })
-            .eq('id', id);
-
+        await apiCall('/api/admin/projects', 'PUT', { id, ...updates });
         setProjects(projects.map(p => p.id === id ? { ...p, ...updates } : p));
     }, [projects]);
 
     const deleteProject = useCallback(async (id) => {
-        await supabase.from('projects').delete().eq('id', id);
+        await apiCall(`/api/admin/projects?id=${id}`, 'DELETE');
         setProjects(projects.filter(p => p.id !== id));
     }, [projects]);
 
@@ -256,11 +154,8 @@ export function useAdminData() {
         newProjects.splice(toIndex, 0, removed);
         setProjects(newProjects);
 
-        // Update sort_order in database
-        const updates = newProjects.map((project, index) =>
-            supabase.from('projects').update({ sort_order: index }).eq('id', project.id)
-        );
-        await Promise.all(updates);
+        const updates = newProjects.map((project, index) => ({ id: project.id, sort_order: index }));
+        await apiCall('/api/admin/projects', 'PATCH', updates);
     }, [projects]);
 
     // Export data
@@ -285,7 +180,6 @@ export function useAdminData() {
                     await updateSocial(platform, value);
                 }
             }
-            // Reload all data
             await loadAllData();
             return true;
         } catch (e) {
@@ -335,6 +229,7 @@ export function useAdminAuth() {
         const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'admin123';
         if (password === adminPassword) {
             sessionStorage.setItem(AUTH_KEY, 'true');
+            sessionStorage.setItem(PASSWORD_KEY, password); // Store for API calls
             setIsAuthenticated(true);
             return true;
         }
@@ -343,6 +238,7 @@ export function useAdminAuth() {
 
     const logout = useCallback(() => {
         sessionStorage.removeItem(AUTH_KEY);
+        sessionStorage.removeItem(PASSWORD_KEY);
         setIsAuthenticated(false);
     }, []);
 
