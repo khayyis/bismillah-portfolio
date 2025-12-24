@@ -6,14 +6,14 @@ import Link from 'next/link';
 import { useAdminAuth, useAdminData } from '../../../hooks/useAdminData';
 
 const colorPresets = [
-    { name: 'Blue', color: '#3B82F6', gradient: 'linear-gradient(145deg, #3B82F6, #000)' },
-    { name: 'Green', color: '#10B981', gradient: 'linear-gradient(145deg, #10B981, #000)' },
-    { name: 'Purple', color: '#8B5CF6', gradient: 'linear-gradient(145deg, #8B5CF6, #000)' },
-    { name: 'Red', color: '#EF4444', gradient: 'linear-gradient(145deg, #EF4444, #000)' },
-    { name: 'Yellow', color: '#F59E0B', gradient: 'linear-gradient(145deg, #F59E0B, #000)' },
-    { name: 'Cyan', color: '#06B6D4', gradient: 'linear-gradient(145deg, #06B6D4, #000)' },
-    { name: 'Pink', color: '#EC4899', gradient: 'linear-gradient(145deg, #EC4899, #000)' },
-    { name: 'Indigo', color: '#4F46E5', gradient: 'linear-gradient(145deg, #4F46E5, #000)' },
+    { name: 'Blue', color: '#3B82F6', gradient: 'linear-gradient(145deg, #3B82F6, transparent)' },
+    { name: 'Green', color: '#10B981', gradient: 'linear-gradient(145deg, #10B981, transparent)' },
+    { name: 'Purple', color: '#8B5CF6', gradient: 'linear-gradient(145deg, #8B5CF6, transparent)' },
+    { name: 'Red', color: '#EF4444', gradient: 'linear-gradient(145deg, #EF4444, transparent)' },
+    { name: 'Yellow', color: '#F59E0B', gradient: 'linear-gradient(145deg, #F59E0B, transparent)' },
+    { name: 'Cyan', color: '#06B6D4', gradient: 'linear-gradient(145deg, #06B6D4, transparent)' },
+    { name: 'Pink', color: '#EC4899', gradient: 'linear-gradient(145deg, #EC4899, transparent)' },
+    { name: 'Indigo', color: '#4F46E5', gradient: 'linear-gradient(145deg, #4F46E5, transparent)' },
 ];
 
 export default function AdminProjects() {
@@ -30,7 +30,7 @@ export default function AdminProjects() {
         handle: '',
         url: '',
         borderColor: '#3B82F6',
-        gradient: 'linear-gradient(145deg, #3B82F6, #000)'
+        gradient: 'linear-gradient(145deg, #3B82F6, transparent)'
     });
     const [draggedIndex, setDraggedIndex] = useState(null);
 
@@ -55,7 +55,7 @@ export default function AdminProjects() {
             handle: '',
             url: '',
             borderColor: '#3B82F6',
-            gradient: 'linear-gradient(145deg, #3B82F6, #000)'
+            gradient: 'linear-gradient(145deg, #3B82F6, transparent)'
         });
         setShowForm(false);
     };
@@ -140,7 +140,7 @@ export default function AdminProjects() {
                                 handle: '',
                                 url: '',
                                 borderColor: '#3B82F6',
-                                gradient: 'linear-gradient(145deg, #3B82F6, #000)'
+                                gradient: 'linear-gradient(145deg, #3B82F6, transparent)'
                             });
                         }}
                         className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors flex items-center gap-2"

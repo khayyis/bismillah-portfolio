@@ -27,7 +27,7 @@ export const ChromaGrid = ({
             subtitle: 'Demo Project',
             handle: '@demo',
             borderColor: '#4F46E5',
-            gradient: 'linear-gradient(145deg, #4F46E5, #000)',
+            gradient: 'linear-gradient(145deg, #4F46E5, transparent)',
             url: '#'
         }
     ];
@@ -115,7 +115,7 @@ export const ChromaGrid = ({
                     onClick={() => handleCardClick(c.url)}
                     style={{
                         '--card-border': c.borderColor || 'transparent',
-                        '--card-gradient': c.gradient || 'linear-gradient(145deg, #333, #000)',
+                        '--card-gradient': c.gradient || 'linear-gradient(145deg, #333, transparent)',
                         cursor: c.url && c.url !== '#' ? 'pointer' : 'default'
                     }}
                 >
