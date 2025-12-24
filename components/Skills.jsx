@@ -1,12 +1,10 @@
 'use client';
 import { motion } from 'framer-motion';
-import ShinyText from './ShinyText';
 import Carousel from './Carousel';
 import { FiCpu, FiCodesandbox, FiCommand, FiMessageSquare, FiStar } from 'react-icons/fi';
 import GlareHover from './GlareHover';
 import ScrollReveal from './ScrollReveal';
 import './GlareHover.css';
-import { useRouter } from 'next/navigation';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 import { useSkills } from '../hooks/useProfile';
 
@@ -14,36 +12,31 @@ import { useSkills } from '../hooks/useProfile';
 const defaultSkillList = [
 	{
 		title: 'Autonomous Mobile Robotic',
-		description:
-			'Pengalaman dalam kompetisi LKS bidang robotik dan otomasi. Memahami pemrograman dan kontrol perangkat robotik.',
+		description: 'Pengalaman dalam kompetisi LKS bidang robotik dan otomasi. Memahami pemrograman dan kontrol perangkat robotik.',
 		id: 1,
 		icon: <FiCpu className="carousel-icon" />,
 	},
 	{
 		title: 'Desain 3D',
-		description:
-			'Keahlian dalam pembuatan model 3D menggunakan berbagai software desain untuk prototyping dan visualisasi proyek.',
+		description: 'Keahlian dalam pembuatan model 3D menggunakan berbagai software desain untuk prototyping dan visualisasi proyek.',
 		id: 2,
 		icon: <FiCodesandbox className="carousel-icon" />,
 	},
 	{
 		title: 'Prompt Engineering AI',
-		description:
-			'Kemampuan dalam membuat prompt yang efektif untuk berbagai model AI, mengoptimalkan hasil generasi konten dan kode.',
+		description: 'Kemampuan dalam membuat prompt yang efektif untuk berbagai model AI, mengoptimalkan hasil generasi konten dan kode.',
 		id: 3,
 		icon: <FiCommand className="carousel-icon" />,
 	},
 	{
 		title: 'Pengembangan Chatbot',
-		description:
-			'Pengalaman dalam membuat dan mengembangkan chatbot WhatsApp dengan integrasi berbagai API dan fungsi otomatisasi.',
+		description: 'Pengalaman dalam membuat dan mengembangkan chatbot WhatsApp dengan integrasi berbagai API dan fungsi otomatisasi.',
 		id: 4,
 		icon: <FiMessageSquare className="carousel-icon" />,
 	},
 	{
 		title: 'Fotografi',
-		description:
-			'Keahlian dalam fotografi landscape dan potret dengan penguasaan teknik pencahayaan, komposisi, dan editing foto profesional.',
+		description: 'Keahlian dalam fotografi landscape dan potret dengan penguasaan teknik pencahayaan, komposisi, dan editing foto profesional.',
 		id: 5,
 		icon: <FiCodesandbox className="carousel-icon" />,
 	},
@@ -65,9 +58,8 @@ const iconMap = {
 };
 
 export default function Skills() {
-	const router = useRouter();
 	const isAnimationReady = useAnimationReady(200);
-	const { skills, isLoaded } = useSkills();
+	const { skills } = useSkills();
 
 	// Convert database skills to carousel format
 	const skillList = skills.length > 0
