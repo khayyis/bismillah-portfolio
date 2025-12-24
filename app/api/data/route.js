@@ -54,11 +54,15 @@ export async function GET(request) {
                 id: p.id,
                 title: p.title,
                 subtitle: p.subtitle,
+                description: p.description || p.subtitle || '',
+                category: p.category || 'Proyek',
+                status: p.status || 'Selesai',
                 image: p.image,
                 handle: p.handle,
                 url: p.url,
                 borderColor: p.border_color,
-                gradient: p.gradient
+                gradient: p.gradient,
+                colorStops: [p.border_color || '#3B82F6']
             }));
             return NextResponse.json(projects);
         }
