@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAdminSupabase } from '../../../../lib/supabase';
+import { getAdminSupabase } from '../../../lib/supabase';
 
 // Public API - untuk baca data (tidak perlu auth)
 export async function GET(request) {
