@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
 
 // Default profile data (fallback)
 const defaultProfile = {
@@ -35,8 +34,8 @@ const defaultSocial = {
 };
 
 /**
- * Hook untuk mengambil data profil dari Supabase
- * Digunakan oleh komponen frontend untuk menampilkan data
+ * Hook untuk mengambil data profil dari API (bukan langsung ke Supabase)
+ * Supabase URL dan key tidak akan terlihat di browser
  */
 export function useProfile() {
     const [profile, setProfile] = useState(defaultProfile);
@@ -45,14 +44,10 @@ export function useProfile() {
     useEffect(() => {
         async function loadProfile() {
             try {
-                const { data, error } = await supabase
-                    .from('portfolio_settings')
-                    .select('data')
-                    .eq('type', 'profile')
-                    .single();
-
-                if (data && data.data) {
-                    setProfile(data.data);
+                const res = await fetch('/api/data?type=profile');
+                const data = await res.json();
+                if (data && Object.keys(data).length > 0) {
+                    setProfile({ ...defaultProfile, ...data });
                 }
             } catch (error) {
                 console.error('Error loading profile:', error);
@@ -67,7 +62,7 @@ export function useProfile() {
 }
 
 /**
- * Hook untuk mengambil data social dari Supabase
+ * Hook untuk mengambil data social dari API
  */
 export function useSocial() {
     const [social, setSocial] = useState(defaultSocial);
@@ -76,14 +71,10 @@ export function useSocial() {
     useEffect(() => {
         async function loadSocial() {
             try {
-                const { data, error } = await supabase
-                    .from('portfolio_settings')
-                    .select('data')
-                    .eq('type', 'social')
-                    .single();
-
-                if (data && data.data) {
-                    setSocial(data.data);
+                const res = await fetch('/api/data?type=social');
+                const data = await res.json();
+                if (data && Object.keys(data).length > 0) {
+                    setSocial({ ...defaultSocial, ...data });
                 }
             } catch (error) {
                 console.error('Error loading social:', error);
@@ -98,7 +89,7 @@ export function useSocial() {
 }
 
 /**
- * Hook untuk mengambil data skills dari Supabase
+ * Hook untuk mengambil data skills dari API
  */
 export function useSkills() {
     const [skills, setSkills] = useState([]);
@@ -107,19 +98,10 @@ export function useSkills() {
     useEffect(() => {
         async function loadSkills() {
             try {
-                const { data, error } = await supabase
-                    .from('skills')
-                    .select('*')
-                    .order('sort_order', { ascending: true });
-
-                if (data) {
-                    setSkills(data.map(s => ({
-                        id: s.id,
-                        name: s.name,
-                        icon: s.icon,
-                        level: s.level,
-                        category: s.category
-                    })));
+                const res = await fetch('/api/data?type=skills');
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                    setSkills(data);
                 }
             } catch (error) {
                 console.error('Error loading skills:', error);
@@ -134,7 +116,7 @@ export function useSkills() {
 }
 
 /**
- * Hook untuk mengambil data projects dari Supabase
+ * Hook untuk mengambil data projects dari API
  */
 export function useProjects() {
     const [projects, setProjects] = useState([]);
@@ -143,22 +125,10 @@ export function useProjects() {
     useEffect(() => {
         async function loadProjects() {
             try {
-                const { data, error } = await supabase
-                    .from('projects')
-                    .select('*')
-                    .order('sort_order', { ascending: true });
-
-                if (data) {
-                    setProjects(data.map(p => ({
-                        id: p.id,
-                        title: p.title,
-                        subtitle: p.subtitle,
-                        image: p.image,
-                        handle: p.handle,
-                        url: p.url,
-                        borderColor: p.border_color,
-                        gradient: p.gradient
-                    })));
+                const res = await fetch('/api/data?type=projects');
+                const data = await res.json();
+                if (Array.isArray(data)) {
+                    setProjects(data);
                 }
             } catch (error) {
                 console.error('Error loading projects:', error);
