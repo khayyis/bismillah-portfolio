@@ -47,7 +47,28 @@ const Navbar = () => {
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      const targetPosition = section.offsetTop;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = Math.min(Math.abs(distance) / 2, 1200); // Max 1.2s
+
+      let start = null;
+      const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+      const animation = (currentTime) => {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+
+        window.scrollTo(0, startPosition + distance * ease);
+
+        if (timeElapsed < duration) {
+          requestAnimationFrame(animation);
+        }
+      };
+
+      requestAnimationFrame(animation);
     }
   };
 
@@ -92,8 +113,8 @@ const Navbar = () => {
   return (
     <header
       className={`fixed bottom-0 left-0 w-full z-[100] transition-all duration-300 ${isScrolled
-          ? 'backdrop-blur-md bg-white/10 dark:bg-gray-900/10'
-          : 'bg-transparent'
+        ? 'backdrop-blur-md bg-white/10 dark:bg-gray-900/10'
+        : 'bg-transparent'
         }`}
     >
       <div className="container mx-auto px-4">
