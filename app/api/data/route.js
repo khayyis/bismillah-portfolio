@@ -38,7 +38,8 @@ export async function GET(request) {
                 name: s.name,
                 icon: s.icon,
                 level: s.level,
-                category: s.category
+                category: s.category,
+                description: s.description
             }));
             return NextResponse.json(skills);
         }

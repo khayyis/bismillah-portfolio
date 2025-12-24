@@ -74,7 +74,7 @@ export default function Skills() {
 		? skills.map((skill, index) => ({
 			id: index + 1,
 			title: skill.name,
-			description: skill.category ? `${skill.category} - Level ${skill.level}%` : `Skill Level: ${skill.level}%`,
+			description: skill.description || (skill.category ? `${skill.category} - Level ${skill.level}%` : `Skill Level: ${skill.level}%`),
 			icon: iconMap[skill.icon] || <FiStar className="carousel-icon" />,
 		}))
 		: defaultSkillList;
