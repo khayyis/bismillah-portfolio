@@ -3,12 +3,13 @@ import { motion } from 'framer-motion';
 import GlareHover from './GlareHover';
 import GradientText from './GradientText';
 import './GlareHover.css';
-import userInfo from '../config/userInfo';
+import { useProfile } from '../hooks/useProfile';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 
 export default function Hero() {
   const isAnimationReady = useAnimationReady();
-  
+  const { profile } = useProfile();
+
   return (
     <section
       id="beranda"
@@ -30,7 +31,7 @@ export default function Hero() {
             className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-8"
           >
             <span className="text-blue-400">✨</span>
-            <span className="text-white text-sm font-medium">Teknik Mekatronika</span>
+            <span className="text-white text-sm font-medium">{profile.title}</span>
           </motion.div>
 
           {/* Main Heading */}
@@ -41,17 +42,17 @@ export default function Hero() {
               showBorder={false}
               className="hero-name-gradient"
             >
-              Khayyis Billawal Rozikin
+              {profile.name}
             </GradientText>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-gray-300 mb-4">
-            Siswa SMKN 4 Jakarta
+            Siswa {profile.school}
           </p>
 
           <p className="text-base md:text-lg text-gray-400 mb-10 max-w-xl mx-auto leading-relaxed">
-            Berfokus pada pengembangan robotik, desain 3D, dan teknologi AI. Aktif dalam kompetisi LKS Autonomous Mobile Robotic.
+            {profile.about?.substring(0, 150)}...
           </p>
 
           {/* Buttons */}
@@ -93,7 +94,7 @@ export default function Hero() {
                 className="px-8 h-full flex items-center justify-center text-white font-semibold text-base no-underline select-none bg-transparent border-none"
                 title="Hubungi saya"
               >
-                Hubungi Saya
+                {profile.contactButtonText || 'Hubungi Saya'}
               </a>
             </GlareHover>
           </div>
