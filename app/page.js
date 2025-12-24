@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import About from '@/components/About'
 import Skills from '../components/Skills'
-import ProjectTiltedCards from '../components/ProjectTiltedCards'
+import ProjectsChromaGrid from '../components/ProjectsChromaGrid'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 import Link from 'next/link'
@@ -28,7 +28,7 @@ export default function Home() {
       <Hero />
       <About />
       <Skills />
-      <ProjectTiltedCards />
+      <ProjectsChromaGrid />
       <Contact />
       <Footer />
       <Navbar />
