@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import userInfo from '../config/userInfo';
 import socialConfig from '../config/socialConfig';
 import ScrollReveal from './ScrollReveal';
+import { useAnimationReady } from '../hooks/useAnimationReady';
 
 export default function Contact() {
+  const isAnimationReady = useAnimationReady(400);
 
   return (
     <section id="kontak" className="py-12 md:py-20 text-white">
@@ -28,7 +30,7 @@ export default function Contact() {
         <div className="flex justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={isAnimationReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
             className="max-w-lg w-full"

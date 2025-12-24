@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { NavigationEvents } from './NavigationEvents';
 import { ConnectionProvider } from '../utils/ConnectionProvider';
+import { LoadingProvider } from '../contexts/LoadingContext';
 import ElegantLoading from './ElegantLoading';
 
 /**
@@ -16,6 +17,7 @@ export default function OptimizedTransitionLayout({ children }) {
   const [isNavigating, setIsNavigating] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   
   // Efek untuk menangani first load dengan performa yang lebih baik
   useEffect(() => {
@@ -35,6 +37,7 @@ export default function OptimizedTransitionLayout({ children }) {
       if (!isNewSession) {
         // Bukan kunjungan pertama dan masih dalam 1 jam terakhir
         setIsFirstLoad(false);
+        setIsLoadingComplete(true); // Langsung set complete jika bukan first load
       } else {
         // Kunjungan pertama atau sudah lebih dari 1 jam
         // Simpan status kunjungan dan timestamp
@@ -44,6 +47,10 @@ export default function OptimizedTransitionLayout({ children }) {
         // Tampilkan animasi first load
         const timer = setTimeout(() => {
           setIsFirstLoad(false);
+          // Set loading complete setelah animasi exit selesai (800ms)
+          setTimeout(() => {
+            setIsLoadingComplete(true);
+          }, 800);
         }, 2500); // Hapus setelah 2.5 detik
 
         return () => clearTimeout(timer);
@@ -99,16 +106,18 @@ export default function OptimizedTransitionLayout({ children }) {
   
   return (
     <ConnectionProvider>
-      {/* Komponen NavigationEvents untuk mendeteksi navigasi */}
-      <Suspense fallback={null}>
-        <NavigationEvents setIsNavigating={setIsNavigating} />
-      </Suspense>
-      
-      {/* Komponen Loading dengan animasi CSS murni yang elegan */}
-      <ElegantLoading isNavigating={isNavigating || isLoading} isFirstLoad={isFirstLoad} />
-      
-      {/* Konten halaman */}
-      {children}
+      <LoadingProvider value={{ isLoadingComplete, setLoadingComplete: setIsLoadingComplete }}>
+        {/* Komponen NavigationEvents untuk mendeteksi navigasi */}
+        <Suspense fallback={null}>
+          <NavigationEvents setIsNavigating={setIsNavigating} />
+        </Suspense>
+        
+        {/* Komponen Loading dengan animasi CSS murni yang elegan */}
+        <ElegantLoading isNavigating={isNavigating || isLoading} isFirstLoad={isFirstLoad} />
+        
+        {/* Konten halaman */}
+        {children}
+      </LoadingProvider>
     </ConnectionProvider>
   );
 }

@@ -7,8 +7,11 @@ import GlareHover from './GlareHover';
 import ScrollReveal from './ScrollReveal';
 import './GlareHover.css';
 import userInfo from '../config/userInfo';
+import { useAnimationReady } from '../hooks/useAnimationReady';
 
 const About = () => {
+  const isAnimationReady = useAnimationReady(100); // Delay 100ms setelah Hero
+  
   const scrollToContact = () => {
     const contactSection = document.getElementById('kontak');
     if (contactSection) {
@@ -32,7 +35,7 @@ const About = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10 lg:gap-14">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={isAnimationReady ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
             className="w-full md:w-2/5 lg:w-5/12 flex justify-center md:justify-start"
@@ -53,7 +56,7 @@ const About = () => {
 
           <motion.div
             initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            whileInView={isAnimationReady ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
             className="w-full md:w-3/5 lg:w-7/12 md:pl-6 lg:pl-10"

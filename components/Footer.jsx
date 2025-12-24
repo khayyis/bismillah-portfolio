@@ -3,9 +3,11 @@ import { motion } from 'framer-motion';
 import ShinyText from './ShinyText';
 import socialConfig from '../config/socialConfig';
 import userInfo from '../config/userInfo';
+import { useAnimationReady } from '../hooks/useAnimationReady';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const isAnimationReady = useAnimationReady(500);
 
   return (
     <footer className="text-white py-8 md:py-12 pb-24 md:pb-12">
@@ -14,7 +16,7 @@ export default function Footer() {
           <div>
             <motion.div
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              whileInView={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
@@ -55,7 +57,7 @@ export default function Footer() {
           <div>
             <motion.div
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              whileInView={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
@@ -93,7 +95,7 @@ export default function Footer() {
           <div>
             <motion.div
               initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              whileInView={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
@@ -118,7 +120,7 @@ export default function Footer() {
 
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          whileInView={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="border-t border-gray-800 mt-8 md:mt-12 pt-6 md:pt-8 pb-4 md:pb-0 text-center"

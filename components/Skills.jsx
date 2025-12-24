@@ -7,6 +7,7 @@ import GlareHover from './GlareHover';
 import ScrollReveal from './ScrollReveal';
 import './GlareHover.css';
 import { useRouter } from 'next/navigation';
+import { useAnimationReady } from '../hooks/useAnimationReady';
 
 const skillList = [
 	{
@@ -48,6 +49,7 @@ const skillList = [
 
 export default function Skills() {
 	const router = useRouter();
+	const isAnimationReady = useAnimationReady(200);
 
 	const navigateToProjects = () => {
 		const projectsSection = document.getElementById('projects');
@@ -79,7 +81,7 @@ export default function Skills() {
 				<motion.div
 					className="flex justify-center"
 					initial={{ opacity: 0 }}
-					whileInView={{ opacity: 1 }}
+					whileInView={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
 					viewport={{ once: true, margin: '-100px' }}
 					transition={{ duration: 0.8 }}
 				>
@@ -106,7 +108,7 @@ export default function Skills() {
 
 				<motion.div
 					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
+					whileInView={isAnimationReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
 					viewport={{ once: true, margin: '-100px' }}
 					transition={{ duration: 0.6, delay: 0.4 }}
 					className="mt-10 md:mt-16 text-center"

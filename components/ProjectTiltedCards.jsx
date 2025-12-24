@@ -6,8 +6,9 @@ import "./GlassButton.css";
 import "./ProjectTiltedCards.css";
 import { useRouter } from 'next/navigation';
 import projectsData from '../config/projectsData';
-import AuroraProjectCard from './AuroraProjectCard';
+import ElectricProjectCard from './ElectricProjectCard';
 import ScrollReveal from './ScrollReveal';
+import { useAnimationReady } from '../hooks/useAnimationReady';
 
 // Menggunakan data proyek dari file konfigurasi
 const { projects, categories } = projectsData;
@@ -17,6 +18,7 @@ export default function ProjectTiltedCards() {
   const [loading, setLoading] = useState(true);
   const [hoveredId, setHoveredId] = useState(null);
   const router = useRouter();
+  const isAnimationReady = useAnimationReady(300);
 
   // Efek untuk simulasi loading data
   useEffect(() => {
@@ -132,7 +134,7 @@ export default function ProjectTiltedCards() {
               }
             }}
             initial="hidden"
-            animate="show"
+            animate={isAnimationReady ? "show" : "hidden"}
           >
             {filteredProjects.map((project) => (
               <motion.div
@@ -149,9 +151,16 @@ export default function ProjectTiltedCards() {
                   transition: 'z-index 0.1s'
                 }}
               >
-                <AuroraProjectCard
-                  project={project}
-                  onClick={handleProjectClick}
+                <ElectricProjectCard
+                  id={project.id}
+                  title={project.title}
+                  category={project.category}
+                  description={project.description}
+                  imageSrc={project.image}
+                  status={project.status}
+                  color={project.colorStops?.[0] || '#7df9ff'}
+                  onClick={() => handleProjectClick(project.id)}
+                  priority={project.id === 1}
                 />
               </motion.div>
             ))}

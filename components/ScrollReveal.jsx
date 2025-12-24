@@ -3,6 +3,7 @@
 import { useEffect, useRef, useMemo } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLoading } from '../contexts/LoadingContext';
 
 import './ScrollReveal.css';
 
@@ -21,6 +22,7 @@ const ScrollReveal = ({
     wordAnimationEnd = 'bottom bottom'
 }) => {
     const containerRef = useRef(null);
+    const { isLoadingComplete } = useLoading();
 
     const splitText = useMemo(() => {
         const text = typeof children === 'string' ? children : '';
@@ -35,6 +37,9 @@ const ScrollReveal = ({
     }, [children]);
 
     useEffect(() => {
+        // Tunggu sampai loading selesai
+        if (!isLoadingComplete) return;
+        
         const el = containerRef.current;
         if (!el) return;
 
@@ -97,7 +102,7 @@ const ScrollReveal = ({
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
-    }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
+    }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength, isLoadingComplete]);
 
     return (
         <h2 ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
