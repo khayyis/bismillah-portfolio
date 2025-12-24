@@ -68,7 +68,7 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                     <Link
                         href="/admin/profile"
                         className="bg-gradient-to-br from-green-600 to-green-800 rounded-xl p-6 border border-green-600/50 hover:border-green-500 transition-all hover:scale-[1.02] group"
@@ -102,6 +102,25 @@ export default function AdminDashboard() {
                                 </h3>
                                 <p className="text-pink-200/70">
                                     Atur link Instagram, GitHub, LinkedIn, dll
+                                </p>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link
+                        href="/admin/contact"
+                        className="bg-gradient-to-br from-cyan-600 to-cyan-800 rounded-xl p-6 border border-cyan-600/50 hover:border-cyan-500 transition-all hover:scale-[1.02] group"
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center text-3xl">
+                                📞
+                            </div>
+                            <div>
+                                <h3 className="text-xl font-bold text-white group-hover:text-cyan-200 transition-colors">
+                                    Hubungi Saya
+                                </h3>
+                                <p className="text-cyan-200/70">
+                                    Edit kontak, info, dan custom links
                                 </p>
                             </div>
                         </div>
