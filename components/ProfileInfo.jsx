@@ -5,9 +5,11 @@ import Image from 'next/image';
 import GlareHover from './GlareHover';
 import './GlareHover.css';
 import './ProfileInfo.css';
-import userInfo from '../config/userInfo';
+import { useProfile } from '../hooks/useProfile';
 
 export default function ProfileInfo() {
+  const { profile } = useProfile();
+
   return (
     <section className="py-16 bg-gray-50 dark:bg-gray-900 profile-info-section">
       <div className="container mx-auto px-4 max-w-7xl">
@@ -20,22 +22,22 @@ export default function ProfileInfo() {
             className="profile-info-text"
           >
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 dark:text-white">
-              {userInfo.name}
+              {profile.name}
             </h2>
-            
+
             <div className="mb-4">
               <p className="text-lg font-medium text-gray-900 dark:text-white">
-                Siswa {userInfo.school}
+                Siswa {profile.school}
               </p>
               <p className="text-lg font-medium text-blue-600 dark:text-blue-400">
-                {userInfo.title}
+                {profile.title}
               </p>
             </div>
-            
+
             <p className="text-gray-700 dark:text-gray-300 mb-6">
-              {userInfo.about}
+              {profile.about}
             </p>
-            
+
             <div className="flex flex-wrap gap-4 justify-center md:justify-start">
               <GlareHover
                 height="48px"
@@ -48,8 +50,8 @@ export default function ProfileInfo() {
                 glareSize={300}
                 transitionDuration={800}
               >
-                <a 
-                  href="#projects" 
+                <a
+                  href="#projects"
                   className="px-6 h-full flex items-center justify-center text-white font-semibold text-sm md:text-base no-underline select-none bg-transparent border-none relative group"
                   title="Lihat proyek saya"
                 >
@@ -61,7 +63,7 @@ export default function ProfileInfo() {
                   </div>
                 </a>
               </GlareHover>
-              
+
               <GlareHover
                 height="48px"
                 width="auto"
@@ -74,8 +76,8 @@ export default function ProfileInfo() {
                 glareSize={300}
                 transitionDuration={800}
               >
-                <a 
-                  href="#kontak" 
+                <a
+                  href="#kontak"
                   className="px-6 h-full flex items-center justify-center text-blue-600 font-semibold text-sm md:text-base no-underline select-none bg-transparent border-none relative group"
                   title="Hubungi saya"
                 >
@@ -83,13 +85,13 @@ export default function ProfileInfo() {
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5 mr-2">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
-                    {userInfo.contactButtonText}
+                    {profile.contactButtonText || 'Hubungi Saya'}
                   </div>
                 </a>
               </GlareHover>
             </div>
           </motion.div>
-          
+
           {/* Kolom kanan - Foto profil */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -102,9 +104,9 @@ export default function ProfileInfo() {
               <div className="aspect-square rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-primary-blue to-accent-brightBlue p-1 transform hover:scale-[1.02] transition-transform duration-300">
                 <div className="bg-secondary-white dark:bg-gray-800 theme-dark:bg-gray-800 h-full w-full rounded-2xl overflow-hidden">
                   <div className="relative w-full h-full">
-                    <Image 
-                      src={userInfo.avatarUrl} 
-                      alt={userInfo.name} 
+                    <Image
+                      src={profile.avatarUrl || '/images/khayyis-profile.jpg'}
+                      alt={profile.name || 'Profile'}
                       fill
                       sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 380px"
                       style={{ objectFit: 'cover', display: 'block', minHeight: '100%', minWidth: '100%' }}
@@ -114,7 +116,7 @@ export default function ProfileInfo() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Floating decorative elements */}
               <div className="absolute -top-6 -right-6 w-16 md:w-24 h-16 md:h-24 bg-accent-brightBlue/10 rounded-xl z-[-1] floating-element"></div>
               <div className="absolute -bottom-6 -left-6 w-24 md:w-32 h-24 md:h-32 bg-primary-blue/10 rounded-full z-[-1] floating-element"></div>
