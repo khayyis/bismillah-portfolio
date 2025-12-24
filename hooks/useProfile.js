@@ -16,7 +16,7 @@ const defaultProfile = {
     department: "Jurusan Teknik Mekatronika",
     avatarUrl: "/images/khayyis-profile.jpg",
     miniAvatarUrl: "/images/khayyis-profile.jpg",
-    about: "seorang siswa Teknik Mekatronika, antusias pada pengembangan robotik, desain 3D, dan teknologi AI.",
+    about: "seorang siswa Teknik Mekatronika, antusias pada pengembangan robotik, desain 3D, dan teknologi AI. pernah berpartisipasi dalam Lomba Kompetensi Siswa bidang Autonomous Mobile Robotic. Selalu mencari peluang, serta mengembangkan keterampilan dalam bidang teknologi.",
     contactText: "Kontak Saya",
     contactButtonText: "Hubungi Saya",
     sendMessageText: "Kirim Pesan",
@@ -34,19 +34,22 @@ const defaultSocial = {
 };
 
 /**
- * Hook untuk mengambil data profil dari API (bukan langsung ke Supabase)
- * Supabase URL dan key tidak akan terlihat di browser
+ * Hook untuk mengambil data profil dari API
+ * Menggunakan default data untuk SSR agar tidak terjadi hydration mismatch
  */
 export function useProfile() {
     const [profile, setProfile] = useState(defaultProfile);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
+
         async function loadProfile() {
             try {
                 const res = await fetch('/api/data?type=profile');
                 const data = await res.json();
-                if (data && Object.keys(data).length > 0) {
+                if (data && Object.keys(data).length > 0 && !data.error) {
                     setProfile({ ...defaultProfile, ...data });
                 }
             } catch (error) {
@@ -58,7 +61,8 @@ export function useProfile() {
         loadProfile();
     }, []);
 
-    return { profile, isLoaded };
+    // Return default profile during SSR and initial mount to prevent hydration mismatch
+    return { profile, isLoaded, isMounted };
 }
 
 /**
@@ -67,13 +71,16 @@ export function useProfile() {
 export function useSocial() {
     const [social, setSocial] = useState(defaultSocial);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
+
         async function loadSocial() {
             try {
                 const res = await fetch('/api/data?type=social');
                 const data = await res.json();
-                if (data && Object.keys(data).length > 0) {
+                if (data && Object.keys(data).length > 0 && !data.error) {
                     setSocial({ ...defaultSocial, ...data });
                 }
             } catch (error) {
@@ -85,7 +92,7 @@ export function useSocial() {
         loadSocial();
     }, []);
 
-    return { social, isLoaded };
+    return { social, isLoaded, isMounted };
 }
 
 /**
@@ -94,8 +101,11 @@ export function useSocial() {
 export function useSkills() {
     const [skills, setSkills] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
+
         async function loadSkills() {
             try {
                 const res = await fetch('/api/data?type=skills');
@@ -112,7 +122,7 @@ export function useSkills() {
         loadSkills();
     }, []);
 
-    return { skills, isLoaded };
+    return { skills, isLoaded, isMounted };
 }
 
 /**
@@ -121,8 +131,11 @@ export function useSkills() {
 export function useProjects() {
     const [projects, setProjects] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
+
         async function loadProjects() {
             try {
                 const res = await fetch('/api/data?type=projects');
@@ -139,7 +152,7 @@ export function useProjects() {
         loadProjects();
     }, []);
 
-    return { projects, isLoaded };
+    return { projects, isLoaded, isMounted };
 }
 
 export default useProfile;
