@@ -46,56 +46,7 @@ export default function Hero() {
             </GradientText>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-lg md:text-xl text-gray-300 mb-4">
-            Siswa {profile.school}
-          </p>
 
-
-
-          {/* Buttons */}
-          <div className="flex flex-row gap-4 justify-center">
-            <GlareHover
-              height="52px"
-              width="auto"
-              background="#ffffff"
-              borderRadius="999px"
-              glareColor="#3B82F6"
-              glareOpacity={0.3}
-              glareAngle={-30}
-              glareSize={300}
-              transitionDuration={800}
-            >
-              <a
-                href="#projects"
-                className="px-8 h-full flex items-center justify-center text-gray-900 font-semibold text-base no-underline select-none bg-transparent border-none"
-                title="Lihat proyek saya"
-              >
-                Lihat Proyek
-              </a>
-            </GlareHover>
-
-            <GlareHover
-              height="52px"
-              width="auto"
-              background="transparent"
-              borderRadius="999px"
-              borderColor="rgba(255,255,255,0.3)"
-              glareColor="#ffffff"
-              glareOpacity={0.2}
-              glareAngle={-30}
-              glareSize={300}
-              transitionDuration={800}
-            >
-              <a
-                href="#kontak"
-                className="px-8 h-full flex items-center justify-center text-white font-semibold text-base no-underline select-none bg-transparent border-none"
-                title="Hubungi saya"
-              >
-                {profile.contactButtonText || 'Hubungi Saya'}
-              </a>
-            </GlareHover>
-          </div>
         </motion.div>
       </div>
     </section>
