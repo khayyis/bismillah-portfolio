@@ -11,7 +11,7 @@ import { useAnimationReady } from '../hooks/useAnimationReady';
 
 const About = () => {
   const isAnimationReady = useAnimationReady(100); // Delay 100ms setelah Hero
-  
+
   const scrollToContact = () => {
     const contactSection = document.getElementById('kontak');
     if (contactSection) {
@@ -62,7 +62,7 @@ const About = () => {
             className="w-full md:w-3/5 lg:w-7/12 md:pl-6 lg:pl-10"
           >
             <h3 className="text-2xl font-bold mb-4">{userInfo.school}</h3>
-            <p className="text-gray-300 mb-6 text-lg leading-relaxed">
+            <p className="text-gray-300 mb-6 text-lg leading-relaxed text-justify">
               {userInfo.about}
             </p>
 
