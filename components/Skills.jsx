@@ -2,9 +2,7 @@
 import { motion } from 'framer-motion';
 import Carousel from './Carousel';
 import { FiCpu, FiCodesandbox, FiCommand, FiMessageSquare, FiStar } from 'react-icons/fi';
-import GlareHover from './GlareHover';
 import ScrollReveal from './ScrollReveal';
-import './GlareHover.css';
 import { useAnimationReady } from '../hooks/useAnimationReady';
 import { useSkills } from '../hooks/useProfile';
 
@@ -126,39 +124,7 @@ export default function Skills() {
 					</div>
 				</motion.div>
 
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={isAnimationReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-					viewport={{ once: true, margin: '-100px' }}
-					transition={{ duration: 0.6, delay: 0.4 }}
-					className="mt-10 md:mt-16 text-center"
-				>
-					<div className="flex justify-center">
-						<GlareHover
-							height="48px"
-							width="220px"
-							background="#2563eb"
-							borderRadius="8px"
-							glareColor="#ffffff"
-							glareOpacity={0.3}
-							glareAngle={-30}
-							glareSize={300}
-							transitionDuration={800}
-						>
-							<a
-								href="#projects"
-								onClick={(e) => {
-									e.preventDefault();
-									navigateToProjects();
-								}}
-								className="w-full h-full flex items-center justify-center text-white font-semibold text-base no-underline select-none bg-transparent border-none cursor-pointer"
-								aria-label="Lihat Proyek Saya"
-							>
-								<div className="button-text">Lihat Proyek Saya</div>
-							</a>
-						</GlareHover>
-					</div>
-				</motion.div>
+
 			</div>
 		</section>
 	);
