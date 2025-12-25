@@ -92,12 +92,13 @@ const BlurGradientText = ({
             className={`font-bold leading-tight ${className}`}
             style={{
                 display: 'flex',
-                flexWrap: 'nowrap',
+                flexWrap: 'wrap',
                 justifyContent: 'center',
                 gap: '0.15em',
-                fontSize: 'clamp(1.8rem, 5vw, 4.5rem)',
+                fontSize: 'clamp(1.4rem, 6vw, 4.5rem)',
                 fontFamily: "'LEMON MILK', sans-serif",
-                whiteSpace: 'nowrap'
+                textAlign: 'center',
+                width: '100%'
             }}
         >
             {elements.map((segment, index) => {
