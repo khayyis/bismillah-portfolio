@@ -83,12 +83,17 @@ const BlurGradientText = ({
             const container = ref.current.parentElement;
             if (!container) return;
 
-            const containerWidth = container.offsetWidth;
+            const containerWidth = container.offsetWidth - 16; // Account for padding
             const textLength = text.length;
+            const wordCount = text.split(' ').length;
 
-            // Calculate optimal font size: width / (chars * ratio)
-            const charWidthRatio = 0.55;
-            const optimalSize = containerWidth / (textLength * charWidthRatio);
+            // Calculate optimal font size accounting for:
+            // - Character width (LEMONMILK is wider, ratio ~0.7)
+            // - Gap between words (0.25em per gap)
+            const charWidthRatio = 0.7;
+            const gapRatio = (wordCount - 1) * 0.25; // gaps between words
+            const effectiveLength = textLength * charWidthRatio + gapRatio;
+            const optimalSize = containerWidth / effectiveLength;
 
             // Clamp between 10px and 72px
             const clampedSize = Math.max(10, Math.min(72, optimalSize));
