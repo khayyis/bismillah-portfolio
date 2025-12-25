@@ -4,10 +4,27 @@
 
 .scroll-reveal-text {
     /* Font size controlled by textClassName prop, not here */
-    line-height: 1.6;
+    line-height: 1.5;
     display: inline;
+    word-spacing: normal;
 }
 
 .word {
     display: inline-block;
+    margin-right: 0.25em;
+}
+
+.word:last-child {
+    margin-right: 0;
+}
+
+/* Tighter spacing on mobile */
+@media (max-width: 640px) {
+    .scroll-reveal-text {
+        line-height: 1.4;
+    }
+
+    .word {
+        margin-right: 0.2em;
+    }
 }
