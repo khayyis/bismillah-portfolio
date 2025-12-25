@@ -19,7 +19,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="text-center max-w-3xl mx-auto"
+          className="text-center w-full mx-auto"
         >
           {/* Main Heading with Blur + Gradient Animation */}
           <BlurGradientText
