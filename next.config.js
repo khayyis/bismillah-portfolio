@@ -22,6 +22,11 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.githubusercontent.com' },
       { protocol: 'https', hostname: 'raw.githubusercontent.com' },
       { protocol: 'https', hostname: '**.supabase.co' },
+      // Instagram CDN
+      { protocol: 'https', hostname: '**.cdninstagram.com' },
+      { protocol: 'https', hostname: 'scontent.cdninstagram.com' },
+      { protocol: 'https', hostname: '**.fbcdn.net' },
+      { protocol: 'https', hostname: 'scontent-*.cdninstagram.com' },
     ],
   },
   // Konfigurasi tambahan untuk mengatasi masalah hydration
