@@ -96,8 +96,7 @@ export async function PUT(request) {
                 icon: body.icon,
                 level: body.level,
                 category: body.category,
-                description: body.description,
-                updated_at: new Date().toISOString()
+                description: body.description
             })
             .eq('id', body.id)
             .select()
