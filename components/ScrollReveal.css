@@ -5,7 +5,7 @@
 .scroll-reveal-text {
     /* Font size controlled by textClassName prop, not here */
     line-height: 1.5;
-    display: inline;
+    display: block;
     word-spacing: normal;
 }
 
