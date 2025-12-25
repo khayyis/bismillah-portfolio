@@ -39,7 +39,7 @@ const ScrollReveal = ({
     useEffect(() => {
         // Tunggu sampai loading selesai
         if (!isLoadingComplete) return;
-        
+
         const el = containerRef.current;
         if (!el) return;
 
@@ -102,7 +102,7 @@ const ScrollReveal = ({
         return () => {
             ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
-    }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength, isLoadingComplete]);
+    }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength, isLoadingComplete, children]);
 
     return (
         <h2 ref={containerRef} className={`scroll-reveal ${containerClassName}`}>
