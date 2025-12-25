@@ -2,34 +2,63 @@
 @import '../components/ProfileCard.css';
 @import '../components/ShinyText.css';
 
+/* Custom Font - LEMON MILK Bold */
+@font-face {
+  font-family: 'lemonmilkbold';
+  src: url('/fonts/LEMONMILK-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   /* Variabel tema terang (default) */
-  --bg-primary: 249, 250, 251; /* gray-50 */
-  --bg-secondary: 243, 244, 246; /* gray-100 */
-  --text-primary: 31, 41, 55; /* gray-800 */
-  --text-secondary: 75, 85, 99; /* gray-600 */
-  --border-color: 229, 231, 235; /* gray-200 */
-  --card-bg: 255, 255, 255; /* white */
-  --card-border: 229, 231, 235; /* gray-200 */
-  --button-primary-bg: 59, 130, 246; /* blue-500 */
-  --button-primary-text: 255, 255, 255; /* white */
-  --button-secondary-bg: 255, 255, 255; /* white */
-  --button-secondary-text: 37, 99, 235; /* blue-600 */
-  --button-secondary-border: 37, 99, 235; /* blue-600 */
-  --badge-bg: 243, 244, 246; /* gray-100 */
-  --badge-text: 37, 99, 235; /* blue-600 */
-  --badge-border: 229, 231, 235; /* gray-200 */
-  --section-alt-bg: 248, 250, 252; /* gray-50 */
-  --nav-bg: 255, 255, 255; /* white */
-  --nav-text: 31, 41, 55; /* gray-800 */
-  --nav-active: 59, 130, 246; /* blue-500 */
-  --shadow-color: 0, 0, 0; /* black */
+  --bg-primary: 249, 250, 251;
+  /* gray-50 */
+  --bg-secondary: 243, 244, 246;
+  /* gray-100 */
+  --text-primary: 31, 41, 55;
+  /* gray-800 */
+  --text-secondary: 75, 85, 99;
+  /* gray-600 */
+  --border-color: 229, 231, 235;
+  /* gray-200 */
+  --card-bg: 255, 255, 255;
+  /* white */
+  --card-border: 229, 231, 235;
+  /* gray-200 */
+  --button-primary-bg: 59, 130, 246;
+  /* blue-500 */
+  --button-primary-text: 255, 255, 255;
+  /* white */
+  --button-secondary-bg: 255, 255, 255;
+  /* white */
+  --button-secondary-text: 37, 99, 235;
+  /* blue-600 */
+  --button-secondary-border: 37, 99, 235;
+  /* blue-600 */
+  --badge-bg: 243, 244, 246;
+  /* gray-100 */
+  --badge-text: 37, 99, 235;
+  /* blue-600 */
+  --badge-border: 229, 231, 235;
+  /* gray-200 */
+  --section-alt-bg: 248, 250, 252;
+  /* gray-50 */
+  --nav-bg: 255, 255, 255;
+  /* white */
+  --nav-text: 31, 41, 55;
+  /* gray-800 */
+  --nav-active: 59, 130, 246;
+  /* blue-500 */
+  --shadow-color: 0, 0, 0;
+  /* black */
   --shadow-opacity: 0.05;
-  
+
   /* Untuk kompatibilitas dengan kode lama */
   --foreground-rgb: var(--text-primary);
   --background-start-rgb: var(--bg-primary);
@@ -38,33 +67,53 @@
 
 /* Tema gelap - Terinspirasi dari hikeys1977.com */
 .theme-dark {
-  --bg-primary: 16, 16, 16; /* #101010 - hampir hitam */
-  --bg-secondary: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
-  --text-primary: 250, 250, 250; /* #fafafa - putih keabu-abuan */
-  --text-secondary: 230, 230, 230; /* #e6e6e6 - abu-abu sangat terang */
-  --border-color: 40, 40, 40; /* #282828 - abu-abu gelap */
-  --card-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
-  --card-border: 40, 40, 40; /* #282828 - abu-abu gelap */
-  --button-primary-bg: 59, 130, 246; /* blue-500 */
-  --button-primary-text: 255, 255, 255; /* white */
-  --button-secondary-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
-  --button-secondary-text: 200, 200, 255; /* #c8c8ff - biru sangat terang */
-  --button-secondary-border: 59, 130, 246; /* blue-500 */
-  --badge-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
-  --badge-text: 200, 200, 255; /* #c8c8ff - biru sangat terang */
-  --badge-border: 40, 40, 40; /* #282828 - abu-abu gelap */
-  --section-alt-bg: 24, 24, 24; /* #181818 - abu-abu sangat gelap */
-  --nav-bg: 16, 16, 16; /* #101010 - hampir hitam */
-  --nav-text: 250, 250, 250; /* #fafafa - putih keabu-abuan */
-  --nav-active: 120, 180, 255; /* #78b4ff - biru terang */
-  --shadow-color: 0, 0, 0; /* black */
+  --bg-primary: 16, 16, 16;
+  /* #101010 - hampir hitam */
+  --bg-secondary: 24, 24, 24;
+  /* #181818 - abu-abu sangat gelap */
+  --text-primary: 250, 250, 250;
+  /* #fafafa - putih keabu-abuan */
+  --text-secondary: 230, 230, 230;
+  /* #e6e6e6 - abu-abu sangat terang */
+  --border-color: 40, 40, 40;
+  /* #282828 - abu-abu gelap */
+  --card-bg: 24, 24, 24;
+  /* #181818 - abu-abu sangat gelap */
+  --card-border: 40, 40, 40;
+  /* #282828 - abu-abu gelap */
+  --button-primary-bg: 59, 130, 246;
+  /* blue-500 */
+  --button-primary-text: 255, 255, 255;
+  /* white */
+  --button-secondary-bg: 24, 24, 24;
+  /* #181818 - abu-abu sangat gelap */
+  --button-secondary-text: 200, 200, 255;
+  /* #c8c8ff - biru sangat terang */
+  --button-secondary-border: 59, 130, 246;
+  /* blue-500 */
+  --badge-bg: 24, 24, 24;
+  /* #181818 - abu-abu sangat gelap */
+  --badge-text: 200, 200, 255;
+  /* #c8c8ff - biru sangat terang */
+  --badge-border: 40, 40, 40;
+  /* #282828 - abu-abu gelap */
+  --section-alt-bg: 24, 24, 24;
+  /* #181818 - abu-abu sangat gelap */
+  --nav-bg: 16, 16, 16;
+  /* #101010 - hampir hitam */
+  --nav-text: 250, 250, 250;
+  /* #fafafa - putih keabu-abuan */
+  --nav-active: 120, 180, 255;
+  /* #78b4ff - biru terang */
+  --shadow-color: 0, 0, 0;
+  /* black */
   --shadow-opacity: 0.3;
-  
+
   /* Untuk kompatibilitas dengan kode lama */
   --foreground-rgb: var(--text-primary);
   --background-start-rgb: var(--bg-primary);
   --background-end-rgb: var(--bg-primary);
-  
+
   /* Untuk kompatibilitas dengan kode lama */
   --dark-bg-primary: 17, 24, 39;
   --dark-bg-secondary: 31, 41, 55;
@@ -207,25 +256,31 @@ footer {
 
 /* Responsive text sizes */
 @media (max-width: 640px) {
-  h1, .text-hero {
+
+  h1,
+  .text-hero {
     font-size: 36px !important;
   }
-  
-  h2, .text-h1 {
+
+  h2,
+  .text-h1 {
     font-size: 28px !important;
   }
-  
-  h3, .text-h2 {
+
+  h3,
+  .text-h2 {
     font-size: 20px !important;
   }
-  
-  p, .text-body {
+
+  p,
+  .text-body {
     font-size: 14px !important;
   }
 }
 
 /* Fix for mobile overflow issues */
-html, body {
+html,
+body {
   overflow-x: hidden;
   width: 100%;
 }
