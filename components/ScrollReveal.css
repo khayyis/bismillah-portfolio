@@ -9,22 +9,14 @@
     word-spacing: normal;
 }
 
+/* Keep word as inline to preserve natural text flow and spacing */
 .word {
-    display: inline-block;
-    margin-right: 0.25em;
-}
-
-.word:last-child {
-    margin-right: 0;
+    display: inline;
 }
 
 /* Tighter spacing on mobile */
 @media (max-width: 640px) {
     .scroll-reveal-text {
         line-height: 1.4;
-    }
-
-    .word {
-        margin-right: 0.2em;
     }
 }
