@@ -77,8 +77,6 @@ const BlurGradientText = ({
     const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
 
     // Auto-fit font size based on container width
-    const [autoFontSize, setAutoFontSize] = useState('3rem');
-
     useEffect(() => {
         const calculateFontSize = () => {
             if (!ref.current) return;
@@ -88,19 +86,25 @@ const BlurGradientText = ({
             const containerWidth = container.offsetWidth;
             const textLength = text.length;
 
-            // Calculate optimal font size: width / (chars * 0.6)
-            // 0.6 is approximate char width ratio for this font
-            const charWidthRatio = 0.58;
+            // Calculate optimal font size: width / (chars * ratio)
+            const charWidthRatio = 0.55;
             const optimalSize = containerWidth / (textLength * charWidthRatio);
 
-            // Clamp between 12px and 72px
-            const clampedSize = Math.max(12, Math.min(72, optimalSize));
-            setAutoFontSize(`${clampedSize}px`);
+            // Clamp between 10px and 72px
+            const clampedSize = Math.max(10, Math.min(72, optimalSize));
+
+            // Apply with !important to override any CSS
+            ref.current.style.setProperty('font-size', `${clampedSize}px`, 'important');
         };
 
-        calculateFontSize();
+        // Initial calculation after mount
+        const timer = setTimeout(calculateFontSize, 50);
+
         window.addEventListener('resize', calculateFontSize);
-        return () => window.removeEventListener('resize', calculateFontSize);
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', calculateFontSize);
+        };
     }, [text]);
 
     const gradientStyle = {
@@ -122,7 +126,6 @@ const BlurGradientText = ({
                 flexWrap: 'nowrap',
                 justifyContent: 'center',
                 gap: '0.05em',
-                fontSize: autoFontSize,
                 fontFamily: "'LEMON MILK', sans-serif",
                 whiteSpace: 'nowrap',
                 width: '100%',
