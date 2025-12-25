@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { gsap } from 'gsap';
 import './ChromaGrid.css';
 
@@ -119,8 +120,14 @@ export const ChromaGrid = ({
                         cursor: c.url && c.url !== '#' ? 'pointer' : 'default'
                     }}
                 >
-                    <div className="chroma-img-wrapper">
-                        <img src={c.image} alt={c.title} loading="lazy" />
+                    <div className="chroma-img-wrapper" style={{ position: 'relative', width: '100%', aspectRatio: '16/9' }}>
+                        <Image
+                            src={c.image}
+                            alt={c.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            style={{ objectFit: 'cover' }}
+                        />
                     </div>
                     <footer className="chroma-info">
                         <h3 className="name">{c.title}</h3>

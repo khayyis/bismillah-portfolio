@@ -3,6 +3,22 @@ import './darkTheme.css'
 import OptimizedLayout from './optimized-layout'
 import './optimized-imports' // Import stylesheet untuk optimasi
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
+
+// Optimized font loading with next/font
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
+
+const lemonMilk = localFont({
+  src: '../public/fonts/LEMONMILK-Bold.otf',
+  variable: '--font-lemonmilk',
+  display: 'swap',
+  weight: '700',
+})
 
 export const metadata = {
   // Primary SEO
@@ -82,11 +98,11 @@ export const metadata = {
 // Komponen layout yang dibuat lebih stabil untuk menghindari masalah hydration
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="id" className={`scroll-smooth ${inter.variable} ${lemonMilk.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/cropped-khayyis-profile.jpg" type="image/jpeg" />
-        <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/lemon-milk" />
+        {/* Fonts are now loaded via next/font for improved performance */}
         <link rel="stylesheet" href="/fix-profile-image.css" />
         <link rel="stylesheet" href="/fix-project-images.css" />
         <link rel="stylesheet" href="/fix-image-display.css" />
