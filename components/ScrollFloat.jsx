@@ -43,7 +43,10 @@ const ScrollFloat = ({
 
         const charElements = el.querySelectorAll('.char');
 
-        gsap.fromTo(
+        // Store triggers for cleanup
+        const triggers = [];
+
+        const anim = gsap.fromTo(
             charElements,
             {
                 willChange: 'opacity, transform',
@@ -71,8 +74,13 @@ const ScrollFloat = ({
             }
         );
 
+        if (anim.scrollTrigger) {
+            triggers.push(anim.scrollTrigger);
+        }
+
         return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+            // Only kill triggers belonging to this component
+            triggers.forEach(trigger => trigger.kill());
         };
     }, [scrollContainerRef, animationDuration, ease, scrollStart, scrollEnd, stagger, isLoadingComplete]);
 
