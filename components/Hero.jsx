@@ -11,7 +11,7 @@ export default function Hero() {
   return (
     <section
       id="beranda"
-      className="relative min-h-screen flex items-center justify-center"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       <div className="container mx-auto px-4 py-12">
         {/* Centered Content */}

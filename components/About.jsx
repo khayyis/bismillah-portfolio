@@ -93,7 +93,7 @@ const About = () => {
               baseRotation={2}
               blurStrength={15}
               wordAnimationEnd="center center"
-              textClassName="text-gray-300 text-lg leading-relaxed text-justify"
+              textClassName="text-gray-300 text-lg leading-relaxed md:text-justify"
             >
               {profile.about}
             </ScrollReveal>
