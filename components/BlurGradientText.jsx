@@ -76,6 +76,33 @@ const BlurGradientText = ({
     const totalDuration = stepDuration * (stepCount - 1);
     const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
 
+    // Auto-fit font size based on container width
+    const [autoFontSize, setAutoFontSize] = useState('3rem');
+
+    useEffect(() => {
+        const calculateFontSize = () => {
+            if (!ref.current) return;
+            const container = ref.current.parentElement;
+            if (!container) return;
+
+            const containerWidth = container.offsetWidth;
+            const textLength = text.length;
+
+            // Calculate optimal font size: width / (chars * 0.6)
+            // 0.6 is approximate char width ratio for this font
+            const charWidthRatio = 0.58;
+            const optimalSize = containerWidth / (textLength * charWidthRatio);
+
+            // Clamp between 12px and 72px
+            const clampedSize = Math.max(12, Math.min(72, optimalSize));
+            setAutoFontSize(`${clampedSize}px`);
+        };
+
+        calculateFontSize();
+        window.addEventListener('resize', calculateFontSize);
+        return () => window.removeEventListener('resize', calculateFontSize);
+    }, [text]);
+
     const gradientStyle = {
         backgroundImage: `linear-gradient(to right, ${colors.join(', ')})`,
         animationDuration: `${animationSpeed}s`,
@@ -94,12 +121,13 @@ const BlurGradientText = ({
                 display: 'flex',
                 flexWrap: 'nowrap',
                 justifyContent: 'center',
-                gap: '0.06em',
-                fontSize: 'min(4.5rem, max(0.6rem, 3.5vw))',
+                gap: '0.05em',
+                fontSize: autoFontSize,
                 fontFamily: "'LEMON MILK', sans-serif",
                 whiteSpace: 'nowrap',
                 width: '100%',
-                padding: '0'
+                padding: '0 8px',
+                boxSizing: 'border-box'
             }}
         >
             {elements.map((segment, index) => {
