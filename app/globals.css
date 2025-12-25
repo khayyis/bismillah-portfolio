@@ -1,15 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Fonts are now loaded via next/font in layout.js for optimized performance */
 @import '../components/ProfileCard.css';
 @import '../components/ShinyText.css';
-
-/* Custom Font - LEMON MILK Bold */
-@font-face {
-  font-family: 'lemonmilkbold';
-  src: url('/fonts/LEMONMILK-Bold.otf') format('opentype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
 @tailwind base;
 @tailwind components;
@@ -135,7 +126,7 @@
 body {
   color: rgb(var(--text-primary));
   background: rgb(var(--bg-primary));
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

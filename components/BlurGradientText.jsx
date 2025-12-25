@@ -131,7 +131,7 @@ const BlurGradientText = ({
                 flexWrap: 'nowrap',
                 justifyContent: 'center',
                 gap: '0.25em',
-                fontFamily: "'lemonmilkbold', sans-serif",
+                fontFamily: "var(--font-lemonmilk), 'lemonmilkbold', sans-serif",
                 whiteSpace: 'nowrap',
                 width: '100%',
                 padding: '0 8px',

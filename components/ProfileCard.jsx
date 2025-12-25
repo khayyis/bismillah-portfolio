@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+import Image from 'next/image';
 import './ProfileCard.css';
 
 const DEFAULT_INNER_GRADIENT = 'linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)';
@@ -313,29 +314,26 @@ const ProfileCardComponent = ({
             <div className="pc-shine" />
             <div className="pc-glare" />
             <div className="pc-content pc-avatar-content">
-              <img
+              <Image
                 className="avatar"
                 src={avatarUrl}
                 alt={`${name || 'User'} avatar`}
-                loading="lazy"
-                onError={e => {
-                  const t = e.target;
-                  t.style.display = 'none';
-                }}
+                fill
+                sizes="300px"
+                style={{ objectFit: 'cover' }}
+                unoptimized
               />
               {showUserInfo && (
                 <div className="pc-user-info">
                   <div className="pc-user-details">
-                    <div className="pc-mini-avatar">
-                      <img
+                    <div className="pc-mini-avatar" style={{ position: 'relative', width: '100%', height: '100%' }}>
+                      <Image
                         src={miniAvatarUrl || avatarUrl}
                         alt={`${name || 'User'} mini avatar`}
-                        loading="lazy"
-                        onError={e => {
-                          const t = e.target;
-                          t.style.opacity = '0.5';
-                          t.src = avatarUrl;
-                        }}
+                        fill
+                        sizes="40px"
+                        style={{ objectFit: 'cover' }}
+                        unoptimized
                       />
                     </div>
                     <div className="pc-user-text">
