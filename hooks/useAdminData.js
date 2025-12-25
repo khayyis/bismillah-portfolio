@@ -116,8 +116,20 @@ export function useAdminData() {
     }, [skills]);
 
     const updateSkill = useCallback(async (id, updates) => {
-        await apiCall('/api/admin/skills', 'PUT', { id, ...updates });
-        setSkills(skills.map(s => s.id === id ? { ...s, ...updates } : s));
+        console.log('updateSkill called with:', { id, updates });
+        try {
+            const res = await apiCall('/api/admin/skills', 'PUT', { id, ...updates });
+            console.log('updateSkill response:', res);
+            if (res.success) {
+                setSkills(skills.map(s => s.id === id ? { ...s, ...updates } : s));
+            } else {
+                console.error('updateSkill failed:', res.error);
+                alert('Update skill gagal: ' + (res.error || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('updateSkill error:', error);
+            alert('Update skill error: ' + error.message);
+        }
     }, [skills]);
 
     const deleteSkill = useCallback(async (id) => {
