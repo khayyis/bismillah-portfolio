@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '../../../lib/supabase';
 
+// Force dynamic rendering - no caching
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Public API - untuk baca data (tidak perlu auth)
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
@@ -41,7 +45,11 @@ export async function GET(request) {
                 category: s.category,
                 description: s.description
             }));
-            return NextResponse.json(skills);
+            return NextResponse.json(skills, {
+                headers: {
+                    'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+                }
+            });
         }
 
         if (type === 'projects') {
