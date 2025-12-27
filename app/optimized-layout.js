@@ -5,6 +5,7 @@ import ThemeProvider from '../components/ThemeProvider';
 import OptimizedTransitionLayout from '../components/OptimizedTransitionLayout';
 import ClickSpark from '../components/ClickSpark';
 import FloatingLines from '../components/FloatingLines';
+import SmoothScroll from '../components/SmoothScroll';
 
 /**
  * OptimizedLayout - Layout yang dioptimalkan untuk performa
@@ -57,17 +58,19 @@ export default function OptimizedLayout({ children }) {
       {/* Unified Glass Overlay - satu layer untuk semua konten */}
       <div className="fixed inset-0 z-[-5] bg-black/30 backdrop-blur-sm pointer-events-none" />
 
-      <ClickSpark
-        sparkColor="#6366f1"
-        sparkSize={12}
-        sparkRadius={20}
-        sparkCount={isMobile ? 5 : 10}
-        duration={500}
-      >
-        <OptimizedTransitionLayout>
-          {children}
-        </OptimizedTransitionLayout>
-      </ClickSpark>
+      <SmoothScroll>
+        <ClickSpark
+          sparkColor="#6366f1"
+          sparkSize={12}
+          sparkRadius={20}
+          sparkCount={isMobile ? 5 : 10}
+          duration={500}
+        >
+          <OptimizedTransitionLayout>
+            {children}
+          </OptimizedTransitionLayout>
+        </ClickSpark>
+      </SmoothScroll>
     </ThemeProvider>
   );
 }
