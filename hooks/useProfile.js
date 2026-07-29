@@ -125,11 +125,57 @@ export function useSkills() {
     return { skills, isLoaded, isMounted };
 }
 
+// Default projects data (fallback)
+const defaultProjects = [
+    {
+        id: 1,
+        title: 'Chatbot WhatsApp AI',
+        subtitle: 'Chatbot pintar berbasis AI untuk WhatsApp',
+        description: 'Chatbot pintar berbasis AI untuk WhatsApp dengan kemampuan memproses pesan dan memberikan respons otomatis.',
+        category: 'AI',
+        status: 'Selesai',
+        image: '/images/CHATBOT-WHATSAPP.png',
+        handle: '@ai-bot',
+        url: 'https://github.com/khayyis',
+        borderColor: '#a855f7',
+        gradient: 'linear-gradient(145deg, #a855f7, transparent)',
+        colorStops: ['#a855f7']
+    },
+    {
+        id: 2,
+        title: 'Autonomous Mobile Robotic',
+        subtitle: 'Proyek Robotika Otonom LKS',
+        description: 'Proyek robot otonom untuk kompetisi LKS dengan kemampuan navigasi dan pengenalan objek.',
+        category: 'Robotik',
+        status: 'Selesai',
+        image: '/images/placeholder-project.jpg',
+        handle: '@robotics',
+        url: 'https://github.com/khayyis',
+        borderColor: '#3B82F6',
+        gradient: 'linear-gradient(145deg, #3B82F6, transparent)',
+        colorStops: ['#3B82F6']
+    },
+    {
+        id: 3,
+        title: 'Desain & Modeling 3D',
+        subtitle: 'Visualisasi dan Modeling 3D',
+        description: 'Proyek desain 3D untuk berbagai keperluan visualisasi dan modeling.',
+        category: 'Desain 3D',
+        status: 'Dalam Pengembangan',
+        image: '/images/Dalam-Tahap-Pengembangan.jpeg',
+        handle: '@3d-design',
+        url: 'https://github.com/khayyis',
+        borderColor: '#ff6b9d',
+        gradient: 'linear-gradient(145deg, #ff6b9d, transparent)',
+        colorStops: ['#ff6b9d']
+    }
+];
+
 /**
  * Hook untuk mengambil data projects dari API
  */
 export function useProjects() {
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState(defaultProjects);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
 
@@ -140,11 +186,14 @@ export function useProjects() {
             try {
                 const res = await fetch('/api/data?type=projects');
                 const data = await res.json();
-                if (Array.isArray(data)) {
+                if (Array.isArray(data) && data.length > 0) {
                     setProjects(data);
+                } else {
+                    setProjects(defaultProjects);
                 }
             } catch (error) {
                 console.error('Error loading projects:', error);
+                setProjects(defaultProjects);
             }
             setIsLoaded(true);
         }
