@@ -24,10 +24,15 @@ const BlurGradientText = ({
     const wordsRef = useRef([]);
 
     useEffect(() => {
-        if (!isReady || !ref.current) return;
+        if (!ref.current) return;
 
         const validElements = wordsRef.current.filter(Boolean);
         if (validElements.length === 0) return;
+
+        if (!isReady) {
+            gsap.set(validElements, { yPercent: 120, opacity: 0 });
+            return;
+        }
 
         // Reset & Run GSAP Obys Reveal Animation
         gsap.killTweensOf(validElements);
@@ -40,7 +45,9 @@ const BlurGradientText = ({
                 duration: 1.2,
                 stagger: delay / 1000,
                 ease: 'expo.out',
-                clearProps: 'willChange'
+                onComplete: () => {
+                    gsap.set(validElements, { opacity: 1, yPercent: 0 });
+                }
             }
         );
     }, [isReady, text, delay]);
@@ -108,9 +115,7 @@ const BlurGradientText = ({
                         className="inline-block will-change-transform text-inherit"
                         style={{
                             ...gradientStyle,
-                            fontSize: 'inherit',
-                            opacity: 0,
-                            transform: 'translateY(120%)'
+                            fontSize: 'inherit'
                         }}
                     >
                         {segment === ' ' ? '\u00A0' : segment}
