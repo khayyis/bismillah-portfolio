@@ -20,7 +20,7 @@ export default function Contact() {
   const sectionSubtitle = contact.sectionSubtitle || 'Tertarik untuk berkolaborasi atau memiliki pertanyaan? Jangan ragu untuk menghubungi saya!';
 
   return (
-    <section id="kontak" className="py-12 md:py-20 text-white">
+    <section id="kontak" className="relative min-h-screen flex flex-col justify-center items-center py-12 md:py-16 text-white w-full">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 md:mb-12">
           <ScrollFloat

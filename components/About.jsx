@@ -42,7 +42,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="py-16 md:py-20 lg:py-24 text-white">
+    <section id="about" className="relative min-h-screen flex flex-col justify-center items-center py-12 md:py-16 text-white w-full">
       <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="text-center mb-12">
           <ScrollFloat

@@ -78,7 +78,7 @@ export default function Skills() {
 	};
 
 	return (
-		<section id="keahlian" className="py-12 md:py-20">
+		<section id="keahlian" className="relative min-h-screen flex flex-col justify-center items-center py-12 md:py-16 w-full">
 			<div className="container mx-auto px-4">
 				<div className="text-center mb-10 md:mb-16">
 					<ScrollFloat

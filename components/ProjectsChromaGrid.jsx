@@ -9,7 +9,7 @@ const ProjectsChromaGrid = () => {
 
     if (!isLoaded) {
         return (
-            <section id="projects" className="py-16 md:py-20 lg:py-24">
+            <section id="projects" className="relative min-h-screen flex flex-col justify-center items-center py-12 md:py-16 w-full">
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold text-white">PROYEK SAYA</h2>
@@ -23,7 +23,7 @@ const ProjectsChromaGrid = () => {
     }
 
     return (
-        <section id="projects" className="py-16 md:py-20 lg:py-24">
+        <section id="projects" className="relative min-h-screen flex flex-col justify-center items-center py-12 md:py-16 w-full">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
                     <h2 className="text-4xl font-bold text-white">PROYEK SAYA</h2>
