@@ -1,76 +1,55 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import './GradientText.css';
 
-const buildKeyframes = (from, steps) => {
-    const keys = new Set([...Object.keys(from), ...steps.flatMap(s => Object.keys(s))]);
-    const keyframes = {};
-    keys.forEach(k => {
-        keyframes[k] = [from[k], ...steps.map(s => s[k])];
-    });
-    return keyframes;
-};
-
 /**
- * BlurGradientText - Combines BlurText animation with GradientText styling
- * Each word/character animates in with blur effect while displaying gradient colors
+ * BlurGradientText - Obys Agency Style GSAP Hero Text Reveal
+ * Uses exact GSAP `expo.out` curve and `yPercent: 120` reveal mask matching experiment.obys.agency
  */
 const BlurGradientText = ({
     text = '',
-    delay = 150,
+    delay = 120,
     className = '',
     animateBy = 'words',
-    direction = 'top',
     threshold = 0.1,
     rootMargin = '0px',
-    animationFrom,
-    animationTo,
-    easing = t => t,
-    onAnimationComplete,
-    stepDuration = 0.35,
-    // Gradient props
     colors = ['#40ffaa', '#4079ff', '#40ffaa', '#4079ff', '#40ffaa'],
     animationSpeed = 8,
 }) => {
     const elements = animateBy === 'words' ? text.split(' ') : text.split('');
-    const [inView, setInView] = useState(false);
     const ref = useRef(null);
+    const wordsRef = useRef([]);
 
     useEffect(() => {
         if (!ref.current) return;
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    setInView(true);
+                    if (wordsRef.current.length > 0) {
+                        gsap.fromTo(
+                            wordsRef.current,
+                            { yPercent: 120, opacity: 0 },
+                            {
+                                yPercent: 0,
+                                opacity: 1,
+                                duration: 1.2,
+                                stagger: delay / 1000,
+                                ease: 'expo.out'
+                            }
+                        );
+                    }
                     observer.unobserve(ref.current);
                 }
             },
             { threshold, rootMargin }
         );
+
         observer.observe(ref.current);
         return () => observer.disconnect();
-    }, [threshold, rootMargin]);
-
-    const defaultFrom = useMemo(
-        () => ({ filter: 'blur(6px)', opacity: 0, y: '120%' }),
-        []
-    );
-
-    const defaultTo = useMemo(
-        () => [
-            { filter: 'blur(0px)', opacity: 1, y: '0%' }
-        ],
-        []
-    );
-
-    const fromSnapshot = animationFrom ?? defaultFrom;
-    const toSnapshots = animationTo ?? defaultTo;
-
-    const stepCount = toSnapshots.length + 1;
-    const totalDuration = 1.2;
-    const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
+    }, [threshold, rootMargin, delay]);
 
     // Auto-fit font size based on container width
     useEffect(() => {
@@ -83,22 +62,16 @@ const BlurGradientText = ({
             const textLength = text.length;
             const wordCount = text.split(' ').length;
 
-            // Calculate optimal font size accounting for:
-            // - Character width (LEMONMILK is wider, ratio ~0.7)
-            // - Gap between words (0.25em per gap)
             const charWidthRatio = 0.7;
             const gapRatio = (wordCount - 1) * 0.25; // gaps between words
             const effectiveLength = textLength * charWidthRatio + gapRatio;
             const optimalSize = containerWidth / effectiveLength;
 
-            // Clamp between 10px and 72px
             const clampedSize = Math.max(10, Math.min(72, optimalSize));
 
-            // Apply with !important to override any CSS
             ref.current.style.setProperty('font-size', `${clampedSize}px`, 'important');
         };
 
-        // Initial calculation after mount
         const timer = setTimeout(calculateFontSize, 50);
 
         window.addEventListener('resize', calculateFontSize);
@@ -134,31 +107,22 @@ const BlurGradientText = ({
                 boxSizing: 'border-box'
             }}
         >
-            {elements.map((segment, index) => {
-                const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
-
-                const spanTransition = {
-                    duration: totalDuration,
-                    times,
-                    delay: (index * delay) / 1000,
-                    ease: [0.16, 1, 0.3, 1] // Obys expo.out easing
-                };
-
-                return (
-                    <span key={index} className="inline-block overflow-hidden py-1" style={{ fontSize: 'inherit' }}>
-                        <motion.span
-                            className="inline-block will-change-[transform,filter,opacity] text-inherit"
-                            initial={fromSnapshot}
-                            animate={inView ? animateKeyframes : fromSnapshot}
-                            transition={spanTransition}
-                            style={{ ...gradientStyle, fontSize: 'inherit' }}
-                            onAnimationComplete={index === elements.length - 1 ? onAnimationComplete : undefined}
-                        >
-                            {segment === ' ' ? '\u00A0' : segment}
-                        </motion.span>
+            {elements.map((segment, index) => (
+                <span key={index} className="inline-block overflow-hidden py-1" style={{ fontSize: 'inherit' }}>
+                    <span
+                        ref={(el) => (wordsRef.current[index] = el)}
+                        className="inline-block will-change-transform text-inherit"
+                        style={{
+                            ...gradientStyle,
+                            fontSize: 'inherit',
+                            transform: 'translateY(120%)',
+                            opacity: 0
+                        }}
+                    >
+                        {segment === ' ' ? '\u00A0' : segment}
                     </span>
-                );
-            })}
+                </span>
+            ))}
         </h1>
     );
 };
