@@ -1,15 +1,36 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 
 export default function SmoothScroll({ children }) {
-    const isScrollingRef = useRef(false);
+    const lenisRef = useRef(null);
+    const isSnappingRef = useRef(false);
     const touchStartRef = useRef(0);
-    const lastScrollTimeRef = useRef(0);
-    const animFrameRef = useRef(null);
+    const lastSnapTimeRef = useRef(0);
 
     useEffect(() => {
         const sectionIds = ['beranda', 'about', 'keahlian', 'projects', 'kontak'];
+
+        // Initialize Lenis for luxury smooth physics momentum
+        const lenis = new Lenis({
+            duration: 1.4,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 0.85,
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
+
+        lenisRef.current = lenis;
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
 
         const getSectionElements = () => {
             return sectionIds
@@ -29,59 +50,34 @@ export default function SmoothScroll({ children }) {
             return currentIndex;
         };
 
-        // Custom Silk-Smooth RAF Scroll Engine with easeInOutQuart
-        const smoothScrollTo = (targetY, duration = 1100) => {
-            if (animFrameRef.current) {
-                cancelAnimationFrame(animFrameRef.current);
-            }
-
-            const startY = window.pageYOffset || document.documentElement.scrollTop;
-            const distance = targetY - startY;
-            let startTime = null;
-
-            // EaseInOutQuart: Silky, ultra-smooth acceleration & deceleration curve
-            const easeInOutQuart = (t) => {
-                return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
-            };
-
-            const step = (currentTime) => {
-                if (!startTime) startTime = currentTime;
-                const timeElapsed = currentTime - startTime;
-                const progress = Math.min(timeElapsed / duration, 1);
-                const eased = easeInOutQuart(progress);
-
-                window.scrollTo(0, startY + distance * eased);
-
-                if (progress < 1) {
-                    animFrameRef.current = requestAnimationFrame(step);
-                } else {
-                    isScrollingRef.current = false;
-                }
-            };
-
-            isScrollingRef.current = true;
-            lastScrollTimeRef.current = Date.now();
-            animFrameRef.current = requestAnimationFrame(step);
-        };
-
-        const scrollToSection = (index) => {
+        const snapToSection = (index) => {
             const els = getSectionElements();
             if (index < 0 || index >= els.length) return;
 
-            const targetEl = els[index];
-            const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset;
+            isSnappingRef.current = true;
+            lastSnapTimeRef.current = Date.now();
 
-            smoothScrollTo(targetTop, 1100);
+            lenis.scrollTo(els[index], {
+                duration: 1.4,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                onComplete: () => {
+                    isSnappingRef.current = false;
+                }
+            });
+
+            setTimeout(() => {
+                isSnappingRef.current = false;
+            }, 1400);
         };
 
         const handleWheel = (e) => {
             const now = Date.now();
-            if (isScrollingRef.current || now - lastScrollTimeRef.current < 1100) {
+            if (isSnappingRef.current || now - lastSnapTimeRef.current < 1400) {
                 e.preventDefault();
                 return;
             }
 
-            if (Math.abs(e.deltaY) < 8) return;
+            if (Math.abs(e.deltaY) < 12) return;
 
             e.preventDefault();
             const currentIndex = getCurrentSectionIndex();
@@ -89,12 +85,12 @@ export default function SmoothScroll({ children }) {
             if (e.deltaY > 0) {
                 // Scroll Down -> Next Section
                 if (currentIndex < sectionIds.length - 1) {
-                    scrollToSection(currentIndex + 1);
+                    snapToSection(currentIndex + 1);
                 }
             } else {
                 // Scroll Up -> Previous Section
                 if (currentIndex > 0) {
-                    scrollToSection(currentIndex - 1);
+                    snapToSection(currentIndex - 1);
                 }
             }
         };
@@ -105,17 +101,17 @@ export default function SmoothScroll({ children }) {
 
         const handleTouchEnd = (e) => {
             const now = Date.now();
-            if (isScrollingRef.current || now - lastScrollTimeRef.current < 1100) return;
+            if (isSnappingRef.current || now - lastSnapTimeRef.current < 1400) return;
 
             const touchEnd = e.changedTouches[0].clientY;
             const diff = touchStartRef.current - touchEnd;
 
-            if (Math.abs(diff) > 30) {
+            if (Math.abs(diff) > 35) {
                 const currentIndex = getCurrentSectionIndex();
                 if (diff > 0 && currentIndex < sectionIds.length - 1) {
-                    scrollToSection(currentIndex + 1);
+                    snapToSection(currentIndex + 1);
                 } else if (diff < 0 && currentIndex > 0) {
-                    scrollToSection(currentIndex - 1);
+                    snapToSection(currentIndex - 1);
                 }
             }
         };
@@ -125,13 +121,14 @@ export default function SmoothScroll({ children }) {
         window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
         return () => {
-            if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
             window.removeEventListener('wheel', handleWheel);
             window.removeEventListener('touchstart', handleTouchStart);
             window.removeEventListener('touchend', handleTouchEnd);
+            lenis.destroy();
         };
     }, []);
 
     return <>{children}</>;
 }
+
 
