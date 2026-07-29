@@ -5,22 +5,19 @@ import Lenis from 'lenis';
 
 export default function SmoothScroll({ children }) {
     const lenisRef = useRef(null);
-    const isSnappingRef = useRef(false);
-    const touchStartRef = useRef(0);
-    const lastSnapTimeRef = useRef(0);
 
     useEffect(() => {
         const sectionIds = ['beranda', 'about', 'keahlian', 'projects', 'kontak'];
 
-        // Initialize Lenis for luxury smooth physics momentum
+        // Initialize Lenis with natural, silky smooth momentum
         const lenis = new Lenis({
-            duration: 1.4,
+            duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: 'vertical',
             gestureOrientation: 'vertical',
             smoothWheel: true,
-            wheelMultiplier: 0.85,
-            touchMultiplier: 1.5,
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.8,
             infinite: false,
         });
 
@@ -32,103 +29,60 @@ export default function SmoothScroll({ children }) {
         }
         requestAnimationFrame(raf);
 
-        const getSectionElements = () => {
-            return sectionIds
-                .map((id) => document.getElementById(id))
-                .filter(Boolean);
-        };
+        let snapTimeout = null;
+        let isAutoSnapping = false;
 
-        const getCurrentSectionIndex = () => {
-            const els = getSectionElements();
-            const scrollPos = window.scrollY + window.innerHeight / 3;
-            let currentIndex = 0;
-            for (let i = 0; i < els.length; i++) {
-                if (els[i].offsetTop <= scrollPos) {
-                    currentIndex = i;
+        // Gentle debounced auto-snap to section top when scroll settles
+        const handleScroll = () => {
+            if (isAutoSnapping) return;
+
+            if (snapTimeout) clearTimeout(snapTimeout);
+
+            snapTimeout = setTimeout(() => {
+                const scrollPos = window.scrollY;
+                const els = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+                if (!els.length) return;
+
+                // Find section closest to current scroll position
+                let closestSection = els[0];
+                let minDistance = Math.abs(scrollPos - els[0].offsetTop);
+
+                for (let i = 1; i < els.length; i++) {
+                    const dist = Math.abs(scrollPos - els[i].offsetTop);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestSection = els[i];
+                    }
                 }
-            }
-            return currentIndex;
-        };
 
-        const snapToSection = (index) => {
-            const els = getSectionElements();
-            if (index < 0 || index >= els.length) return;
-
-            isSnappingRef.current = true;
-            lastSnapTimeRef.current = Date.now();
-
-            lenis.scrollTo(els[index], {
-                duration: 1.4,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                onComplete: () => {
-                    isSnappingRef.current = false;
+                // If resting slightly off-center (distance > 10px), gently glide auto-top
+                if (minDistance > 10 && minDistance < window.innerHeight * 0.85) {
+                    isAutoSnapping = true;
+                    lenis.scrollTo(closestSection, {
+                        duration: 0.9,
+                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                        onComplete: () => {
+                            isAutoSnapping = false;
+                        }
+                    });
+                    setTimeout(() => {
+                        isAutoSnapping = false;
+                    }, 1000);
                 }
-            });
-
-            setTimeout(() => {
-                isSnappingRef.current = false;
-            }, 1400);
+            }, 180);
         };
 
-        const handleWheel = (e) => {
-            const now = Date.now();
-            if (isSnappingRef.current || now - lastSnapTimeRef.current < 1400) {
-                e.preventDefault();
-                return;
-            }
-
-            if (Math.abs(e.deltaY) < 12) return;
-
-            e.preventDefault();
-            const currentIndex = getCurrentSectionIndex();
-
-            if (e.deltaY > 0) {
-                // Scroll Down -> Next Section
-                if (currentIndex < sectionIds.length - 1) {
-                    snapToSection(currentIndex + 1);
-                }
-            } else {
-                // Scroll Up -> Previous Section
-                if (currentIndex > 0) {
-                    snapToSection(currentIndex - 1);
-                }
-            }
-        };
-
-        const handleTouchStart = (e) => {
-            touchStartRef.current = e.touches[0].clientY;
-        };
-
-        const handleTouchEnd = (e) => {
-            const now = Date.now();
-            if (isSnappingRef.current || now - lastSnapTimeRef.current < 1400) return;
-
-            const touchEnd = e.changedTouches[0].clientY;
-            const diff = touchStartRef.current - touchEnd;
-
-            if (Math.abs(diff) > 35) {
-                const currentIndex = getCurrentSectionIndex();
-                if (diff > 0 && currentIndex < sectionIds.length - 1) {
-                    snapToSection(currentIndex + 1);
-                } else if (diff < 0 && currentIndex > 0) {
-                    snapToSection(currentIndex - 1);
-                }
-            }
-        };
-
-        window.addEventListener('wheel', handleWheel, { passive: false });
-        window.addEventListener('touchstart', handleTouchStart, { passive: true });
-        window.addEventListener('touchend', handleTouchEnd, { passive: true });
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         return () => {
-            window.removeEventListener('wheel', handleWheel);
-            window.removeEventListener('touchstart', handleTouchStart);
-            window.removeEventListener('touchend', handleTouchEnd);
+            window.removeEventListener('scroll', handleScroll);
+            if (snapTimeout) clearTimeout(snapTimeout);
             lenis.destroy();
         };
     }, []);
 
     return <>{children}</>;
 }
+
 
 
