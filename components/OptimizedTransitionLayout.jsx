@@ -4,17 +4,16 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { NavigationEvents } from './NavigationEvents';
 import { ConnectionProvider } from '../utils/ConnectionProvider';
 import { LoadingProvider } from '../contexts/LoadingContext';
+import ObysPreloader from './ObysPreloader';
 
 /**
- * OptimizedTransitionLayout - Versi yang dioptimalkan dari TransitionLayout
- * 
- * Layout tanpa loading page - konten langsung ditampilkan.
+ * OptimizedTransitionLayout - Layout dengan Obys Preloader
  */
 export default function OptimizedTransitionLayout({ children }) {
   // State untuk tracking navigasi
   const [isNavigating, setIsNavigating] = useState(false);
-  // Loading complete langsung true supaya konten langsung muncul
-  const [isLoadingComplete, setIsLoadingComplete] = useState(true);
+  // Track loading complete (false awal saat preloader jalan)
+  const [isLoadingComplete, setIsLoadingComplete] = useState(false);
 
   // Efek untuk menangani navigasi
   useEffect(() => {
@@ -30,14 +29,17 @@ export default function OptimizedTransitionLayout({ children }) {
   return (
     <ConnectionProvider>
       <LoadingProvider value={{ isLoadingComplete, setLoadingComplete: setIsLoadingComplete }}>
+        {/* Obys Preloader Animation */}
+        <ObysPreloader onComplete={() => setIsLoadingComplete(true)} />
+
         {/* Komponen NavigationEvents untuk mendeteksi navigasi */}
         <Suspense fallback={null}>
           <NavigationEvents setIsNavigating={setIsNavigating} />
         </Suspense>
 
-        {/* Konten halaman - langsung tampil tanpa loading */}
+        {/* Konten halaman */}
         {children}
       </LoadingProvider>
     </ConnectionProvider>
   );
-}
+}
