@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Fungsi untuk memperbaiki gambar yang gagal dimuat
   function fixBrokenImages() {
     console.log('Fixing broken images...');
-    // Cari semua gambar dalam project card dan AuroraCard
-    const images = document.querySelectorAll('.project-card img, [class*="AuroraCard"] img');
+    // Cari semua gambar dalam project card dan AuroraCard / ChromaCard
+    const images = document.querySelectorAll('.project-card img, [class*="AuroraCard"] img, .chroma-card img, .chroma-grid img');
     console.log(`Found ${images.length} project images`);
     
     images.forEach((img, index) => {

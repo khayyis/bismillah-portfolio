@@ -14,8 +14,25 @@ export default function ObysPreloader({ onComplete }) {
     const startTime = performance.now();
     let animFrameId = null;
 
+    // Helper to safely run gsap on selectors if they exist
+    const safeGsapTo = (selectors, vars) => {
+      const arr = Array.isArray(selectors) ? selectors : [selectors];
+      const valid = arr.filter(s => typeof s === 'string' ? document.querySelector(s) : s);
+      if (valid.length > 0) {
+        gsap.to(valid, vars);
+      }
+    };
+
+    const safeGsapSet = (selectors, vars) => {
+      const arr = Array.isArray(selectors) ? selectors : [selectors];
+      const valid = arr.filter(s => typeof s === 'string' ? document.querySelector(s) : s);
+      if (valid.length > 0) {
+        gsap.set(valid, vars);
+      }
+    };
+
     // Phase 1: Fade in preloader details (0 -> 0.8s)
-    gsap.to(['.preloader-title', '.preloader-percent', '.preloader-line'], {
+    safeGsapTo(['.preloader-title', '.preloader-percent', '.preloader-line'], {
       opacity: 1,
       duration: 0.8,
       ease: 'power2.out'
@@ -41,12 +58,12 @@ export default function ObysPreloader({ onComplete }) {
 
     // Phase 3: Fade out loader details
     const timerPhase3 = setTimeout(() => {
-      gsap.to(['.preloader-title', '.preloader-percent', '.preloader-line'], {
+      safeGsapTo(['.preloader-title', '.preloader-percent', '.preloader-line'], {
         opacity: 0,
         duration: 0.25,
         ease: 'power2.out',
         onComplete: () => {
-          gsap.set(['.preloader-title', '.preloader-percent', '.preloader-line'], {
+          safeGsapSet(['.preloader-title', '.preloader-percent', '.preloader-line'], {
             display: 'none'
           });
         }
@@ -59,15 +76,19 @@ export default function ObysPreloader({ onComplete }) {
       if (typeof onComplete === 'function') {
         onComplete();
       }
-      gsap.to('.preloader-top', { yPercent: -100, duration: 1.2, ease: 'expo.inOut' });
-      gsap.to('.preloader-bottom', {
-        yPercent: 100,
-        duration: 1.2,
-        ease: 'expo.inOut',
-        onComplete: () => {
-          setIsVisible(false);
-        }
-      });
+      safeGsapTo('.preloader-top', { yPercent: -100, duration: 1.2, ease: 'expo.inOut' });
+      if (document.querySelector('.preloader-bottom')) {
+        gsap.to('.preloader-bottom', {
+          yPercent: 100,
+          duration: 1.2,
+          ease: 'expo.inOut',
+          onComplete: () => {
+            setIsVisible(false);
+          }
+        });
+      } else {
+        setIsVisible(false);
+      }
     }, DURATION + 250);
 
     return () => {

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Fungsi untuk log gambar proyek
   function logProjectImages() {
-    const projectImages = document.querySelectorAll('.project-card img, [class*="project"] img, [class*="AuroraCard"] img');
+    const projectImages = document.querySelectorAll('.project-card img, [class*="project"] img, [class*="AuroraCard"] img, .chroma-card img, .chroma-grid img');
     console.log(`Total project images: ${projectImages.length}`);
     
     projectImages.forEach((img, index) => {
