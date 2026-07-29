@@ -1,39 +1,111 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Lenis from 'lenis';
 
 export default function SmoothScroll({ children }) {
-    const lenisRef = useRef(null);
+    const isScrollingRef = useRef(false);
+    const touchStartRef = useRef(0);
+    const lastScrollTimeRef = useRef(0);
 
     useEffect(() => {
-        // Initialize Lenis for smooth scrolling
-        const lenis = new Lenis({
-            duration: 1.2, // Duration of the scroll animation
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing function for smooth deceleration
-            orientation: 'vertical',
-            gestureOrientation: 'vertical',
-            smoothWheel: true,
-            wheelMultiplier: 1,
-            touchMultiplier: 2,
-            infinite: false,
-        });
+        const sectionIds = ['beranda', 'about', 'keahlian', 'projects', 'kontak'];
 
-        lenisRef.current = lenis;
+        const getSectionElements = () => {
+            return sectionIds
+                .map((id) => document.getElementById(id))
+                .filter(Boolean);
+        };
 
-        // Animation frame loop
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        const getCurrentSectionIndex = () => {
+            const els = getSectionElements();
+            const scrollPos = window.scrollY + window.innerHeight / 3;
+            let currentIndex = 0;
+            for (let i = 0; i < els.length; i++) {
+                if (els[i].offsetTop <= scrollPos) {
+                    currentIndex = i;
+                }
+            }
+            return currentIndex;
+        };
 
-        requestAnimationFrame(raf);
+        const scrollToSection = (index) => {
+            const els = getSectionElements();
+            if (index < 0 || index >= els.length) return;
 
-        // Cleanup on unmount
+            isScrollingRef.current = true;
+            lastScrollTimeRef.current = Date.now();
+            
+            const targetEl = els[index];
+            const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset;
+
+            window.scrollTo({
+                top: targetTop,
+                behavior: 'smooth'
+            });
+
+            setTimeout(() => {
+                isScrollingRef.current = false;
+            }, 900);
+        };
+
+        const handleWheel = (e) => {
+            // Rate limit scroll triggers
+            const now = Date.now();
+            if (isScrollingRef.current || now - lastScrollTimeRef.current < 900) {
+                e.preventDefault();
+                return;
+            }
+
+            if (Math.abs(e.deltaY) < 10) return;
+
+            e.preventDefault();
+            const currentIndex = getCurrentSectionIndex();
+
+            if (e.deltaY > 0) {
+                // Scroll Down -> Next Section
+                if (currentIndex < sectionIds.length - 1) {
+                    scrollToSection(currentIndex + 1);
+                }
+            } else {
+                // Scroll Up -> Previous Section
+                if (currentIndex > 0) {
+                    scrollToSection(currentIndex - 1);
+                }
+            }
+        };
+
+        const handleTouchStart = (e) => {
+            touchStartRef.current = e.touches[0].clientY;
+        };
+
+        const handleTouchEnd = (e) => {
+            const now = Date.now();
+            if (isScrollingRef.current || now - lastScrollTimeRef.current < 900) return;
+
+            const touchEnd = e.changedTouches[0].clientY;
+            const diff = touchStartRef.current - touchEnd;
+
+            if (Math.abs(diff) > 35) {
+                const currentIndex = getCurrentSectionIndex();
+                if (diff > 0 && currentIndex < sectionIds.length - 1) {
+                    scrollToSection(currentIndex + 1);
+                } else if (diff < 0 && currentIndex > 0) {
+                    scrollToSection(currentIndex - 1);
+                }
+            }
+        };
+
+        window.addEventListener('wheel', handleWheel, { passive: false });
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
         return () => {
-            lenis.destroy();
+            window.removeEventListener('wheel', handleWheel);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleTouchEnd);
         };
     }, []);
 
     return <>{children}</>;
 }
+
