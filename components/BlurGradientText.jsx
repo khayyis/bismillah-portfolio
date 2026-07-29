@@ -8,48 +8,52 @@ import './GradientText.css';
  * BlurGradientText - Obys Agency Style GSAP Hero Text Reveal
  * Uses exact GSAP `expo.out` curve and `yPercent: 120` reveal mask matching experiment.obys.agency
  */
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import './GradientText.css';
+
+/**
+ * BlurGradientText - Obys Agency Style GSAP Hero Text Reveal
+ * Uses exact GSAP `expo.out` curve and `yPercent: 120` reveal mask matching experiment.obys.agency
+ */
 const BlurGradientText = ({
     text = '',
-    delay = 120,
+    delay = 150,
     className = '',
     animateBy = 'words',
     threshold = 0.1,
     rootMargin = '0px',
     colors = ['#40ffaa', '#4079ff', '#40ffaa', '#4079ff', '#40ffaa'],
     animationSpeed = 8,
+    isReady = true,
 }) => {
     const elements = animateBy === 'words' ? text.split(' ') : text.split('');
     const ref = useRef(null);
     const wordsRef = useRef([]);
 
     useEffect(() => {
-        if (!ref.current) return;
+        if (!isReady || !ref.current) return;
 
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    if (wordsRef.current.length > 0) {
-                        gsap.fromTo(
-                            wordsRef.current,
-                            { yPercent: 120, opacity: 0 },
-                            {
-                                yPercent: 0,
-                                opacity: 1,
-                                duration: 1.2,
-                                stagger: delay / 1000,
-                                ease: 'expo.out'
-                            }
-                        );
-                    }
-                    observer.unobserve(ref.current);
-                }
-            },
-            { threshold, rootMargin }
+        const validElements = wordsRef.current.filter(Boolean);
+        if (validElements.length === 0) return;
+
+        // Reset & Run GSAP Obys Reveal Animation
+        gsap.killTweensOf(validElements);
+        gsap.fromTo(
+            validElements,
+            { yPercent: 120, opacity: 0 },
+            {
+                yPercent: 0,
+                opacity: 1,
+                duration: 1.2,
+                stagger: delay / 1000,
+                ease: 'expo.out',
+                clearProps: 'willChange'
+            }
         );
-
-        observer.observe(ref.current);
-        return () => observer.disconnect();
-    }, [threshold, rootMargin, delay]);
+    }, [isReady, text, delay]);
 
     // Auto-fit font size based on container width
     useEffect(() => {
@@ -58,16 +62,16 @@ const BlurGradientText = ({
             const container = ref.current.parentElement;
             if (!container) return;
 
-            const containerWidth = container.offsetWidth - 16; // Account for padding
+            const containerWidth = container.offsetWidth - 16;
             const textLength = text.length;
             const wordCount = text.split(' ').length;
 
             const charWidthRatio = 0.7;
-            const gapRatio = (wordCount - 1) * 0.25; // gaps between words
+            const gapRatio = (wordCount - 1) * 0.25;
             const effectiveLength = textLength * charWidthRatio + gapRatio;
             const optimalSize = containerWidth / effectiveLength;
 
-            const clampedSize = Math.max(10, Math.min(72, optimalSize));
+            const clampedSize = Math.max(12, Math.min(72, optimalSize));
 
             ref.current.style.setProperty('font-size', `${clampedSize}px`, 'important');
         };
@@ -99,7 +103,7 @@ const BlurGradientText = ({
                 display: 'flex',
                 flexWrap: 'nowrap',
                 justifyContent: 'center',
-                gap: '0.25em',
+                gap: '0.28em',
                 fontFamily: "var(--font-lemonmilk), 'lemonmilkbold', sans-serif",
                 whiteSpace: 'nowrap',
                 width: '100%',
@@ -115,8 +119,8 @@ const BlurGradientText = ({
                         style={{
                             ...gradientStyle,
                             fontSize: 'inherit',
-                            transform: 'translateY(120%)',
-                            opacity: 0
+                            opacity: 0,
+                            transform: 'translateY(120%)'
                         }}
                     >
                         {segment === ' ' ? '\u00A0' : segment}
@@ -128,3 +132,4 @@ const BlurGradientText = ({
 };
 
 export default BlurGradientText;
+

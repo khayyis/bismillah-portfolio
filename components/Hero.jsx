@@ -21,12 +21,12 @@ export default function Hero() {
           transition={{ duration: 0.3 }}
           className="text-center w-full mx-auto"
         >
-          {/* Main Heading with Blur + Gradient Animation */}
+          {/* Main Heading with Obys Agency Style GSAP Reveal Animation */}
           <BlurGradientText
             text={profile.name}
-            delay={120}
+            delay={150}
             animateBy="words"
-            direction="top"
+            isReady={isAnimationReady}
             colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
             animationSpeed={8}
             className="hero-name-gradient"
