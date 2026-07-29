@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obys® Experiment Space — EJO Modal Reveal</title>
+  <meta name="description" content="Obys Agency preloader & text reveal animation applied to EJO Modal Card">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══ PRELOADER ═══ -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-top"></div>
+    <div class="preloader-bottom"></div>
+    <div class="preloader-content">
+      <div class="mask-wrap"><div class="preloader-title">Obys® Experiment Space</div></div>
+      <div class="mask-wrap"><div class="preloader-percent">00</div></div>
+    </div>
+    <div class="preloader-line">
+      <div class="preloader-line-fill"></div>
+    </div>
+  </div>
+
+  <!-- ═══ MAIN PAGE ═══ -->
+  <main class="main-content">
+    <!-- Navigation Bar -->
+    <nav class="nav">
+      <div class="nav-left">
+        <a href="#" class="nav-logo">Obys® Space</a>
+        <a href="#modal-section">EJO Card</a>
+      </div>
+      <div class="nav-right">
+        <button id="btn-replay" class="btn-replay">
+          <i data-lucide="rotate-ccw"></i> Replay Obys Reveal
+        </button>
+        <span class="nav-time" id="nav-time">00:00:00 AM</span>
+      </div>
+    </nav>
+
+    <!-- Hero Section with Obys reveal text -->
+    <section class="hero">
+      <div class="hero-mask">
+        <div class="hero-reveal-logo">OBYS<sup>®</sup></div>
+      </div>
+      <div class="hero-mask">
+        <div class="hero-reveal-top">EXPERIMENT</div>
+      </div>
+      <div class="hero-mask">
+        <div class="hero-reveal-bottom">SPACE</div>
+      </div>
+    </section>
+
+    <div class="hero-sub">
+      <span class="hero-sub-left">Since 2018…</span>
+      <span class="hero-sub-right">…Never Finished</span>
+    </div>
+
+    <!-- EJO Modal Section -->
+    <section class="modal-wrapper-section" id="modal-section">
+      <div class="modal-card card-glass animate-in" style="max-width: 720px;">
+        <div class="modal-header">
+          <div class="ejo-header-badge">
+            <span id="modal-ejo-id" class="badge-ejo-code">GEJO-003</span>
+            <span id="modal-ejo-priority" class="badge" style="background-color: var(--color-cyan); color: rgb(255, 255, 255);">3 - Rutin</span>
+          </div>
+          <button class="modal-close" id="modal-close-btn" aria-label="Close modal">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+
+        <div class="modal-body" style="grid-template-columns: 1fr;">
+          <div class="modal-main-info">
+            <div class="mask-reveal">
+              <h2 id="modal-ejo-title">adsaad</h2>
+            </div>
+            <div class="mask-reveal">
+              <p class="text-secondary" style="margin-top: 0.5rem;">
+                <i data-lucide="map-pin" style="width: 14px; height: 14px; display: inline; vertical-align: middle; margin-right: 4px;"></i>
+                Lokasi: <span id="modal-ejo-location">dsadsadsadada</span>
+              </p>
+            </div>
+
+            <div class="ejo-meta-fields">
+              <div class="meta-field mask-reveal">
+                <span class="meta-label"><i data-lucide="building"></i> Departemen Pemohon</span>
+                <span class="meta-value" id="modal-ejo-dept">ENG (Engineering)</span>
+              </div>
+              <div class="meta-field mask-reveal" id="modal-ejo-mid-field" style="display: flex;">
+                <span class="meta-label"><i data-lucide="cpu"></i> Machine ID (MID)</span>
+                <span class="meta-value" id="modal-ejo-mid">23212321</span>
+              </div>
+              <div class="meta-field mask-reveal" id="modal-ejo-quantity-field" style="display: flex;">
+                <span class="meta-label"><i data-lucide="package"></i> Jumlah Quantity Barang</span>
+                <span class="meta-value" id="modal-ejo-quantity">12 Pcs</span>
+              </div>
+              <div class="meta-field mask-reveal">
+                <span class="meta-label"><i data-lucide="user"></i> Nama Pemohon</span>
+                <span class="meta-value" id="modal-ejo-requester">foreman</span>
+              </div>
+              <div class="meta-field mask-reveal">
+                <span class="meta-label"><i data-lucide="wrench"></i> Kategori Pekerjaan</span>
+                <span class="meta-value" id="modal-ejo-category">Repair Part</span>
+              </div>
+              <div class="meta-field mask-reveal">
+                <span class="meta-label"><i data-lucide="calendar"></i> Tanggal Dibuat</span>
+                <span class="meta-value" id="modal-ejo-created-date">29 Jul 2026</span>
+              </div>
+              <div class="meta-field mask-reveal">
+                <span class="meta-label"><i data-lucide="calendar"></i> Target Selesai (Requester)</span>
+                <span class="meta-value" id="modal-ejo-target-date">--</span>
+              </div>
+              <div class="meta-field mask-reveal" id="modal-ejo-est-date-field" style="display: flex;">
+                <span class="meta-label"><i data-lucide="calendar-check" style="color: var(--color-green);"></i> Estimasi Selesai (Acceptor)</span>
+                <span class="meta-value" id="modal-ejo-est-date" style="color: var(--color-green); font-weight: bold;">28 Jun 2026</span>
+              </div>
+              <!-- ponytail: dynamic field to show assigned engineer details -->
+              <div class="meta-field mask-reveal" id="modal-ejo-engineer-field" style="display: flex;">
+                <span class="meta-label"><i data-lucide="wrench" style="color: var(--color-green);"></i> Engineer (General)</span>
+                <span class="meta-value" id="modal-ejo-engineer" style="color: var(--color-green); font-weight: bold;">-</span>
+              </div>
+              <div class="meta-field mask-reveal">
+                <span class="meta-label"><i data-lucide="activity"></i> Status Sekarang</span>
+                <span class="badge badge-status status-requested" id="modal-ejo-status">Requested</span>
+              </div>
+
+              <!-- Repair Cost Analysis Card (Full Width) -->
+              <div class="cost-analysis-card mask-reveal" id="modal-ejo-cost-field" style="display: flex;">
+                <div class="cost-analysis-header">
+                  <i data-lucide="calculator"></i>
+                  <span>Analisis Biaya Perbaikan (Repair Cost Analysis)</span>
+                </div>
+                <div class="cost-analysis-grid">
+                  <div class="cost-stat-item">
+                    <span class="cost-stat-label">Harga Baru Part</span>
+                    <span class="cost-stat-value" id="modal-ejo-price-new">Rp 112.211</span>
+                  </div>
+                  <div class="cost-stat-item">
+                    <span class="cost-stat-label">Durasi Pengerjaan</span>
+                    <span class="cost-stat-value" id="modal-ejo-duration">0 Hari</span>
+                  </div>
+                  <div class="cost-stat-item">
+                    <span class="cost-stat-label">Biaya Orang / Hari</span>
+                    <span class="cost-stat-value" id="modal-ejo-cost-per-day">Rp 0</span>
+                  </div>
+                  <div class="cost-stat-item">
+                    <span class="cost-stat-label">Total Biaya Perbaikan</span>
+                    <span class="cost-stat-value" id="modal-ejo-cost-total">Rp 0</span>
+                  </div>
+                </div>
+                <div class="cost-saving-banner">
+                  <span class="cost-saving-label">Cost Saving (Penghematan):</span>
+                  <span class="cost-saving-value" id="modal-ejo-saving" style="color: var(--color-green);">Rp 112.211</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="details-section mask-reveal">
+              <h4><i data-lucide="align-left" style="color: var(--color-cyan);"></i> Deskripsi Masalah / Ruang Lingkup</h4>
+              <div class="details-desc-box" id="modal-ejo-desc">dsdasa</div>
+              <div id="modal-attachment-preview-container" style="margin-top: 1rem;"></div>
+            </div>
+
+            <!-- Justifikasi Urgent (Prioritas 1) -->
+            <div class="details-section mask-reveal" id="modal-ejo-urgent-section" style="display: none;">
+              <h4 style="color: var(--color-rose); border-bottom-color: rgba(244, 63, 94, 0.2);"><i data-lucide="alert-triangle" style="color: var(--color-rose);"></i> Justifikasi Prioritas 1 (Urgent)</h4>
+              <div class="details-desc-box urgent-report-box" id="modal-ejo-urgent-reason">
+                Alasan urgent akan ditampilkan di sini.
+              </div>
+            </div>
+
+            <!-- Foto Before (Kondisi Awal) -->
+            <div class="details-section mask-reveal" id="modal-ejo-photo-before-section" style="display: block;">
+              <h4><i data-lucide="camera" style="color: var(--color-blue);"></i> Foto Before (Kondisi Awal)</h4>
+              <div class="photo-before-container">
+                <a id="modal-ejo-photo-before-link" href="#" target="_blank" class="photo-before-wrapper">
+                  <div class="photo-placeholder-graphic">
+                    <i data-lucide="image" style="width: 32px; height: 32px; color: var(--color-cyan);"></i>
+                    <span>Preview Foto Before</span>
+                  </div>
+                  <span class="photo-preview-hint"><i data-lucide="zoom-in" style="width: 12px; height: 12px;"></i> Klik untuk memperbesar</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Laporan Hasil Pekerjaan (Drafter/Engineer) -->
+            <div class="details-section mask-reveal" id="modal-ejo-completion-report-section" style="display: none;">
+              <h4 class="completion-section-title"><i data-lucide="check-circle-2" style="color: var(--color-green);"></i> Laporan Hasil Pekerjaan (Drafter/Engineer)</h4>
+              <div class="details-desc-box completion-report-box" id="modal-ejo-completion-report"></div>
+            </div>
+
+            <!-- Instruksi/Alasan Revisi -->
+            <div class="details-section mask-reveal" id="modal-ejo-revision-instruction-section" style="display: none;">
+              <h4 class="revision-section-title"><i data-lucide="alert-circle" style="color: var(--color-rose);"></i> Instruksi/Alasan Revisi (<span id="modal-ejo-revision-role">Lead/Admin</span>)</h4>
+              <div class="details-desc-box revision-report-box" id="modal-ejo-revision-instruction"></div>
+            </div>
+
+            <!-- Signature approvals section for General EJOs -->
+            <div class="details-section mask-reveal" id="general-ejo-signatures-section" style="display: block;">
+              <h4><i data-lucide="check-square" style="color: var(--color-cyan);"></i> Tanda Tangan Persetujuan (Approval)</h4>
+              <div id="general-ejo-signatures-container" class="signatures-grid">
+                <div class="signature-card signature-pending">
+                  <span class="signature-role">User (Requester)</span>
+                  <div class="signature-placeholder">
+                    <i data-lucide="clock" class="signature-pending-icon"></i>
+                    <span class="signature-empty">Belum ada approval</span>
+                  </div>
+                </div>
+            
+                <div class="signature-card signature-pending">
+                  <span class="signature-role">Foreman / Admin</span>
+                  <div class="signature-placeholder">
+                    <i data-lucide="clock" class="signature-pending-icon"></i>
+                    <span class="signature-empty">Belum ada approval</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Flow/Activity Logs -->
+            <div class="details-section mask-reveal">
+              <h4><i data-lucide="history" style="color: var(--color-cyan);"></i> Update Log Pekerjaan &amp; Progress</h4>
+              <div class="timeline" id="modal-ejo-logs">
+                <div class="timeline-item active">
+                  <div class="timeline-date">2026-07-29 13:53</div>
+                  <div class="timeline-content">General EJO dibuat oleh foreman.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Control sidebar for actions in Modal -->
+          <div class="modal-action-sidebar" id="modal-action-sidebar" style="display: block;">
+            <div class="action-card mask-reveal" id="card-assignment-finance">
+              <h4>Penugasan &amp; Keuangan</h4>
+
+              <div class="form-field" style="margin-top: 1rem;">
+                <label>Engineer Lapangan (Bisa beberapa)</label>
+                <div id="modal-assignee-container" class="card-glass" style="max-height: 120px; overflow-y: auto; padding: 0.5rem; display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--card-border); border-radius: var(--border-radius-sm);">
+                  <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer; font-size: 0.8rem; margin: 0;">
+                    <input type="checkbox" id="assignee-unassigned" value="Unassigned" checked> Unassigned (Belum ditunjuk)
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-grid" style="grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.75rem;">
+                <div class="form-field">
+                  <label for="modal-est-cost">Est. Biaya (Rp)</label>
+                  <input type="number" id="modal-est-cost" class="input-sm" value="0">
+                </div>
+                <div class="form-field">
+                  <label for="modal-act-cost">Aktual Biaya (Rp)</label>
+                  <input type="number" id="modal-act-cost" class="input-sm" value="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="action-card mask-reveal" id="card-work-reports" style="margin-top: 1rem;">
+              <h4>Laporan &amp; Log Pekerjaan</h4>
+              <div class="form-field" style="margin-top: 0.75rem;">
+                <label for="modal-log-template">Template Laporan</label>
+                <select id="modal-log-template">
+                  <option value="">-- Pilih Template --</option>
+                  <option value="selesai_normal">Pekerjaan Selesai Normal &amp; Testing OK</option>
+                  <option value="selesai_part">Selesai &amp; Penggantian Spare Part</option>
+                  <option value="selesai_catatan">Selesai dengan Catatan / Observasi</option>
+                  <option value="progress_log">Catatan Progress / Kendala Lapangan</option>
+                </select>
+              </div>
+              <div class="form-field" style="margin-top: 0.75rem;">
+                <label for="modal-new-log">Catatan Pekerjaan Tambahan</label>
+                <textarea id="modal-new-log" rows="3" placeholder="Tulis catatan perkembangan atau laporan penyelesaian di sini..."></textarea>
+              </div>
+              <div class="form-field" style="margin-top: 0.75rem; display: block;">
+                <label for="modal-attachment">Tambah Lampiran File / Gambar</label>
+                <div class="file-upload-mock" id="modal-upload-mock">
+                  <i data-lucide="upload-cloud" style="width: 16px; height: 16px;"></i>
+                  <span id="modal-upload-span">Klik untuk tambah gambar</span>
+                  <input type="file" id="modal-attachment" style="display: none;" multiple accept="image/*,.pdf,.dwg,.doc,.docx,.xls,.xlsx,.zip,.rar">
+                </div>
+              </div>
+            </div>
+
+            <div class="action-card mask-reveal" id="card-status-update" style="margin-top: 1rem;">
+              <h4>Perbarui Status EJO</h4>
+              <div class="status-btn-group" id="modal-status-btn-group" style="display: flex;">
+                <button class="btn btn-outline btn-status-change active" data-status="Requested">
+                  <i data-lucide="circle-dot"></i> Requested
+                </button>
+                <button class="btn btn-outline btn-status-change" data-status="Checking">
+                  <i data-lucide="thumbs-up"></i> Checking
+                </button>
+                <button class="btn btn-outline btn-status-change" data-status="In Progress">
+                  <i data-lucide="play"></i> Start Work
+                </button>
+                <button class="btn btn-outline btn-status-change" data-status="Pending Approval">
+                  <i data-lucide="clock"></i> Pending
+                </button>
+                <button class="btn btn-outline btn-status-change" data-status="Completed">
+                  <i data-lucide="check"></i> Complete
+                </button>
+                <button class="btn btn-outline btn-danger btn-status-change" data-status="Cancelled">
+                  <i data-lucide="x-circle"></i> Cancel
+                </button>
+              </div>
+
+              <!-- Sub-options for Checking status -->
+              <div id="checking-sub-options" style="display: none; margin-top: 0.75rem; padding: 0.75rem; border: 1px dashed var(--card-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.03); flex-direction: column; gap: 0.5rem;">
+                <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Sub-status Checking:</label>
+                <div style="display: flex; gap: 1.5rem; align-items: center;">
+                  <label style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; cursor: pointer; color: var(--text-main);">
+                    <input type="checkbox" name="checking-sub-type" value="Drawing Ready" checked> Drawing Ready
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; cursor: pointer; color: var(--text-main);">
+                    <input type="checkbox" name="checking-sub-type" value="Material"> Material
+                  </label>
+                </div>
+              </div>
+
+              <div id="modal-revision-wrapper" style="display: none; margin-top: 1rem; flex-direction: column; gap: 8px; width: 100%;">
+                <button class="btn btn-warning full-width" id="btn-request-revision">
+                  <i data-lucide="refresh-cw" style="width: 16px; height: 16px; margin-right: 4px;"></i> Ajukan Revisi Pekerjaan
+                </button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary glow-button full-width mask-reveal" id="btn-save-modal" style="margin-top: 1.5rem;">
+              <i data-lucide="save"></i> Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

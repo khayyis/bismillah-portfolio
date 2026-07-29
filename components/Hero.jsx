@@ -15,12 +15,7 @@ export default function Hero() {
     >
       <div className="container mx-auto px-4 py-12">
         {/* Centered Content */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isAnimationReady ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-center w-full mx-auto"
-        >
+        <div className="text-center w-full mx-auto">
           {/* Main Heading with Obys Agency Style GSAP Reveal Animation */}
           <BlurGradientText
             text={profile.name}
@@ -31,7 +26,7 @@ export default function Hero() {
             animationSpeed={8}
             className="hero-name-gradient"
           />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

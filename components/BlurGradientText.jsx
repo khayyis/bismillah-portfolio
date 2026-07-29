@@ -8,16 +8,6 @@ import './GradientText.css';
  * BlurGradientText - Obys Agency Style GSAP Hero Text Reveal
  * Uses exact GSAP `expo.out` curve and `yPercent: 120` reveal mask matching experiment.obys.agency
  */
-'use client';
-
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import './GradientText.css';
-
-/**
- * BlurGradientText - Obys Agency Style GSAP Hero Text Reveal
- * Uses exact GSAP `expo.out` curve and `yPercent: 120` reveal mask matching experiment.obys.agency
- */
 const BlurGradientText = ({
     text = '',
     delay = 150,
