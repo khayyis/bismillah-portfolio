@@ -55,6 +55,10 @@ export default function ObysPreloader({ onComplete }) {
 
     // Phase 4: Split curtain reveal
     const timerPhase4 = setTimeout(() => {
+      // Trigger animation right when split curtain begins so text reveals as curtains part
+      if (typeof onComplete === 'function') {
+        onComplete();
+      }
       gsap.to('.preloader-top', { yPercent: -100, duration: 1.2, ease: 'expo.inOut' });
       gsap.to('.preloader-bottom', {
         yPercent: 100,
@@ -62,12 +66,9 @@ export default function ObysPreloader({ onComplete }) {
         ease: 'expo.inOut',
         onComplete: () => {
           setIsVisible(false);
-          if (typeof onComplete === 'function') {
-            onComplete();
-          }
         }
       });
-    }, DURATION + 300);
+    }, DURATION + 250);
 
     return () => {
       if (animFrameId) cancelAnimationFrame(animFrameId);
