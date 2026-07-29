@@ -6,16 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-}
-
-section, footer {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
-
 :root {
   /* Variabel tema terang (default) */
   --bg-primary: 249, 250, 251;
