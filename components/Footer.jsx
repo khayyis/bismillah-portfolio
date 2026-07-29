@@ -11,7 +11,7 @@ export default function Footer() {
   const { profile } = useProfile();
 
   return (
-    <footer className="text-white py-8 md:py-12 pb-24 md:pb-12">
+    <footer className="relative min-h-[60vh] flex flex-col justify-center items-center text-white py-8 md:py-12 pb-24 md:pb-12 w-full">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           <div>
