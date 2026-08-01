@@ -1,4 +1,5 @@
 'use client';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ShinyText from './ShinyText';
 import socialConfig from '../config/socialConfig';
@@ -10,8 +11,54 @@ export default function Footer() {
   const isAnimationReady = useAnimationReady(500);
   const { profile } = useProfile();
 
+  const footerRef = useRef(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(false);
+  const [hasCooldown, setHasCooldown] = useState(false);
+
+  useEffect(() => {
+    const targetNode = footerRef.current;
+    if (!targetNode) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !hasCooldown && !isAutoScrolling) {
+          setIsAutoScrolling(true);
+          setHasCooldown(true);
+
+          // Smooth scroll back to top
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          // Reset opacity and state after scroll finishes
+          setTimeout(() => {
+            setIsAutoScrolling(false);
+          }, 1200);
+
+          // Cooldown period before auto-top can trigger again
+          setTimeout(() => {
+            setHasCooldown(false);
+          }, 5000);
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(targetNode);
+
+    return () => {
+      if (targetNode) observer.unobserve(targetNode);
+    };
+  }, [hasCooldown, isAutoScrolling]);
+
   return (
-    <footer className="relative min-h-[60vh] flex flex-col justify-center items-center text-white py-8 md:py-12 pb-24 md:pb-12 w-full">
+    <footer
+      ref={footerRef}
+      style={{
+        opacity: isAutoScrolling ? 0 : 1,
+        transition: 'opacity 0.6s ease-in-out',
+      }}
+      className="relative min-h-[60vh] flex flex-col justify-center items-center text-white py-8 md:py-12 pb-24 md:pb-12 w-full bg-[#060a12]"
+    >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           <div>
