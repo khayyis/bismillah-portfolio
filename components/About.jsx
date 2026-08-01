@@ -15,25 +15,27 @@ const About = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 80%', 'end end'],
+    offset: ['start start', 'end end'],
   });
 
-  // Stage 1: HI Greeting (0.00 - 0.25) -> Immediately visible (1) from 0 to 0.20, then fades out to 0
-  const hiOpacity = useTransform(scrollYProgress, [0, 0.20, 0.30], [1, 1, 0]);
-  const hiScale = useTransform(scrollYProgress, [0, 0.20, 0.30], [1, 1.1, 1.3]);
-  const hiY = useTransform(scrollYProgress, [0.20, 0.30], [0, -40]);
+  // Stage 1: HI Greeting (0.00 - 0.22)
+  // Visible initially, then cleanly fades out BEFORE Stage 2 enters
+  const hiOpacity = useTransform(scrollYProgress, [0, 0.15, 0.24], [1, 1, 0]);
+  const hiScale = useTransform(scrollYProgress, [0, 0.15, 0.24], [1, 1.05, 1.2]);
+  const hiY = useTransform(scrollYProgress, [0.15, 0.24], [0, -40]);
 
-  // Stage 2: Header & Profile Card (0.22 - 0.45)
-  const stage2Opacity = useTransform(scrollYProgress, [0.22, 0.35], [0, 1]);
-  const stage2Y = useTransform(scrollYProgress, [0.22, 0.35], [40, 0]);
+  // Stage 2: Header & Profile Card (0.26 - 0.50)
+  // Starts ONLY after HI has faded out (0.26+)
+  const stage2Opacity = useTransform(scrollYProgress, [0.25, 0.38], [0, 1]);
+  const stage2Y = useTransform(scrollYProgress, [0.25, 0.38], [50, 0]);
 
-  // Stage 3: School Title & Partial Bio (0.45 - 0.70)
-  const stage3Opacity = useTransform(scrollYProgress, [0.42, 0.58], [0, 1]);
-  const stage3Y = useTransform(scrollYProgress, [0.42, 0.58], [30, 0]);
+  // Stage 3: School Title & Bio (0.50 - 0.75)
+  const stage3Opacity = useTransform(scrollYProgress, [0.45, 0.60], [0, 1]);
+  const stage3Y = useTransform(scrollYProgress, [0.45, 0.60], [35, 0]);
 
-  // Stage 4: Full Bio & Contact Button (0.70 - 1.00)
+  // Stage 4: Contact Button (0.75 - 1.00)
   const stage4Opacity = useTransform(scrollYProgress, [0.65, 0.80], [0, 1]);
-  const stage4Y = useTransform(scrollYProgress, [0.65, 0.80], [20, 0]);
+  const stage4Y = useTransform(scrollYProgress, [0.65, 0.80], [25, 0]);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('kontak');
@@ -59,41 +61,52 @@ const About = () => {
   };
 
   return (
-    <section id="about" ref={containerRef} className="relative h-[350vh] w-full">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-12 md:py-16 text-white">
+    <section id="about" ref={containerRef} className="relative h-[320vh] w-full bg-[#070b14] text-white">
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden py-8 md:py-16">
         
-        {/* Stage 1: HI Greeting Overlay */}
+        {/* Stage 1: Standalone HI Greeting Overlay */}
         <motion.div
-          style={{ opacity: hiOpacity, scale: hiScale, y: hiY }}
-          className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none px-4 text-center"
+          style={{
+            opacity: hiOpacity,
+            scale: hiScale,
+            y: hiY,
+          }}
+          className="absolute inset-0 flex flex-col items-center justify-center z-30 pointer-events-none px-4 text-center bg-[#070b14]/90 backdrop-blur-md"
         >
-          <div className="inline-block px-6 py-2 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-sm md:text-base font-medium mb-4 backdrop-blur-sm shadow-lg shadow-blue-500/10">
+          <div className="inline-flex items-center px-5 py-2 rounded-full bg-blue-500/20 border border-blue-400/40 text-blue-300 text-sm md:text-base font-semibold mb-6 shadow-lg shadow-blue-500/20">
             Halo! 👋
           </div>
-          <h1 className="text-7xl md:text-9xl lg:text-[12rem] font-black tracking-tighter bg-gradient-to-r from-white via-blue-100 to-blue-500 bg-clip-text text-transparent drop-shadow-[0_10px_35px_rgba(59,130,246,0.3)]">
+          <h1 className="text-7xl md:text-9xl lg:text-[13rem] font-black tracking-tight text-white drop-shadow-[0_15px_45px_rgba(59,130,246,0.4)]">
             HI
           </h1>
-          <p className="mt-4 text-gray-400 text-sm md:text-lg max-w-md font-medium">
+          <p className="mt-6 text-gray-300 text-base md:text-xl max-w-md font-medium tracking-wide">
             Scroll ke bawah untuk mengenal saya lebih dekat
           </p>
+          <div className="mt-8 flex flex-col items-center animate-bounce opacity-70">
+            <span className="text-xs text-blue-400 font-mono tracking-widest uppercase mb-1">Scroll Down</span>
+            <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
         </motion.div>
 
-        {/* Stage 2, 3, 4: Main Content Container */}
+        {/* Main Content (Stage 2, 3, 4) */}
         <div className="container mx-auto px-4 md:px-8 lg:px-12 xl:px-16 relative z-10 w-full">
           
-          {/* Header "TENTANG SAYA" (Enters at Stage 2) */}
+          {/* Stage 2: Header "TENTANG SAYA" */}
           <motion.div
             style={{ opacity: stage2Opacity, y: stage2Y }}
             className="text-center mb-8 md:mb-12"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-wide">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-wider">
               TENTANG SAYA
             </h2>
+            <div className="w-16 h-1 bg-blue-500 mx-auto mt-3 rounded-full"></div>
           </motion.div>
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10 lg:gap-14">
             
-            {/* Profile Card (Enters at Stage 2) */}
+            {/* Stage 2: Profile Card */}
             <motion.div
               style={{ opacity: stage2Opacity, y: stage2Y }}
               className="w-full md:w-2/5 lg:w-5/12 flex justify-center md:justify-start"
@@ -112,7 +125,7 @@ const About = () => {
               />
             </motion.div>
 
-            {/* Right Column: School & Bio & Button */}
+            {/* Right Column: School (Stage 3), Bio (Stage 3), Button (Stage 4) */}
             <div className="w-full md:w-3/5 lg:w-7/12 md:pl-6 lg:pl-10 flex flex-col justify-center">
               
               {/* Stage 3: School Title */}
@@ -123,7 +136,7 @@ const About = () => {
                 {profile.school}
               </motion.h3>
 
-              {/* Stage 3 & 4: Bio Text */}
+              {/* Stage 3: Bio Text */}
               <motion.div
                 style={{ opacity: stage3Opacity, y: stage3Y }}
                 className="mb-6"
@@ -134,7 +147,7 @@ const About = () => {
                   baseRotation={2}
                   blurStrength={15}
                   wordAnimationEnd="center center"
-                  textClassName="text-gray-300 text-base md:text-lg leading-relaxed md:text-justify"
+                  textClassName="text-gray-200 text-base md:text-lg leading-relaxed md:text-justify font-normal"
                 >
                   {profile.about}
                 </ScrollReveal>
