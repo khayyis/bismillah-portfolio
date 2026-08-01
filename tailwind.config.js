@@ -5,7 +5,7 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  darkMode: 'class', // Mengaktifkan dark mode berbasis class
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -25,25 +25,25 @@ module.exports = {
         },
         dark: {
           bg: {
-            primary: '#111827', // gray-900
-            secondary: '#1F2937', // gray-800
+            primary: '#111827',
+            secondary: '#1F2937',
           },
           text: {
-            primary: '#F9FAFB', // gray-50
-            secondary: '#E5E7EB', // gray-200
+            primary: '#F9FAFB',
+            secondary: '#E5E7EB',
           },
-          border: '#374151', // gray-700
+          border: '#374151',
         },
         light: {
           bg: {
-            primary: '#F9FAFB', // gray-50
-            secondary: '#F3F4F6', // gray-100
+            primary: '#F9FAFB',
+            secondary: '#F3F4F6',
           },
           text: {
-            primary: '#1F2937', // gray-800
-            secondary: '#4B5563', // gray-600
+            primary: '#1F2937',
+            secondary: '#4B5563',
           },
-          border: '#E5E7EB', // gray-200
+          border: '#E5E7EB',
         },
       },
       fontFamily: {
@@ -68,17 +68,6 @@ module.exports = {
         heading: '600',
         body: '400',
         caption: '500',
-      },
-      spacing: {
-        '4': '4px',
-        '8': '8px',
-        '16': '16px',
-        '24': '24px',
-        '32': '32px',
-        '48': '48px',
-        '64': '64px',
-        '96': '96px',
-        '128': '128px',
       },
       borderRadius: {
         DEFAULT: '6px',
