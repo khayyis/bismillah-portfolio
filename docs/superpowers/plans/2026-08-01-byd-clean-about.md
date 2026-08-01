@@ -1,0 +1,210 @@
+# BYD-Style Clean About Showcase Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+
+**Goal:** Overhaul `components/About.jsx` into a clean, modern, natural-scrolling BYD-inspired showcase section with zero scroll-pinning, crisp dark ocean aesthetics, and configurable action buttons.
+
+**Architecture:** Standard `min-h-screen` section with a 2-column responsive layout (Profile/Image slot on left, Tech details + Badges + GlareHover button on right), animated with Framer Motion `whileInView` for clean entrance.
+
+**Tech Stack:** Next.js, React 19, Framer Motion, Tailwind CSS.
+
+## Global Constraints
+- Target File: `components/About.jsx`
+- Maintain dynamic profile data via `useProfile()` hook.
+- Natural unpinned scroll behavior (`min-h-screen py-16 md:py-24`).
+
+---
+
+### Task 1: Rebuild `components/About.jsx` into BYD Clean Tech Showcase
+
+**Files:**
+- Modify: `components/About.jsx:1-250`
+
+**Interfaces:**
+- Consumes: `useProfile` from `../hooks/useProfile`, `ProfileCard`, `ScrollReveal`, `GlareHover`
+- Produces: Clean BYD-inspired tech showcase section for `#about`
+
+- [ ] **Step 1: Write clean `components/About.jsx`**
+
+```jsx
+'use client';
+import React from 'react';
+import { motion } from 'framer-motion';
+import ProfileCard from './ProfileCard';
+import GlareHover from './GlareHover';
+import ScrollReveal from './ScrollReveal';
+import './GlareHover.css';
+import { useProfile } from '../hooks/useProfile';
+import { useAnimationReady } from '../hooks/useAnimationReady';
+
+const About = () => {
+  const isAnimationReady = useAnimationReady(100);
+  const { profile } = useProfile();
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('kontak');
+    if (contactSection) {
+      const targetPosition = contactSection.offsetTop;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = Math.min(Math.abs(distance) / 2, 1200);
+
+      let start = null;
+      const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+      const animation = (currentTime) => {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const progress = Math.min(timeElapsed / duration, 1);
+        window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      };
+
+      requestAnimationFrame(animation);
+    }
+  };
+
+  return (
+    <section id="about" className="relative min-h-screen py-16 md:py-24 px-4 md:px-8 lg:px-12 bg-[#060a12] text-white flex flex-col justify-center items-center overflow-hidden">
+      
+      {/* BYD Ocean Background Ambient Glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-10 w-[400px] h-[250px] bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none"></div>
+
+      <div className="container mx-auto max-w-6xl relative z-10">
+        
+        {/* Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={isAnimationReady ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12 md:mb-16"
+        >
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs md:text-sm font-semibold mb-4 tracking-wider uppercase backdrop-blur-sm">
+            Halo! 👋 — Mechatronics & AI
+          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-wide">
+            TENTANG SAYA
+          </h2>
+          <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full mx-auto mt-4"></div>
+        </motion.div>
+
+        {/* 2-Column Showcase Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 items-center">
+          
+          {/* Left Column: Showcase Card / Image Slot */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={isAnimationReady ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="lg:col-span-5 flex justify-center"
+          >
+            <div className="w-full max-w-md">
+              <ProfileCard
+                name={profile.name}
+                title={profile.title}
+                handle={profile.handle}
+                status={profile.status}
+                contactText={profile.contactText}
+                avatarUrl={profile.avatarUrl}
+                miniAvatarUrl={profile.miniAvatarUrl}
+                showUserInfo={true}
+                enableTilt={true}
+                onContactClick={scrollToContact}
+              />
+            </div>
+          </motion.div>
+
+          {/* Right Column: Tech Details & Action Triggers */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={isAnimationReady ? { opacity: 1, x: 0 } : { opacity: 0, x: 40 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="lg:col-span-7 flex flex-col justify-center"
+          >
+            {/* School Title */}
+            <h3 className="text-2xl md:text-3xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 via-cyan-300 to-white bg-clip-text text-transparent">
+              {profile.school}
+            </h3>
+
+            {/* Bio Paragraph */}
+            <div className="mb-6">
+              <ScrollReveal
+                baseOpacity={1}
+                enableBlur={true}
+                baseRotation={2}
+                blurStrength={15}
+                wordAnimationEnd="center center"
+                textClassName="text-gray-300 text-base md:text-lg leading-relaxed md:text-justify font-normal"
+              >
+                {profile.about}
+              </ScrollReveal>
+            </div>
+
+            {/* Skill / Tech Badges (BYD-style Innovation Highlights) */}
+            <div className="flex flex-wrap gap-2.5 mb-8">
+              <span className="px-3.5 py-1.5 rounded-lg bg-blue-950/60 border border-blue-500/30 text-blue-300 text-xs md:text-sm font-medium">
+                🤖 Autonomous Mobile Robotics
+              </span>
+              <span className="px-3.5 py-1.5 rounded-lg bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-xs md:text-sm font-medium">
+                📐 3D CAD Design
+              </span>
+              <span className="px-3.5 py-1.5 rounded-lg bg-indigo-950/60 border border-indigo-500/30 text-indigo-300 text-xs md:text-sm font-medium">
+                ⚡ AI & Automation
+              </span>
+            </div>
+
+            {/* Action Trigger Button */}
+            <div className="w-[220px]">
+              <GlareHover
+                height="48px"
+                width="100%"
+                background="#3B82F6"
+                borderRadius="8px"
+                glareColor="#ffffff"
+                glareOpacity={0.3}
+                glareAngle={-30}
+                glareSize={300}
+                transitionDuration={800}
+              >
+                <button
+                  onClick={scrollToContact}
+                  className="w-full h-full flex items-center justify-center text-white font-semibold text-sm md:text-base no-underline select-none bg-transparent border-none relative group"
+                  title="Hubungi saya"
+                  aria-label="Hubungi saya"
+                >
+                  <div className="button-text flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5 mr-2">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    {profile.contactButtonText}
+                  </div>
+                  <span className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none z-10">
+                    Hubungi saya
+                  </span>
+                </button>
+              </GlareHover>
+            </div>
+
+          </motion.div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default About;
+```
+
+- [ ] **Step 2: Commit and Push to GitHub**
+
+```bash
+git add components/About.jsx docs/superpowers/plans/2026-08-01-byd-clean-about.md
+git commit -m "feat(about): implement clean BYD-style showcase layout without scroll-pinning"
+git push origin master
+```
