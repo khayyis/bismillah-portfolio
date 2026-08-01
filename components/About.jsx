@@ -15,25 +15,25 @@ const About = () => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end'],
+    offset: ['start 80%', 'end end'],
   });
 
-  // Stage 1: HI Greeting (0.00 - 0.25)
-  const hiOpacity = useTransform(scrollYProgress, [0, 0.08, 0.18, 0.26], [0, 1, 1, 0]);
-  const hiScale = useTransform(scrollYProgress, [0, 0.15, 0.26], [0.8, 1.1, 1.4]);
-  const hiY = useTransform(scrollYProgress, [0.18, 0.26], [0, -50]);
+  // Stage 1: HI Greeting (0.00 - 0.25) -> Immediately visible (1) from 0 to 0.20, then fades out to 0
+  const hiOpacity = useTransform(scrollYProgress, [0, 0.20, 0.30], [1, 1, 0]);
+  const hiScale = useTransform(scrollYProgress, [0, 0.20, 0.30], [1, 1.1, 1.3]);
+  const hiY = useTransform(scrollYProgress, [0.20, 0.30], [0, -40]);
 
-  // Stage 2: Header & Profile Card (0.25 - 0.50)
+  // Stage 2: Header & Profile Card (0.22 - 0.45)
   const stage2Opacity = useTransform(scrollYProgress, [0.22, 0.35], [0, 1]);
-  const stage2Y = useTransform(scrollYProgress, [0.22, 0.35], [60, 0]);
+  const stage2Y = useTransform(scrollYProgress, [0.22, 0.35], [40, 0]);
 
-  // Stage 3: School Title & Partial Bio (0.50 - 0.75)
-  const stage3Opacity = useTransform(scrollYProgress, [0.45, 0.58], [0, 1]);
-  const stage3Y = useTransform(scrollYProgress, [0.45, 0.58], [40, 0]);
+  // Stage 3: School Title & Partial Bio (0.45 - 0.70)
+  const stage3Opacity = useTransform(scrollYProgress, [0.42, 0.58], [0, 1]);
+  const stage3Y = useTransform(scrollYProgress, [0.42, 0.58], [30, 0]);
 
-  // Stage 4: Full Bio & Contact Button (0.75 - 1.00)
-  const stage4Opacity = useTransform(scrollYProgress, [0.70, 0.82], [0, 1]);
-  const stage4Y = useTransform(scrollYProgress, [0.70, 0.82], [30, 0]);
+  // Stage 4: Full Bio & Contact Button (0.70 - 1.00)
+  const stage4Opacity = useTransform(scrollYProgress, [0.65, 0.80], [0, 1]);
+  const stage4Y = useTransform(scrollYProgress, [0.65, 0.80], [20, 0]);
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('kontak');
