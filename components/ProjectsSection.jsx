@@ -4,12 +4,11 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { profileData } from '../lib/portfolioData';
 import { useTelegramWebApp } from './TelegramWebAppProvider';
-import { FileText, X, CheckCircle2, MessageCircle, SlidersHorizontal } from 'lucide-react';
+import { FileText, X, CheckCircle2, MessageCircle } from 'lucide-react';
 
 export default function ProjectsSection() {
-  const { triggerHaptic } = useTelegramWebApp();
+  const { triggerHaptic, activeModalProject, setActiveModalProject } = useTelegramWebApp();
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [activeModalProject, setActiveModalProject] = useState(null);
 
   const categories = [
     { id: 'all', label: 'Semua Proyek' },

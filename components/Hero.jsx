@@ -8,7 +8,7 @@ import { profileData } from '../lib/portfolioData';
 import { ArrowRight, Send, MessageCircle, ShieldCheck, Compass, Terminal, FileCode, CheckCircle2 } from 'lucide-react';
 
 export default function Hero() {
-  const { isTma, tgUser, triggerHaptic } = useTelegramWebApp();
+  const { isTma, tgUser, triggerHaptic, openProjectById } = useTelegramWebApp();
 
   return (
     <section id="beranda" className="relative border-b border-zinc-800 bg-zinc-950 py-12 md:py-20 overflow-hidden">
@@ -61,44 +61,59 @@ export default function Hero() {
               {profileData.bio}
             </p>
 
-            {/* Real Interactive Project Navigation Links (Fixes false affordance) */}
+            {/* Interactive Project Navigation Buttons that immediately open full technical specification sheet */}
             <div className="mt-6">
-              <p className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
-                Dokumentasi Proyek Pilihan (Klik untuk detail):
+              <p className="mb-2.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+                Dokumentasi Proyek Pilihan (Klik untuk buka spesifikasi):
               </p>
               <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-                <Link
-                  href="#proyek"
-                  onClick={() => triggerHaptic('light')}
-                  className="flex items-center gap-2.5 rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300"
+                <button
+                  type="button"
+                  onClick={() => openProjectById('conveyor-bas', profileData.projects)}
+                  className="flex min-h-[44px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
-                  <Compass className="h-4 w-4 shrink-0 text-blue-400" />
-                  <span className="font-medium">Kinematika Konveyor 90° PT BAS</span>
-                </Link>
-                <Link
-                  href="#proyek"
-                  onClick={() => triggerHaptic('light')}
-                  className="flex items-center gap-2.5 rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300"
+                  <div className="flex items-center gap-2.5">
+                    <Compass className="h-4 w-4 shrink-0 text-blue-400" />
+                    <span className="font-semibold">Kinematika Konveyor 90° PT BAS</span>
+                  </div>
+                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => openProjectById('lks-robotics', profileData.projects)}
+                  className="flex min-h-[44px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
-                  <Terminal className="h-4 w-4 shrink-0 text-blue-400" />
-                  <span className="font-medium">Robotika LKS Autonomous Mobile</span>
-                </Link>
-                <Link
-                  href="#proyek"
-                  onClick={() => triggerHaptic('light')}
-                  className="flex items-center gap-2.5 rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300"
+                  <div className="flex items-center gap-2.5">
+                    <Terminal className="h-4 w-4 shrink-0 text-blue-400" />
+                    <span className="font-semibold">Robotika LKS Autonomous Mobile</span>
+                  </div>
+                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => openProjectById('ecu-remap', profileData.projects)}
+                  className="flex min-h-[44px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
-                  <FileCode className="h-4 w-4 shrink-0 text-blue-400" />
-                  <span className="font-medium">Firmware ECU Web Serial & Dyno</span>
-                </Link>
-                <Link
-                  href="#proyek"
-                  onClick={() => triggerHaptic('light')}
-                  className="flex items-center gap-2.5 rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300"
+                  <div className="flex items-center gap-2.5">
+                    <FileCode className="h-4 w-4 shrink-0 text-blue-400" />
+                    <span className="font-semibold">Firmware ECU Web Serial & Dyno</span>
+                  </div>
+                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => openProjectById('we-sut', profileData.projects)}
+                  className="flex min-h-[44px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 p-3 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
-                  <CheckCircle2 className="h-4 w-4 shrink-0 text-blue-400" />
-                  <span className="font-medium">Biometrik Wajah We.Sut Serverless</span>
-                </Link>
+                  <div className="flex items-center gap-2.5">
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-blue-400" />
+                    <span className="font-semibold">Biometrik Wajah We.Sut Serverless</span>
+                  </div>
+                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                </button>
               </div>
             </div>
 
@@ -109,7 +124,7 @@ export default function Hero() {
                 onClick={() => triggerHaptic('light')}
                 className="flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
-                <span>Lihat Dokumentasi Proyek</span>
+                <span>Lihat Semua Proyek</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
 

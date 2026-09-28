@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { profileData } from '../lib/portfolioData';
-import { Bot, Cpu, Eye, Gauge, CheckCircle2 } from 'lucide-react';
+import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { Bot, Cpu, Eye, Gauge, CheckCircle2, ArrowRight } from 'lucide-react';
 
 const icons = {
   robotics: Bot,
@@ -11,7 +12,17 @@ const icons = {
   embedded: Cpu
 };
 
+// Map each pillar to its flagship project ID
+const pillarProjectMap = {
+  cad: 'conveyor-bas',
+  robotics: 'lks-robotics',
+  'ai-vision': 'we-sut',
+  embedded: 'ecu-remap'
+};
+
 export default function EngineeringPillars() {
+  const { openProjectById } = useTelegramWebApp();
+
   return (
     <section id="pilar" className="border-b border-zinc-800 bg-zinc-900/30 py-12 md:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -34,14 +45,16 @@ export default function EngineeringPillars() {
           </p>
         </div>
 
-        {/* Pillars grid with dynamic min-h and responsive text */}
+        {/* Pillars grid with dynamic min-h, responsive text, and interactive project trigger */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {profileData.pillars.map((pillar) => {
             const Icon = icons[pillar.id] || Bot;
+            const targetProjectId = pillarProjectMap[pillar.id];
+
             return (
               <div
                 key={pillar.id}
-                className="border-caliper flex min-h-[340px] flex-col justify-between rounded-xl bg-zinc-950 p-5 transition-all hover:bg-zinc-900/80 sm:p-6"
+                className="border-caliper flex min-h-[360px] flex-col justify-between rounded-xl bg-zinc-950 p-5 transition-all hover:bg-zinc-900/80 sm:p-6"
               >
                 <div>
                   <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-blue-400">
@@ -67,6 +80,18 @@ export default function EngineeringPillars() {
                       </li>
                     ))}
                   </ul>
+
+                  {/* Fully Interactive Button wired to open the corresponding technical project modal */}
+                  <div className="mt-5 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => openProjectById(targetProjectId, profileData.projects)}
+                      className="flex min-h-[44px] w-full items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900 px-3.5 text-xs font-semibold text-zinc-200 transition-colors hover:border-blue-500 hover:bg-blue-600/10 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    >
+                      <span>Buka Spesifikasi</span>
+                      <ArrowRight className="h-3.5 w-3.5 text-blue-400" />
+                    </button>
+                  </div>
                 </div>
               </div>
             );

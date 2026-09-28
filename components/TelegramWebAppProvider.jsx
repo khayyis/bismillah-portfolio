@@ -9,7 +9,10 @@ const TelegramContext = createContext({
   tgUser: null,
   triggerHaptic: () => {},
   activeSurface: 'web',
-  setActiveSurface: () => {}
+  setActiveSurface: () => {},
+  activeModalProject: null,
+  setActiveModalProject: () => {},
+  openProjectById: () => {}
 });
 
 export function TelegramWebAppProvider({ children }) {
@@ -17,6 +20,7 @@ export function TelegramWebAppProvider({ children }) {
   const [isSimulatorMode, setIsSimulatorMode] = useState(false);
   const [activeSurface, setActiveSurface] = useState('web');
   const [tgUser, setTgUser] = useState(null);
+  const [activeModalProject, setActiveModalProject] = useState(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
@@ -59,6 +63,18 @@ export function TelegramWebAppProvider({ children }) {
     setIsSimulatorMode(surface === 'tma');
   };
 
+  const openProjectById = (projectId, allProjects = []) => {
+    triggerHaptic('light');
+    const found = allProjects.find(p => p.id === projectId);
+    if (found) {
+      setActiveModalProject(found);
+    } else {
+      // scroll to projects section
+      const el = document.getElementById('proyek');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <TelegramContext.Provider
       value={{
@@ -68,7 +84,10 @@ export function TelegramWebAppProvider({ children }) {
         tgUser,
         triggerHaptic,
         activeSurface,
-        setActiveSurface: handleSetSurface
+        setActiveSurface: handleSetSurface,
+        activeModalProject,
+        setActiveModalProject,
+        openProjectById
       }}
     >
       {children}
