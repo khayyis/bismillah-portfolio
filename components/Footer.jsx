@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { profileData } from '../lib/portfolioData';
-import { ArrowUp, Shield, Cpu } from 'lucide-react';
+import { ArrowUp, Cpu } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -12,26 +12,26 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950 py-10 text-xs text-zinc-400">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6">
+    <footer className="border-t border-zinc-800 bg-zinc-950 py-8 sm:py-10 text-xs text-zinc-400">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-5 sm:gap-6 px-4 sm:px-6">
         
         {/* Left */}
         <div className="flex flex-col items-center gap-1.5 text-center sm:items-start sm:text-left">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-white">{profileData.name}</span>
+            <span className="font-bold text-white text-sm sm:text-base">{profileData.name}</span>
             <span className="rounded border border-zinc-800 bg-zinc-900 px-2 py-0.5 font-mono text-[10px] text-zinc-400">
-              REVISI 2026.09
+              REV 2026.09
             </span>
           </div>
-          <p className="text-[11px] text-zinc-500">
+          <p className="text-[11px] text-zinc-500 max-w-md">
             SMKN 4 Jakarta | Departemen Teknik Mekatronika | Portofolio Rekayasa Industri & AI
           </p>
         </div>
 
         {/* Center / Technical Badge */}
-        <div className="flex items-center gap-2 rounded border border-zinc-800 bg-zinc-900/90 px-3.5 py-1.5 font-mono text-[11px] text-zinc-300">
-          <Cpu className="h-3.5 w-3.5 text-blue-400" />
-          <span>Next.js 16 | Tailwind CSS | Telegram TMA Verified</span>
+        <div className="flex items-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/90 px-3 py-1.5 font-mono text-[10px] sm:text-[11px] text-zinc-300">
+          <Cpu className="h-3.5 w-3.5 text-blue-400 shrink-0" />
+          <span>Next.js 16 | Tailwind CSS | Telegram TMA</span>
         </div>
 
         {/* Right / Back to top */}

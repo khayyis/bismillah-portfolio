@@ -24,15 +24,15 @@ export default function EngineeringPillars() {
   const { openProjectById } = useTelegramWebApp();
 
   return (
-    <section id="pilar" className="border-b border-zinc-800 bg-zinc-900/30 py-12 md:py-16">
+    <section id="pilar" className="border-b border-zinc-800 bg-zinc-900/30 py-10 md:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         
         {/* Section title */}
-        <div className="mb-10 flex flex-col md:flex-row md:items-end md:justify-between">
+        <div className="mb-6 sm:mb-10 flex flex-col md:flex-row md:items-end md:justify-between">
           <div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
-              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
+              <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
                 Pilar Rekayasa
               </span>
             </div>
@@ -40,13 +40,13 @@ export default function EngineeringPillars() {
               Empat Pilar Keahlian Teknik
             </h2>
           </div>
-          <p className="mt-2 text-xs font-mono text-zinc-400 md:mt-0">
+          <p className="mt-1 text-[11px] sm:text-xs font-mono text-zinc-400 md:mt-0">
             KOMPETENSI: MEKANIKAL / PLC / COMPUTER VISION / EMBEDDED
           </p>
         </div>
 
-        {/* Pillars grid with dynamic min-h, responsive text, and interactive project trigger */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Pillars grid with dynamic min-h and responsive stacking on mobile */}
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {profileData.pillars.map((pillar) => {
             const Icon = icons[pillar.id] || Bot;
             const targetProjectId = pillarProjectMap[pillar.id];
@@ -54,21 +54,21 @@ export default function EngineeringPillars() {
             return (
               <div
                 key={pillar.id}
-                className="border-caliper flex min-h-[360px] flex-col justify-between rounded-xl bg-zinc-950 p-5 transition-all hover:bg-zinc-900/80 sm:p-6"
+                className="border-caliper flex min-h-[300px] sm:min-h-[360px] flex-col justify-between rounded-xl bg-zinc-950 p-4 sm:p-6 transition-all hover:bg-zinc-900/80"
               >
                 <div>
-                  <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-blue-400">
+                  <div className="mb-3 sm:mb-4 inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-blue-400">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="text-base font-bold leading-snug text-white">
                     {pillar.title}
                   </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-zinc-400">
+                  <p className="mt-1.5 text-xs leading-relaxed text-zinc-400">
                     {pillar.subtitle}
                   </p>
                 </div>
 
-                <div className="mt-5 border-t border-zinc-800/80 pt-4">
+                <div className="mt-4 sm:mt-5 border-t border-zinc-800/80 pt-3 sm:pt-4">
                   <p className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
                     SPESIFIKASI PROYEK:
                   </p>
@@ -81,8 +81,8 @@ export default function EngineeringPillars() {
                     ))}
                   </ul>
 
-                  {/* Fully Interactive Button wired to open the corresponding technical project modal */}
-                  <div className="mt-5 pt-2">
+                  {/* Fully Interactive Button */}
+                  <div className="mt-4 pt-2">
                     <button
                       type="button"
                       onClick={() => openProjectById(targetProjectId, profileData.projects)}
