@@ -8,24 +8,24 @@ import {
   Home,
   Bot,
   FolderGit2,
+  Activity,
   Wrench,
   GraduationCap,
   MessageSquare,
   Send,
   MessageCircle,
-  Smartphone,
-  Monitor,
   ArrowUp
 } from 'lucide-react';
 
 export default function FloatingDock() {
-  const { activeSurface, setActiveSurface, isTma, triggerHaptic } = useTelegramWebApp();
+  const { triggerHaptic } = useTelegramWebApp();
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
   const items = [
     { label: 'Beranda', href: '#beranda', icon: Home },
     { label: 'Pilar', href: '#pilar', icon: Bot },
     { label: 'Proyek', href: '#proyek', icon: FolderGit2 },
+    { label: 'Neuro Data', href: '#neuro-analytics', icon: Activity, highlight: 'blue' },
     { label: 'Keahlian', href: '#keahlian', icon: Wrench },
     { label: 'Pengalaman', href: '#pengalaman', icon: GraduationCap },
     { label: 'Kontak', href: '#kontak', icon: MessageSquare },
