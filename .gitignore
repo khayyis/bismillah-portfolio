@@ -40,3 +40,7 @@ next-env.d.ts
 # local archives & tests
 legacy_archive/
 node_modules_ln
+
+# env (secrets)
+vercel.env
+.env*.local

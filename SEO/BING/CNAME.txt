@@ -1,4 +1,0 @@
-Add CNAME record to DNS
-Manually add CNAME record to the Domain Name Server
-
-Add CNAME (alias) record with name 5e81cb527b651fbb8a9076e2cf51dad3 and value verify.bing.com.
