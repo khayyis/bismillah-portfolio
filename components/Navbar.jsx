@@ -38,31 +38,25 @@ export default function Navbar() {
             href="#pilar"
             className="text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            Pilar
+            Pilar Rekayasa
           </Link>
           <Link
             href="#proyek"
             className="text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            Proyek
-          </Link>
-          <Link
-            href="#neuro-analytics"
-            className="text-xs font-semibold uppercase tracking-wider text-blue-400 transition-colors hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-          >
-            Neuro Data
+            Proyek Pilihan
           </Link>
           <Link
             href="#keahlian"
             className="text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            Keahlian
+            Keahlian Teknis
           </Link>
           <Link
             href="#pengalaman"
             className="text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
-            Pengalaman
+            Pengalaman & PKL
           </Link>
           <Link
             href="#kontak"
@@ -137,13 +131,6 @@ export default function Navbar() {
               className="flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium text-zinc-200 hover:bg-zinc-900"
             >
               Proyek Pilihan
-            </Link>
-            <Link
-              href="#neuro-analytics"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center rounded-lg px-3 text-sm font-medium text-blue-400 hover:bg-zinc-900"
-            >
-              Data Sains Neuro-Kognitif
             </Link>
             <Link
               href="#keahlian"

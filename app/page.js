@@ -5,7 +5,6 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import EngineeringPillars from '../components/EngineeringPillars';
 import ProjectsSection from '../components/ProjectsSection';
-import NeuroAnalyticsSection from '../components/NeuroAnalyticsSection';
 import SkillsSection from '../components/SkillsSection';
 import ExperienceSection from '../components/ExperienceSection';
 import ContactSection from '../components/ContactSection';
@@ -25,7 +24,6 @@ export default function Home() {
             <Hero />
             <EngineeringPillars />
             <ProjectsSection />
-            <NeuroAnalyticsSection />
             <SkillsSection />
             <ExperienceSection />
             <ContactSection />

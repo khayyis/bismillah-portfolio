@@ -8,7 +8,6 @@ import {
   Home,
   Bot,
   FolderGit2,
-  Activity,
   Wrench,
   GraduationCap,
   MessageSquare,
@@ -25,7 +24,6 @@ export default function FloatingDock() {
     { label: 'Beranda', href: '#beranda', icon: Home },
     { label: 'Pilar', href: '#pilar', icon: Bot },
     { label: 'Proyek', href: '#proyek', icon: FolderGit2 },
-    { label: 'Neuro Data', href: '#neuro-analytics', icon: Activity, highlight: 'blue' },
     { label: 'Keahlian', href: '#keahlian', icon: Wrench },
     { label: 'Pengalaman', href: '#pengalaman', icon: GraduationCap },
     { label: 'Kontak', href: '#kontak', icon: MessageSquare },
@@ -65,7 +63,6 @@ export default function FloatingDock() {
             >
               <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
               
-              {/* Tooltip on hover */}
               {isHovered && (
                 <div className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-zinc-700 bg-zinc-900 px-2 py-0.5 text-[11px] font-medium text-white shadow-lg">
                   {item.label}
