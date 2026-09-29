@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { profileData } from '../lib/portfolioData';
 import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useToast } from './Toast';
+import TiltCard from './TiltCard';
 import { Send, MessageCircle, Mail, Copy, Check, ExternalLink } from 'lucide-react';
 
 function GithubIcon(props) {
@@ -26,19 +28,21 @@ function InstagramIcon(props) {
 
 export default function ContactSection() {
   const { triggerHaptic } = useTelegramWebApp();
+  const { showToast } = useToast();
   const [copiedType, setCopiedType] = useState(null);
 
-  const handleCopy = (text, type) => {
+  const handleCopy = (text, label, type) => {
     triggerHaptic('light');
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopiedType(type);
+      showToast(`${label} berhasil disalin ke clipboard!`, 'success');
       setTimeout(() => setCopiedType(null), 2500);
     }
   };
 
   return (
-    <section id="kontak" className="border-b border-zinc-800 bg-zinc-950 py-12 md:py-20">
+    <section id="kontak" className="border-b border-zinc-800 bg-zinc-950 py-12 md:py-20 pb-32">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         
         {/* Header */}
@@ -59,11 +63,11 @@ export default function ContactSection() {
           </p>
         </div>
 
-        {/* Contact channels grid */}
+        {/* Contact channels grid with 3D TiltCards */}
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           
           {/* Telegram Card */}
-          <div className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-6">
+          <TiltCard className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-6">
             <div>
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-950 text-blue-400">
                 <Send className="h-5 w-5" />
@@ -90,18 +94,18 @@ export default function ContactSection() {
               </a>
               <button
                 type="button"
-                onClick={() => handleCopy(profileData.contacts.telegram, 'telegram')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white"
+                onClick={() => handleCopy(profileData.contacts.telegram, 'Username Telegram', 'telegram')}
+                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 title="Salin Username Telegram"
                 aria-label="Salin Username Telegram"
               >
                 {copiedType === 'telegram' ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
               </button>
             </div>
-          </div>
+          </TiltCard>
 
           {/* WhatsApp Card */}
-          <div className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-6">
+          <TiltCard className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-6">
             <div>
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-950 text-emerald-400">
                 <MessageCircle className="h-5 w-5" />
@@ -128,18 +132,18 @@ export default function ContactSection() {
               </a>
               <button
                 type="button"
-                onClick={() => handleCopy(`+${profileData.contacts.whatsapp}`, 'wa')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white"
+                onClick={() => handleCopy(`+${profileData.contacts.whatsapp}`, 'Nomor WhatsApp', 'wa')}
+                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 title="Salin Nomor WhatsApp"
                 aria-label="Salin Nomor WhatsApp"
               >
                 {copiedType === 'wa' ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
               </button>
             </div>
-          </div>
+          </TiltCard>
 
           {/* Email Card */}
-          <div className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-6">
+          <TiltCard className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-6">
             <div>
               <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-zinc-200">
                 <Mail className="h-5 w-5" />
@@ -164,15 +168,15 @@ export default function ContactSection() {
               </a>
               <button
                 type="button"
-                onClick={() => handleCopy(profileData.contacts.email, 'email')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white"
+                onClick={() => handleCopy(profileData.contacts.email, 'Alamat Email', 'email')}
+                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 title="Salin Alamat Email"
                 aria-label="Salin Alamat Email"
               >
                 {copiedType === 'email' ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
               </button>
             </div>
-          </div>
+          </TiltCard>
 
         </div>
 
@@ -183,7 +187,7 @@ export default function ContactSection() {
             href={profileData.contacts.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-[44px] items-center gap-2 text-zinc-300 hover:text-white"
+            className="flex min-h-[44px] items-center gap-2 text-zinc-300 hover:text-white transition-colors"
           >
             <GithubIcon className="h-4 w-4" />
             <span className="font-mono">github.com/{profileData.contacts.githubUsername}</span>
@@ -192,7 +196,7 @@ export default function ContactSection() {
             href={profileData.contacts.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex min-h-[44px] items-center gap-2 text-zinc-300 hover:text-white"
+            className="flex min-h-[44px] items-center gap-2 text-zinc-300 hover:text-white transition-colors"
           >
             <InstagramIcon className="h-4 w-4" />
             <span className="font-mono">{profileData.contacts.instagramUsername}</span>
