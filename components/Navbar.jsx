@@ -2,12 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
-import { Menu, X, Smartphone, Monitor } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { profileData } from '../lib/portfolioData';
 
 export default function Navbar() {
-  const { activeSurface, setActiveSurface, isTma } = useTelegramWebApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -66,41 +64,8 @@ export default function Navbar() {
           </Link>
         </nav>
 
-        {/* Right side: Surface View Switcher & Mobile Menu */}
+        {/* Right side: Mobile Menu */}
         <div className="flex items-center gap-2 sm:gap-3">
-          
-          {/* Surface Toggle: Web View vs TMA View */}
-          {!isTma && (
-            <div className="flex items-center rounded-lg border border-zinc-800 bg-zinc-900 p-0.5 sm:p-1">
-              <button
-                type="button"
-                onClick={() => setActiveSurface('web')}
-                className={`flex min-h-[32px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-md px-2.5 sm:px-3 text-[11px] sm:text-xs font-semibold transition-all ${
-                  activeSurface === 'web'
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Tampilan Web Desktop Standar"
-              >
-                <Monitor className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                <span>Web</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveSurface('tma')}
-                className={`flex min-h-[32px] sm:min-h-[36px] items-center gap-1 sm:gap-1.5 rounded-md px-2.5 sm:px-3 text-[11px] sm:text-xs font-semibold transition-all ${
-                  activeSurface === 'tma'
-                    ? 'bg-blue-600 text-white shadow-sm'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Mode Simulasi Telegram Mini App (TMA)"
-              >
-                <Smartphone className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                <span>TMA</span>
-              </button>
-            </div>
-          )}
-
           {/* Mobile hamburger toggle (shows below lg breakpoint) */}
           <button
             type="button"
