@@ -100,7 +100,7 @@ export default function ProjectsSection() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari proyek, CAD, atau instansi..."
-                className="w-full rounded-lg border border-zinc-800 bg-zinc-900/90 py-2 pl-9 pr-4 text-xs text-white placeholder-zinc-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-zinc-800 bg-zinc-900/90 py-2 pl-9 pr-4 text-xs text-white placeholder-zinc-500 transition-colors focus:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               />
               {searchQuery && (
                 <button
