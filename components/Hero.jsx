@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTelegramWebApp } from './TelegramWebAppProvider';
 import { profileData } from '../lib/portfolioData';
-import { ArrowRight, Send, MessageCircle, ShieldCheck, Compass, Terminal, FileCode, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Send, MessageCircle, ShieldCheck, Compass, Terminal, FileCode, CheckCircle2, Award, Sparkles } from 'lucide-react';
 
 export default function Hero() {
   const { isTma, tgUser, triggerHaptic, openProjectById } = useTelegramWebApp();
@@ -35,23 +35,25 @@ export default function Hero() {
               </div>
             )}
 
-            {/* Availability Badge */}
-            <div className="mb-3 inline-flex items-center gap-2 rounded border border-zinc-800 bg-zinc-900/90 px-3 py-1 text-xs font-mono text-zinc-300 w-fit">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-500"></span>
-              <span className="text-zinc-400">STATUS:</span>
+            {/* Neural Attention Salience Badge: Higher visual anchor */}
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/40 px-3.5 py-1 text-xs font-mono text-emerald-300 shadow-sm w-fit">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+              </span>
               <span className="font-semibold text-emerald-400">{profileData.status}</span>
             </div>
 
-            {/* H1 Main Heading */}
+            {/* H1 Main Heading: Strong Visual Focal Point */}
             <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
               {profileData.name}
             </h1>
 
-            {/* Sub-heading */}
+            {/* Sub-heading with high contrast accent */}
             <div className="mt-2.5 flex flex-wrap items-center gap-2 text-base font-semibold sm:text-lg">
-              <span className="text-blue-400">{profileData.tagline}</span>
+              <span className="text-blue-400 font-bold">{profileData.tagline}</span>
               <span className="text-zinc-600">/</span>
-              <span className="font-mono text-xs uppercase tracking-wider text-zinc-400 sm:text-sm">
+              <span className="font-mono text-xs uppercase tracking-wider text-zinc-300 sm:text-sm">
                 SMKN 4 Jakarta
               </span>
             </div>
@@ -61,67 +63,93 @@ export default function Hero() {
               {profileData.bio}
             </p>
 
-            {/* Interactive Project Navigation Buttons */}
+            {/* Visual Attention Anchors: Flagship Engineering Proof Chips */}
             <div className="mt-5">
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                
+                {/* Chip 1: Flagship Conveyor with Verified Badge */}
                 <button
                   type="button"
                   onClick={() => openProjectById('conveyor-bas', profileData.projects)}
-                  className="flex min-h-[42px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="group relative flex min-h-[44px] items-center justify-between overflow-hidden rounded-lg border border-blue-500/40 bg-blue-950/20 px-3.5 py-2.5 text-left text-xs text-zinc-200 transition-all hover:border-blue-400 hover:bg-blue-950/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
                   <div className="flex items-center gap-2.5">
-                    <Compass className="h-4 w-4 shrink-0 text-blue-400" />
-                    <span className="font-semibold">Konveyor 90° PT BAS</span>
+                    <Compass className="h-4 w-4 shrink-0 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <span className="font-bold text-white block">Konveyor 90° PT BAS</span>
+                      <span className="font-mono text-[10px] text-blue-300">ACC MENTOR INDUSTRI WINGS</span>
+                    </div>
                   </div>
-                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                  <span className="rounded bg-blue-600 px-2 py-0.5 font-mono text-[10px] font-bold text-white shadow-sm">
+                    CAD
+                  </span>
                 </button>
 
+                {/* Chip 2: LKS Mobile Robotics with Competition Badge */}
                 <button
                   type="button"
                   onClick={() => openProjectById('lks-robotics', profileData.projects)}
-                  className="flex min-h-[42px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="group relative flex min-h-[44px] items-center justify-between overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/70 px-3.5 py-2.5 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
                   <div className="flex items-center gap-2.5">
-                    <Terminal className="h-4 w-4 shrink-0 text-blue-400" />
-                    <span className="font-semibold">Robotika LKS Mobile</span>
+                    <Terminal className="h-4 w-4 shrink-0 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <span className="font-bold text-white block">Robotika LKS Mobile</span>
+                      <span className="font-mono text-[10px] text-zinc-400">PID KINEMATIKA OTONOM</span>
+                    </div>
                   </div>
-                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                  <span className="rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 font-mono text-[10px] text-zinc-300">
+                    LKS
+                  </span>
                 </button>
 
+                {/* Chip 3: ECU Web Serial & Dyno */}
                 <button
                   type="button"
                   onClick={() => openProjectById('ecu-remap', profileData.projects)}
-                  className="flex min-h-[42px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="group relative flex min-h-[44px] items-center justify-between overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/70 px-3.5 py-2.5 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
                   <div className="flex items-center gap-2.5">
-                    <FileCode className="h-4 w-4 shrink-0 text-blue-400" />
-                    <span className="font-semibold">ECU Web Serial & Dyno</span>
+                    <FileCode className="h-4 w-4 shrink-0 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <span className="font-bold text-white block">ECU Web Serial & Dyno</span>
+                      <span className="font-mono text-[10px] text-zinc-400">UART K-LINE 16HZ SAMPLING</span>
+                    </div>
                   </div>
-                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                  <span className="rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 font-mono text-[10px] text-zinc-300">
+                    UART
+                  </span>
                 </button>
 
+                {/* Chip 4: We.Sut Biometrik AI */}
                 <button
                   type="button"
                   onClick={() => openProjectById('we-sut', profileData.projects)}
-                  className="flex min-h-[42px] items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/70 px-3 py-2 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  className="group relative flex min-h-[44px] items-center justify-between overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900/70 px-3.5 py-2.5 text-left text-xs text-zinc-200 transition-all hover:border-blue-500 hover:bg-zinc-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                 >
                   <div className="flex items-center gap-2.5">
-                    <CheckCircle2 className="h-4 w-4 shrink-0 text-blue-400" />
-                    <span className="font-semibold">We.Sut Biometrik AI</span>
+                    <CheckCircle2 className="h-4 w-4 shrink-0 text-blue-400 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <span className="font-bold text-white block">We.Sut Biometrik AI</span>
+                      <span className="font-mono text-[10px] text-zinc-400">100% SERVERLESS CLOUDFLARE</span>
+                    </div>
                   </div>
-                  <span className="font-mono text-[10px] text-zinc-500">LIHAT</span>
+                  <span className="rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 font-mono text-[10px] text-zinc-300">
+                    EDGE
+                  </span>
                 </button>
+
               </div>
             </div>
 
-            {/* Action buttons */}
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            {/* High Salience Conversion Action Buttons */}
+            <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link
                 href="#proyek"
                 onClick={() => triggerHaptic('light')}
-                className="flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="flex min-h-[46px] items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 text-sm font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:bg-blue-500 hover:shadow-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
-                <span>Lihat Semua Proyek</span>
+                <span>Lihat Portofolio Lengkap</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
 
@@ -130,10 +158,10 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-emerald-800/80 bg-emerald-950/40 px-4 text-sm font-semibold text-emerald-300 transition-colors hover:bg-emerald-900/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                className="flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-emerald-600/50 bg-emerald-950/40 px-5 text-sm font-bold text-emerald-300 transition-all hover:border-emerald-500 hover:bg-emerald-900/60 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               >
                 <MessageCircle className="h-4 w-4 text-emerald-400" />
-                <span>WhatsApp</span>
+                <span>WhatsApp Langsung</span>
               </a>
 
               <a
@@ -141,20 +169,20 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-4 text-sm font-semibold text-zinc-200 transition-colors hover:border-blue-500 hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-5 text-sm font-semibold text-zinc-200 transition-colors hover:border-blue-500 hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 <Send className="h-4 w-4 text-blue-400" />
-                <span>Telegram</span>
+                <span>Chat Telegram</span>
               </a>
             </div>
           </div>
 
-          {/* Caliper Framed Photo Column with Vignette Masking */}
+          {/* Caliper Framed Photo Column with Visual Contrast */}
           <div className="flex justify-center md:col-span-4 md:justify-end">
             <div className="relative">
               {/* Technical caliper frame container */}
-              <div className="border-caliper overflow-hidden rounded-xl bg-zinc-900 p-2 shadow-2xl">
-                <div className="relative h-60 w-60 overflow-hidden rounded-lg bg-zinc-950 sm:h-64 sm:w-64">
+              <div className="border-caliper overflow-hidden rounded-2xl bg-zinc-900 p-2 shadow-2xl">
+                <div className="relative h-60 w-60 overflow-hidden rounded-xl bg-zinc-950 sm:h-64 sm:w-64">
                   <Image
                     src={profileData.avatar}
                     alt={profileData.name}
@@ -168,9 +196,12 @@ export default function Hero() {
               </div>
 
               {/* Technical badge below portrait */}
-              <div className="mt-2.5 flex items-center justify-between rounded border border-zinc-800 bg-zinc-900/90 px-3 py-1 text-xs font-mono text-zinc-300">
-                <span>MEKATRONIKA</span>
-                <span className="font-semibold text-blue-400">SMKN 4 JKT</span>
+              <div className="mt-2.5 flex items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900/90 px-3 py-1.5 text-xs font-mono text-zinc-300">
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                  <span>MEKATRONIKA</span>
+                </span>
+                <span className="font-bold text-blue-400">SMKN 4 JKT</span>
               </div>
             </div>
           </div>

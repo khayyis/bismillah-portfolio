@@ -15,7 +15,9 @@ import {
   Settings,
   ShieldCheck,
   Compass,
-  ArrowRight
+  ArrowRight,
+  Sparkles,
+  Award
 } from 'lucide-react';
 
 export default function ProjectsSection() {
@@ -74,16 +76,16 @@ export default function ProjectsSection() {
     <section id="proyek" className="border-b border-zinc-800 bg-zinc-950 py-12 md:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         
-        {/* Section Header */}
+        {/* Section Header with Attention Hook */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
-              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
-                Portofolio Terverifikasi
+              <span className="h-2 w-2 rounded-full bg-blue-500"></span>
+              <span className="font-mono text-xs font-bold uppercase tracking-wider text-blue-400">
+                Portofolio Terverifikasi Industri
               </span>
             </div>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
               Dokumentasi Proyek Rekayasa
             </h2>
             <p className="mt-1.5 text-xs text-zinc-400">
@@ -177,84 +179,100 @@ export default function ProjectsSection() {
           </div>
         )}
 
-        {/* 3D Tilt Project Cards Grid */}
+        {/* 3D Tilt Project Cards Grid with Attention Salience Anchors */}
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((project) => (
-            <TiltCard
-              key={project.id}
-              onClick={() => openProjectModal(project)}
-              className="border-caliper group flex cursor-pointer flex-col justify-between rounded-xl bg-zinc-900/40 p-0 transition-all hover:bg-zinc-900/80"
-            >
-              <div>
-                {/* Project blueprint/photo view */}
-                <div className="relative h-48 w-full overflow-hidden bg-zinc-950">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  {/* Category label */}
-                  <div className="absolute left-3 top-3 rounded border border-zinc-700 bg-zinc-950/90 px-2.5 py-1 text-[11px] font-mono font-medium text-blue-300 backdrop-blur-sm">
-                    {project.categoryLabel}
-                  </div>
-                  {/* Year tag */}
-                  <div className="absolute right-3 top-3 rounded border border-zinc-700 bg-zinc-950/90 px-2 py-1 font-mono text-[11px] text-zinc-300 backdrop-blur-sm">
-                    {project.year}
-                  </div>
-                </div>
+          {filteredProjects.map((project, idx) => {
+            const isFlagship = project.id === 'conveyor-bas' || project.id === 'lks-robotics';
 
-                {/* Content */}
-                <div className="p-5">
-                  <div className="font-mono text-[11px] font-medium text-zinc-400">
-                    INSTANSI: {project.organization}
-                  </div>
-                  <h3 className="mt-1.5 text-base font-bold text-white group-hover:text-blue-400 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="mt-2 text-xs leading-relaxed text-zinc-300">
-                    {project.summary}
-                  </p>
+            return (
+              <TiltCard
+                key={project.id}
+                onClick={() => openProjectModal(project)}
+                className={`border-caliper group flex cursor-pointer flex-col justify-between rounded-xl bg-zinc-900/40 p-0 transition-all hover:bg-zinc-900/80 ${
+                  isFlagship ? 'border-blue-500/50 shadow-md shadow-blue-950/20' : ''
+                }`}
+              >
+                <div>
+                  {/* Project blueprint/photo view */}
+                  <div className="relative h-48 w-full overflow-hidden bg-zinc-950">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    
+                    {/* Category label */}
+                    <div className="absolute left-3 top-3 rounded border border-zinc-700 bg-zinc-950/90 px-2.5 py-1 text-[11px] font-mono font-bold text-blue-300 backdrop-blur-sm shadow-sm">
+                      {project.categoryLabel}
+                    </div>
 
-                  {/* Technical metrics preview */}
-                  <div className="mt-4 grid grid-cols-2 gap-2 border-t border-zinc-800/80 pt-3">
-                    {project.metrics.slice(0, 2).map((m, idx) => (
-                      <div key={idx} className="rounded border border-zinc-800/80 bg-zinc-950 p-2">
-                        <span className="block font-mono text-[10px] text-zinc-500">{m.label}</span>
-                        <span className="block truncate font-mono text-xs font-bold text-zinc-200">
-                          {m.value}
-                        </span>
+                    {/* Flagship Proof Badge for high retinal salience */}
+                    {isFlagship && (
+                      <div className="absolute left-3 bottom-3 inline-flex items-center gap-1 rounded bg-blue-600/90 px-2 py-0.5 font-mono text-[10px] font-bold text-white shadow-md backdrop-blur-sm">
+                        <Award className="h-3 w-3" />
+                        <span>PROYEK UNGGULAN</span>
                       </div>
-                    ))}
+                    )}
+
+                    {/* Year tag */}
+                    <div className="absolute right-3 top-3 rounded border border-zinc-700 bg-zinc-950/90 px-2 py-1 font-mono text-[11px] text-zinc-300 backdrop-blur-sm">
+                      {project.year}
+                    </div>
                   </div>
 
-                  {/* Technical tags */}
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {project.tags.slice(0, 3).map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="rounded border border-zinc-800 bg-zinc-950 px-2 py-0.5 font-mono text-[10px] text-zinc-400"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  {/* Content */}
+                  <div className="p-5">
+                    <div className="font-mono text-[11px] font-bold text-blue-400">
+                      INSTANSI: {project.organization}
+                    </div>
+                    <h3 className="mt-1 text-base font-extrabold text-white group-hover:text-blue-300 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-zinc-300">
+                      {project.summary}
+                    </p>
+
+                    {/* Technical metrics preview */}
+                    <div className="mt-4 grid grid-cols-2 gap-2 border-t border-zinc-800/80 pt-3">
+                      {project.metrics.slice(0, 2).map((m, mIdx) => (
+                        <div key={mIdx} className="rounded border border-zinc-800/80 bg-zinc-950 p-2">
+                          <span className="block font-mono text-[10px] text-zinc-500">{m.label}</span>
+                          <span className="block truncate font-mono text-xs font-bold text-zinc-100">
+                            {m.value}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Technical tags */}
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {project.tags.slice(0, 3).map((tag, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className="rounded border border-zinc-800 bg-zinc-950 px-2 py-0.5 font-mono text-[10px] text-zinc-400"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Action footer */}
-              <div className="border-t border-zinc-800/80 p-5 pt-3">
-                <div className="flex min-h-[44px] w-full items-center justify-between rounded-lg border border-zinc-700 bg-zinc-950 px-4 text-xs font-semibold text-zinc-200 transition-colors group-hover:border-blue-500 group-hover:text-blue-300">
-                  <span className="flex items-center gap-2">
-                    <FileText className="h-3.5 w-3.5 text-blue-400" />
-                    <span>Buka Spesifikasi Lengkap</span>
-                  </span>
-                  <ArrowRight className="h-3.5 w-3.5 text-blue-400 transition-transform group-hover:translate-x-1" />
+                {/* Action footer with high-affordance button */}
+                <div className="border-t border-zinc-800/80 p-5 pt-3">
+                  <div className="flex min-h-[44px] w-full items-center justify-between rounded-lg border border-zinc-700 bg-zinc-950 px-4 text-xs font-bold text-zinc-200 transition-colors group-hover:border-blue-500 group-hover:text-blue-300">
+                    <span className="flex items-center gap-2">
+                      <FileText className="h-3.5 w-3.5 text-blue-400" />
+                      <span>Buka Spesifikasi Teknis</span>
+                    </span>
+                    <ArrowRight className="h-3.5 w-3.5 text-blue-400 transition-transform group-hover:translate-x-1" />
+                  </div>
                 </div>
-              </div>
-            </TiltCard>
-          ))}
+              </TiltCard>
+            );
+          })}
         </div>
 
       </div>
