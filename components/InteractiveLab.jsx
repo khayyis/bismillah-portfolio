@@ -2,20 +2,19 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useProjectModal } from './ProjectModalProvider';
-import { Play, RotateCcw, Cpu, Activity, Sliders, Sparkles } from 'lucide-react';
+import { RotateCcw, Cpu, Activity, Sliders } from 'lucide-react';
 
 export default function InteractiveLab() {
   const { triggerHaptic } = useProjectModal();
-  const [activeTab, setActiveTab] = useState('pid'); // 'pid' | 'ecu'
+  const [activeTab, setActiveTab] = useState('pid'); // 'pid' | 'pwm'
   
   // PID state
   const [kp, setKp] = useState(2.4);
   const [ki, setKi] = useState(0.8);
   const [targetSpeed, setTargetSpeed] = useState(60);
   
-  // ECU state
-  const [rpm, setRpm] = useState(4500);
-  const [isSampling, setIsSampling] = useState(true);
+  // Motor PWM state
+  const [dutyCycle, setDutyCycle] = useState(65);
 
   const canvasRef = useRef(null);
   const animationFrameId = useRef(null);
@@ -78,7 +77,6 @@ export default function InteractiveLab() {
         let integral = 0;
 
         for (let x = 0; x < width; x += 3) {
-          const tRel = (x / width) * 5;
           const error = targetSpeed - (height - 20 - currentY);
           integral += error * 0.02;
           const u = kp * error + ki * integral;
@@ -100,38 +98,34 @@ export default function InteractiveLab() {
         ctx.fill();
 
       } else {
-        // ECU 16Hz Sensor Waveform
-        const freq = (rpm / 6000) * 8;
+        // Motor PWM Actuator Waveform
+        const period = 50;
+        const onWidth = (dutyCycle / 100) * period;
         const midY = height / 2;
+        const highY = midY - 40;
+        const lowY = midY + 40;
 
-        // RPM Sinusoidal Signal
         ctx.strokeStyle = '#896fff';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
-        for (let x = 0; x < width; x += 2) {
-          const y = midY + Math.sin((x * 0.04 * freq) - time * 4) * (height * 0.28);
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
+        
+        const offset = (time * 60) % period;
 
-        // Square Wave Trigger Pulse (Crank Position Sensor)
-        ctx.strokeStyle = '#10b981';
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        for (let x = 0; x < width; x += 2) {
-          const sq = Math.sin((x * 0.02 * freq) - time * 4) > 0 ? 1 : -1;
-          const y = midY + 40 + sq * 20;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
+        for (let x = -period; x < width + period; x += period) {
+          const startX = x - offset;
+          ctx.moveTo(startX, lowY);
+          ctx.lineTo(startX, highY);
+          ctx.lineTo(startX + onWidth, highY);
+          ctx.lineTo(startX + onWidth, lowY);
+          ctx.lineTo(startX + period, lowY);
         }
         ctx.stroke();
 
         ctx.fillStyle = '#896fff';
         ctx.font = '10px monospace';
-        ctx.fillText(`UART TELEMETRI: ${rpm} RPM (16Hz SAMPLING)`, 10, 20);
+        ctx.fillText(`MOTOR PWM SIGNAL: ${dutyCycle}% DUTY CYCLE (20kHz)`, 10, 24);
         ctx.fillStyle = '#10b981';
-        ctx.fillText(`CRANK PULSE SENSOR: ACTIVE`, 10, 36);
+        ctx.fillText(`KONTROL KECEPATAN: AKTIF`, 10, 42);
       }
 
       animationFrameId.current = requestAnimationFrame(render);
@@ -144,31 +138,28 @@ export default function InteractiveLab() {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [activeTab, kp, ki, targetSpeed, rpm]);
+  }, [activeTab, kp, ki, targetSpeed, dutyCycle]);
 
   return (
-    <section id="lab" className="border-b border-white/[0.08] bg-[#07080b] py-14 md:py-24">
+    <section id="lab" className="border-b border-white/[0.08] bg-[#07080b] py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/[0.08] pb-6 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/[0.08] pb-6 mb-12">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#896fff]"></span>
-              <span className="cap-small text-[#896fff]">
-                [ EXPERIMENTAL LAB / INTERACTIVE SIMULATION ]
-              </span>
-            </div>
+            <span className="cap-small text-[#896fff]">
+              [ EXPERIMENTAL LAB / INTERACTIVE SIMULATION ]
+            </span>
             <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white lowercase">
-              we also engineer interactive simulations.
+              simulasi interaktif kinematika.
             </h2>
-            <p className="mt-1.5 text-xs text-zinc-400">
-              Eksplorasi respons kendali PID robotika dan waveform telemetri sensor ECU langsung di browser.
+            <p className="mt-2 text-xs text-zinc-400">
+              Eksplorasi respons kendali PID robotika dan modulasi sinyal aktuator motor langsung di browser.
             </p>
           </div>
 
           {/* Mode Switcher Tabs */}
-          <div className="mt-4 md:mt-0 flex items-center gap-2 bg-zinc-950 p-1.5 rounded-full border border-white/[0.08]">
+          <div className="mt-6 md:mt-0 flex items-center gap-2 bg-zinc-950 p-1.5 rounded-full border border-white/[0.08]">
             <button
               type="button"
               onClick={() => {
@@ -188,16 +179,16 @@ export default function InteractiveLab() {
               type="button"
               onClick={() => {
                 triggerHaptic('light');
-                setActiveTab('ecu');
+                setActiveTab('pwm');
               }}
               className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                activeTab === 'ecu'
+                activeTab === 'pwm'
                   ? 'bg-blue-600 text-white shadow-md'
                   : 'text-zinc-400 hover:text-white'
               }`}
             >
               <Activity className="h-3.5 w-3.5" />
-              <span>ECU Telemetri</span>
+              <span>Sinyal Motor PWM</span>
             </button>
           </div>
         </div>
@@ -225,8 +216,8 @@ export default function InteractiveLab() {
             </div>
 
             <div className="mt-3 flex items-center justify-between font-mono text-[10px] text-zinc-400 px-1">
-              <span>STATUS: CLOSED-LOOP ACTIVE</span>
-              <span>STANDAR: ISO 2768-1 / 16Hz UART</span>
+              <span>STATUS: CLOSED-LOOP AKTIF</span>
+              <span>STANDAR: ISO 2768-1 / KINEMATIKA</span>
             </div>
           </div>
 
@@ -236,7 +227,7 @@ export default function InteractiveLab() {
               <div className="flex items-center gap-2 pb-3 border-b border-white/[0.08]">
                 <Sliders className="h-4 w-4 text-[#896fff]" />
                 <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-white">
-                  {activeTab === 'pid' ? 'Parameter Kendali PID' : 'Parameter Sensor ECU'}
+                  {activeTab === 'pid' ? 'Parameter Kendali PID' : 'Parameter Modulasi PWM'}
                 </h3>
               </div>
 
@@ -294,32 +285,32 @@ export default function InteractiveLab() {
                 <div className="mt-5 space-y-4">
                   <div>
                     <div className="flex justify-between text-xs font-mono mb-1.5">
-                      <span className="text-zinc-400">Putaran Mesin (RPM):</span>
-                      <span className="font-bold text-[#896fff]">{rpm} RPM</span>
+                      <span className="text-zinc-400">Siklus Kerja (Duty Cycle):</span>
+                      <span className="font-bold text-[#896fff]">{dutyCycle}%</span>
                     </div>
                     <input
                       type="range"
-                      min="1000"
-                      max="9500"
-                      step="250"
-                      value={rpm}
-                      onChange={(e) => setRpm(parseInt(e.target.value))}
+                      min="10"
+                      max="100"
+                      step="5"
+                      value={dutyCycle}
+                      onChange={(e) => setDutyCycle(parseInt(e.target.value))}
                       className="w-full accent-[#896fff] cursor-pointer"
                     />
                   </div>
 
                   <div className="p-3 rounded-lg border border-white/[0.08] bg-zinc-900/60 font-mono text-[11px] space-y-1 text-zinc-300">
                     <div className="flex justify-between">
-                      <span>Protokol:</span>
-                      <span className="text-white font-bold">K-Line UART</span>
+                      <span>Frekuensi:</span>
+                      <span className="text-white font-bold">20 kHz PWM</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Sampling Rate:</span>
-                      <span className="text-emerald-400 font-bold">16 Samples/sec</span>
+                      <span>Tegangan Motor:</span>
+                      <span className="text-emerald-400 font-bold">12V - 24V DC</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Konektor:</span>
-                      <span className="text-blue-400 font-bold">USB FT232R</span>
+                      <span>Driver:</span>
+                      <span className="text-blue-400 font-bold">H-Bridge MOSFET</span>
                     </div>
                   </div>
                 </div>
@@ -337,7 +328,7 @@ export default function InteractiveLab() {
                   setKp(2.4);
                   setKi(0.8);
                   setTargetSpeed(60);
-                  setRpm(4500);
+                  setDutyCycle(65);
                 }}
                 className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-zinc-900 px-3 py-1.5 text-xs text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
               >

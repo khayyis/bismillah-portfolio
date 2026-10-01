@@ -67,7 +67,7 @@ check("load tidak saturasi (spread > 0.05)",
 # Narasi kognitif benar: Kontak = aksi (M1 dominan), section teknis = load lebih tinggi
 kontak_m1 = sec["Kontak_Konversi"]["cluster_ratio"]["M1_motor"]
 tech_loads = [sec[k]["prefrontal_cognitive_load"]
-              for k in ("Proyek_LKS_Robotika", "Proyek_ECU_WebSerial")]
+              for k in ("Proyek_LKS_Robotika", "Proyek_Otomasi_PLC")]
 check("Kontak didominasi korteks motorik M1 (>0.1)", kontak_m1 > 0.1, str(kontak_m1))
 check("Section teknis load > Kontak load",
       min(tech_loads) > sec["Kontak_Konversi"]["prefrontal_cognitive_load"],
@@ -87,7 +87,7 @@ check("determinisme: total_spikes identik setelah re-run",
 
 # ── B. Bukti teks NYATA dari portfolioData.js ──────────────────────────────
 js = open(DATA_JS, encoding="utf-8").read()
-for tok in ["Konveyor", "ECU", "Khayyis", "PID", "ISO 2768-1"]:
+for tok in ["Konveyor", "PLC", "Khayyis", "PID", "ISO 2768-1"]:
     check(f"token nyata '{tok}' ada di portfolioData.js", tok in js)
 check("simulator membaca portfolioData.js",
       "portfolioData.js" in open(SIM_PATH, encoding="utf-8").read())

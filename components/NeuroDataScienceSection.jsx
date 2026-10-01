@@ -18,16 +18,16 @@ const SECTION_ORDER = [
   'Pilar_Rekayasa',
   'Proyek_Konveyor_BAS',
   'Proyek_LKS_Robotika',
-  'Proyek_ECU_WebSerial',
+  'Proyek_Otomasi_PLC',
   'Kontak_Konversi'
 ];
 
 const SECTION_LABELS = {
-  Hero_Perkenalan: 'Perkenalan',
+  Hero_Perkenalan: 'Hero',
   Pilar_Rekayasa: 'Pilar Rekayasa',
   Proyek_Konveyor_BAS: 'Konveyor 90°',
   Proyek_LKS_Robotika: 'Robot LKS',
-  Proyek_ECU_WebSerial: 'ECU Web Serial',
+  Proyek_Otomasi_PLC: 'Otomasi PLC',
   Kontak_Konversi: 'Kontak'
 };
 
@@ -316,7 +316,7 @@ export default function NeuroDataScienceSection() {
             icon={Eye}
             tone="text-violet-400"
             title="Routing Semantik ke Korteks"
-            body="Token teknis (CAD, PID, ECU, ISO) mengaktifkan jalur Parietal & Prefrontal, sedangkan token ajakan (kontak, rekrut) mengaktifkan korteks motorik M1, memodelkan lintasan dari membaca menuju bertindak."
+            body="Token teknis (CAD, PID, PLC, ISO) mengaktifkan jalur Parietal & Prefrontal, sedangkan token ajakan (kontak, rekrut) mengaktifkan korteks motorik M1, memodelkan lintasan dari membaca menuju bertindak."
             rows={[
               ['Reseptor', 'V1 visual'],
               ['Pemetaan', 'Parietal spasial'],

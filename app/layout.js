@@ -3,12 +3,12 @@ import { ProjectModalProvider } from '../components/ProjectModalProvider';
 
 export const metadata = {
   title: 'Khayyis Billawal Rozikin | Portofolio Teknik Mekatronika & AI',
-  description: 'Portofolio resmi Khayyis Billawal Rozikin, siswa Teknik Mekatronika SMKN 4 Jakarta. Spesialisasi dalam robotika otonom LKS, perancangan 3D CAD konveyor industri PT BAS, firmware ECU, dan AI.',
+  description: 'Portofolio resmi Khayyis Billawal Rozikin, siswa Teknik Mekatronika SMKN 4 Jakarta. Spesialisasi dalam robotika otonom LKS, perancangan 3D CAD konveyor industri PT BAS, otomasi PLC, dan AI.',
   keywords: [
     'Khayyis', 'Khayyis Billawal', 'Khayyis Billawal Rozikin',
     'Portofolio Khayyis', 'Teknik Mekatronika', 'SMKN 4 Jakarta',
     'Autonomous Mobile Robotic', 'Autodesk Inventor', 'PT Bumi Alam Segar',
-    'Wings Group', 'ECU Web Serial', 'We.Sut'
+    'Wings Group', 'PLC Mitsubishi', 'We.Sut'
   ],
   authors: [{ name: 'Khayyis Billawal Rozikin', url: 'https://khayyis.vercel.app' }],
   creator: 'Khayyis Billawal Rozikin',

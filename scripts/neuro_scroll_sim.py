@@ -62,7 +62,7 @@ CLUSTERS = {
 # Routing semantik: token teknis mengaktifkan kluster kognitif lebih tinggi,
 # token ajakan-kontak mengaktifkan korteks motorik (aksi).
 TECH_KEYWORDS = {
-    "cad", "plc", "pid", "iso", "ecu", "dyno", "k-line", "ftdi", "serial",
+    "cad", "plc", "pid", "iso", "dyno", "k-line", "ftdi", "serial",
     "robot", "robotika", "konveyor", "inventor", "gripper", "enkoder", "sensor",
     "torsi", "whp", "telemetry", "firmware", "vision", "onnx", "yolo", "next",
     "cloudflare", "d1", "r2", "ss304", "ss316", "heliks", "gear", "modul",
@@ -204,7 +204,7 @@ def extract_sections() -> Dict[str, str]:
         ),
         "Pilar_Rekayasa": (
             "Robotika Mobile PLC Desain CAD Fabrikasi Computer Vision Embedded "
-            "Firmware ECU Dyno Navigasi PID closed loop HMI industri"
+            "Otomasi PLC HMI Navigasi PID closed loop HMI industri"
         ),
         "Proyek_Konveyor_BAS": (
             "Sistem Transfer Konveyor 90 T-Junction PT Bumi Alam Segar Wings Group "
@@ -214,9 +214,9 @@ def extract_sections() -> Dict[str, str]:
             "Autonomous Mobile Robot LKS SMKN 4 Jakarta PID Closed-Loop Control "
             "Multi-Array IR Enkoder diferensial gripper presisi kinematika"
         ),
-        "Proyek_ECU_WebSerial": (
-            "ECU Web Serial Remap Dyno Telemetry FTDI FT232R K-Line DLC 16Hz "
-            "CSV Logger Inertia WHP Torsi pengapian"
+        "Proyek_Otomasi_PLC": (
+            "Otomasi Konveyor PLC Mitsubishi FX GX Works2 HMI Layar Sentuh "
+            "Diagram Tangga Ladder Interlock Keselamatan Industri"
         ),
         "Kontak_Konversi": (
             "Hubungi Khayyis Telegram WhatsApp Email GitHub magang kerja "

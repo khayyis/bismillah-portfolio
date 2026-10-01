@@ -16,7 +16,7 @@ const pillarProjectMap = {
   cad: 'conveyor-bas',
   robotics: 'lks-robotics',
   'ai-vision': 'we-sut',
-  embedded: 'ecu-remap'
+  embedded: 'plc-automation'
 };
 
 export default function EngineeringPillars() {

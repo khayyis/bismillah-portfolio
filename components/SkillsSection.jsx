@@ -12,7 +12,7 @@ export default function SkillsSection() {
     0: 'lks-robotics',
     1: 'conveyor-bas',
     2: 'we-sut',
-    3: 'ecu-remap'
+    3: 'plc-automation'
   };
 
   return (

@@ -105,6 +105,17 @@ def test_wcag_contrast():
     print(f" -> PASSED: Blue accent on dark contrast: {ratio_accent:.2f}:1 (Threshold 3.0:1 Large/UI).")
     print(f" -> PASSED: Emerald accent on dark contrast: {ratio_emerald:.2f}:1.")
 
+def test_zero_ecu_cleanliness():
+    print("[TEST 6] Testing Total Deletion of ECU References...")
+    with open('/mnt/c/billawal/portofolio/lib/portfolioData.js') as f:
+        c = f.read()
+    assert "ecu" not in c.lower(), "ECU reference still found in portfolioData.js"
+
+    with open('/mnt/c/billawal/portofolio/app/layout.js') as f:
+        l = f.read()
+    assert "ecu" not in l.lower(), "ECU reference still found in app/layout.js"
+    print(" -> PASSED: Zero ECU references verified across public portfolio data.")
+
 if __name__ == "__main__":
     print("=" * 60)
     print("RUNNING MANDATORY EMPIRICAL QUALITY VERIFICATION SUITE")
@@ -114,6 +125,7 @@ if __name__ == "__main__":
     test_api_data()
     test_zero_telegram_cleanliness()
     test_wcag_contrast()
+    test_zero_ecu_cleanliness()
     print("=" * 60)
-    print("ALL 5 EMPIRICAL TEST SUITES PASSED (100% SUCCESS)")
+    print("ALL 6 EMPIRICAL TEST SUITES PASSED (100% SUCCESS)")
     print("=" * 60)
