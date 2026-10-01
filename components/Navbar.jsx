@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
-export default function Navbar() {
+export default function Navbar({ showNeuro = false }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [timeString, setTimeString] = useState('');
 
@@ -79,13 +79,15 @@ export default function Navbar() {
             </span>
             <u></u>
           </Link>
-          <Link
-            href="#neuro"
-            className="dash-link text-xs font-medium text-cyan-300 hover:text-cyan-200 transition-colors"
-          >
-            <span>Data Sains</span>
-            <u></u>
-          </Link>
+          {showNeuro && (
+            <Link
+              href="#neuro"
+              className="dash-link text-xs font-medium text-cyan-300 hover:text-cyan-200 transition-colors"
+            >
+              <span>Data Sains</span>
+              <u></u>
+            </Link>
+          )}
           <Link
             href="#keahlian"
             className="dash-link text-xs font-medium text-zinc-300 hover:text-white transition-colors"
@@ -155,13 +157,15 @@ export default function Navbar() {
             >
               Lab Interaktif
             </Link>
-            <Link
-              href="#neuro"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[40px] items-center text-sm font-medium text-cyan-300"
-            >
-              Data Sains
-            </Link>
+            {showNeuro && (
+              <Link
+                href="#neuro"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex min-h-[40px] items-center text-sm font-medium text-cyan-300"
+              >
+                Data Sains
+              </Link>
+            )}
             <Link
               href="#keahlian"
               onClick={() => setMobileMenuOpen(false)}

@@ -60,7 +60,7 @@ function PortfolioContent() {
   return (
     <ClickSpark sparkColor="#896fff" sparkCount={8} duration={400}>
       <main className="relative min-h-screen bg-[#07080b] text-zinc-100">
-        <Navbar />
+        <Navbar showNeuro={showNeuroTelemetry} />
         <Hero />
         <EngineeringPillars />
         <ProjectsSection />
@@ -73,7 +73,7 @@ function PortfolioContent() {
         <ExperienceSection />
         <ContactSection />
         <Footer />
-        <FloatingDock />
+        <FloatingDock showNeuro={showNeuroTelemetry} />
       </main>
     </ClickSpark>
   );

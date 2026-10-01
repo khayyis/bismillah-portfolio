@@ -17,7 +17,7 @@ import {
   ArrowUp
 } from 'lucide-react';
 
-export default function FloatingDock() {
+export default function FloatingDock({ showNeuro = false }) {
   const { triggerHaptic } = useProjectModal();
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
@@ -27,7 +27,7 @@ export default function FloatingDock() {
     { label: 'Pilar', href: '#pilar', icon: Bot, hideOnMobile: true },
     { label: 'Proyek', href: '#proyek', icon: FolderGit2 },
     { label: 'Lab', href: '#lab', icon: Activity },
-    { label: 'Data Sains', href: '#neuro', icon: Brain, hideOnMobile: true },
+    ...(showNeuro ? [{ label: 'Data Sains', href: '#neuro', icon: Brain, hideOnMobile: true }] : []),
     { label: 'Keahlian', href: '#keahlian', icon: Wrench, hideOnMobile: true },
     { label: 'Pengalaman', href: '#pengalaman', icon: GraduationCap, hideOnMobile: true },
     { label: 'Kontak', href: '#kontak', icon: MessageSquare },
