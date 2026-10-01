@@ -1,5 +1,5 @@
 import './globals.css';
-import { TelegramWebAppProvider } from '../components/TelegramWebAppProvider';
+import { ProjectModalProvider } from '../components/ProjectModalProvider';
 
 export const metadata = {
   title: 'Khayyis Billawal Rozikin | Portofolio Teknik Mekatronika & AI',
@@ -8,7 +8,7 @@ export const metadata = {
     'Khayyis', 'Khayyis Billawal', 'Khayyis Billawal Rozikin',
     'Portofolio Khayyis', 'Teknik Mekatronika', 'SMKN 4 Jakarta',
     'Autonomous Mobile Robotic', 'Autodesk Inventor', 'PT Bumi Alam Segar',
-    'Wings Group', 'ECU Web Serial', 'We.Sut', 'Telegram Mini App'
+    'Wings Group', 'ECU Web Serial', 'We.Sut'
   ],
   authors: [{ name: 'Khayyis Billawal Rozikin', url: 'https://khayyis.vercel.app' }],
   creator: 'Khayyis Billawal Rozikin',
@@ -57,7 +57,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="id" className="scroll-smooth dark" suppressHydrationWarning>
       <head>
-        <script src="https://telegram.org/js/telegram-web-app.js" async></script>
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
@@ -79,21 +78,20 @@ export default function RootLayout({ children }) {
                 "Kinematika Konveyor Industri",
                 "PLC Programming",
                 "Computer Vision & AI",
-                "Telegram Mini App"
+                "Web Serial Firmware"
               ],
               "sameAs": [
                 "https://github.com/khayyis",
-                "https://instagram.com/Khayyis_Billawal",
-                "https://t.me/KhayyisBillawal"
+                "https://instagram.com/Khayyis_Billawal"
               ]
             })
           }}
         />
       </head>
       <body className="min-h-screen bg-zinc-950 font-sans text-zinc-100 antialiased selection:bg-blue-600 selection:text-white" suppressHydrationWarning>
-        <TelegramWebAppProvider>
+        <ProjectModalProvider>
           {children}
-        </TelegramWebAppProvider>
+        </ProjectModalProvider>
       </body>
     </html>
   );

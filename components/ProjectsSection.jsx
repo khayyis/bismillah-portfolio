@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { profileData } from '../lib/portfolioData';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useProjectModal } from './ProjectModalProvider';
 import TiltCard from './TiltCard';
 import {
   FileText,
@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 
 export default function ProjectsSection() {
-  const { triggerHaptic, activeModalProject, setActiveModalProject } = useTelegramWebApp();
+  const { triggerHaptic, activeModalProject, setActiveModalProject } = useProjectModal();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [modalTab, setModalTab] = useState('specs'); // 'specs' | 'kinematics' | 'standards'

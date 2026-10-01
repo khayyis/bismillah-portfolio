@@ -3,12 +3,12 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useProjectModal } from './ProjectModalProvider';
 import { profileData } from '../lib/portfolioData';
-import { ArrowRight, Send, MessageCircle, ShieldCheck, Compass, Terminal, FileCode, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, MessageCircle, Compass, Terminal, FileCode, CheckCircle2 } from 'lucide-react';
 
 export default function Hero() {
-  const { isTma, tgUser, triggerHaptic, openProjectById } = useTelegramWebApp();
+  const { triggerHaptic, openProjectById } = useProjectModal();
 
   return (
     <section id="beranda" className="relative border-b border-white/[0.08] bg-makeme-dark py-12 sm:py-16 md:py-24 overflow-hidden">
@@ -27,14 +27,6 @@ export default function Hero() {
           {/* Main Editorial Text Column */}
           <div className="flex flex-col lg:col-span-8">
             
-            {/* Telegram Mini App Banner (if inside TMA) */}
-            {tgUser && (
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-purple-500/40 bg-purple-950/40 px-3.5 py-1 text-xs text-purple-200">
-                <ShieldCheck className="h-4 w-4 text-purple-400" />
-                <span>Terautentikasi Telegram TMA: @{tgUser.username || tgUser.first_name}</span>
-              </div>
-            )}
-
             {/* Makemepulse Pulse Dot & Status */}
             <div className="mb-4 inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-950/30 px-3.5 py-1 font-mono text-[11px] sm:text-xs text-emerald-300 w-fit">
               <span className="dot--bounce h-2 w-2 text-emerald-400">
@@ -46,7 +38,7 @@ export default function Hero() {
               <span className="text-zinc-400">SMKN 4 Jakarta</span>
             </div>
 
-            {/* Makemepulse Editorial Display Headline (Oversized, lowercase, high craft) */}
+            {/* Makemepulse Editorial Display Headline */}
             <div className="space-y-1">
               <p className="cap-small text-[#896fff]">
                 Autonomous Systems & Mechanical Engineering Studio
@@ -156,7 +148,7 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Makemepulse Action Buttons: Circular Pill Arrow CTA */}
+            {/* Makemepulse Action Buttons */}
             <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 href="#proyek"
@@ -169,29 +161,16 @@ export default function Hero() {
                 </div>
               </Link>
 
-              <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center sm:gap-3">
-                <a
-                  href={profileData.contacts.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => triggerHaptic('medium')}
-                  className="flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/20 px-5 text-xs sm:text-sm font-semibold text-emerald-300 transition-all hover:border-emerald-400 hover:bg-emerald-900/40 hover:text-white"
-                >
-                  <MessageCircle className="h-4 w-4 text-emerald-400 shrink-0" />
-                  <span>WhatsApp</span>
-                </a>
-
-                <a
-                  href={profileData.contacts.telegramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => triggerHaptic('medium')}
-                  className="flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-white/[0.1] bg-zinc-900/80 px-5 text-xs sm:text-sm font-semibold text-zinc-200 transition-all hover:border-[#896fff] hover:text-[#896fff]"
-                >
-                  <Send className="h-4 w-4 text-[#896fff] shrink-0" />
-                  <span>Telegram</span>
-                </a>
-              </div>
+              <a
+                href={profileData.contacts.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => triggerHaptic('medium')}
+                className="flex min-h-[48px] items-center justify-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-950/20 px-6 text-xs sm:text-sm font-semibold text-emerald-300 transition-all hover:border-emerald-400 hover:bg-emerald-900/40 hover:text-white"
+              >
+                <MessageCircle className="h-4 w-4 text-emerald-400 shrink-0" />
+                <span>WhatsApp Bisnis</span>
+              </a>
             </div>
 
           </div>

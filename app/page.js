@@ -14,10 +14,8 @@ import Footer from '../components/Footer';
 import FloatingDock from '../components/FloatingDock';
 import ClickSpark from '../components/ClickSpark';
 import { ToastProvider, useToast } from '../components/Toast';
-import { useTelegramWebApp } from '../components/TelegramWebAppProvider';
 
 function PortfolioContent() {
-  const { tgUser } = useTelegramWebApp();
   const { showToast } = useToast();
   const [showNeuroTelemetry, setShowNeuroTelemetry] = useState(false);
 
@@ -32,21 +30,15 @@ function PortfolioContent() {
     // 3. LocalStorage persistence check
     const savedAdminState = typeof window !== 'undefined' ? localStorage.getItem('khayyis_neuro_unlocked') === 'true' : false;
 
-    // 4. Telegram Owner verification
-    const isOwnerTg = tgUser && (
-      (tgUser.username && tgUser.username.toLowerCase() === 'khayyis_billawal') ||
-      (tgUser.first_name && tgUser.first_name.toLowerCase().includes('khayyis'))
-    );
-
     if (hasSecretParam && typeof window !== 'undefined') {
       localStorage.setItem('khayyis_neuro_unlocked', 'true');
     }
 
-    if (isDev || hasSecretParam || savedAdminState || isOwnerTg) {
+    if (isDev || hasSecretParam || savedAdminState) {
       setShowNeuroTelemetry(true);
     }
 
-    // 5. Hidden Hotkey listener: Ctrl + Shift + N to toggle
+    // 4. Hidden Hotkey listener: Ctrl + Shift + N to toggle
     const handleKeyDown = (e) => {
       if (e.ctrlKey && e.shiftKey && (e.key === 'N' || e.key === 'n')) {
         e.preventDefault();
@@ -63,7 +55,7 @@ function PortfolioContent() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [tgUser, showToast]);
+  }, [showToast]);
 
   return (
     <ClickSpark sparkColor="#896fff" sparkCount={8} duration={400}>

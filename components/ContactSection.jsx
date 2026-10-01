@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { profileData } from '../lib/portfolioData';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useProjectModal } from './ProjectModalProvider';
 import { useToast } from './Toast';
 import TiltCard from './TiltCard';
-import { Send, MessageCircle, Mail, Copy, Check, ExternalLink, ArrowRight } from 'lucide-react';
+import { MessageCircle, Mail, Copy, Check, ExternalLink, Calendar } from 'lucide-react';
 
 function GithubIcon(props) {
   return (
@@ -27,7 +27,7 @@ function InstagramIcon(props) {
 }
 
 export default function ContactSection() {
-  const { triggerHaptic } = useTelegramWebApp();
+  const { triggerHaptic } = useProjectModal();
   const { showToast } = useToast();
   const [copiedType, setCopiedType] = useState(null);
 
@@ -62,76 +62,38 @@ export default function ContactSection() {
         </div>
 
         {/* Contact channels grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
           
-          {/* Telegram Card */}
-          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 transition-all hover:border-[#896fff]/60 hover:bg-zinc-900/60">
-            <div>
-              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#896fff]/20 text-[#896fff] border border-[#896fff]/30">
-                <Send className="h-5 w-5" />
-              </div>
-              <h3 className="text-base font-bold text-white">Telegram Langsung</h3>
-              <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                Respon cepat untuk diskusi teknis, review shop drawing CAD, dan kolaborasi kode.
-              </p>
-              <div className="mt-4 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-2.5 font-mono text-xs text-zinc-200 truncate">
-                @{profileData.contacts.telegram}
-              </div>
-            </div>
-
-            <div className="mt-6 flex items-center gap-2">
-              <a
-                href={profileData.contacts.telegramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full bg-[#896fff] px-4 text-xs font-bold text-white transition-all hover:bg-purple-600"
-              >
-                <span>Buka Chat</span>
-                <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-              <button
-                type="button"
-                onClick={() => handleCopy(profileData.contacts.telegram, 'Username Telegram', 'telegram')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
-                title="Salin Username Telegram"
-                aria-label="Salin Username Telegram"
-              >
-                {copiedType === 'telegram' ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
-              </button>
-            </div>
-          </TiltCard>
-
           {/* WhatsApp Card */}
-          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 transition-all hover:border-emerald-500/60 hover:bg-zinc-900/60">
+          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 sm:p-8 transition-all hover:border-emerald-500/60 hover:bg-zinc-900/60">
             <div>
-              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-950/50 text-emerald-400 border border-emerald-500/30">
-                <MessageCircle className="h-5 w-5" />
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-950/50 text-emerald-400 border border-emerald-500/30">
+                <MessageCircle className="h-6 w-6" />
               </div>
-              <h3 className="text-base font-bold text-white">WhatsApp Bisnis</h3>
-              <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                Saluran resmi pesan instan untuk jadwal wawancara magang kerja dan penawaran proyek.
+              <h3 className="text-lg font-bold text-white">WhatsApp Bisnis</h3>
+              <p className="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                Saluran resmi pesan instan untuk jadwal wawancara magang kerja, konsultasi gambar kerja CAD, dan penawaran proyek industri.
               </p>
-              <div className="mt-4 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-2.5 font-mono text-xs text-zinc-200 truncate">
+              <div className="mt-5 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-3 font-mono text-xs sm:text-sm text-zinc-200">
                 +62 895-3256-37890
               </div>
             </div>
 
-            <div className="mt-6 flex items-center gap-2">
+            <div className="mt-6 flex items-center gap-3">
               <a
                 href={profileData.contacts.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 text-xs font-bold text-white transition-all hover:bg-emerald-500"
+                className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-full bg-emerald-600 px-5 text-xs sm:text-sm font-bold text-white transition-all hover:bg-emerald-500 shadow-md"
               >
-                <span>Kirim Pesan</span>
-                <ExternalLink className="h-3.5 w-3.5" />
+                <span>Kirim Pesan WhatsApp</span>
+                <ExternalLink className="h-4 w-4" />
               </a>
               <button
                 type="button"
                 onClick={() => handleCopy(profileData.contacts.whatsapp, 'Nomor WhatsApp', 'whatsapp')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
+                className="flex min-h-[46px] min-w-[46px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
                 title="Salin Nomor WhatsApp"
                 aria-label="Salin Nomor WhatsApp"
               >
@@ -140,34 +102,34 @@ export default function ContactSection() {
             </div>
           </TiltCard>
 
-          {/* Email / Official Inquiries Card */}
-          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 transition-all hover:border-blue-500/60 hover:bg-zinc-900/60">
+          {/* Email Card */}
+          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 sm:p-8 transition-all hover:border-[#896fff]/60 hover:bg-zinc-900/60">
             <div>
-              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-950/50 text-blue-400 border border-blue-500/30">
-                <Mail className="h-5 w-5" />
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#896fff]/20 text-[#896fff] border border-[#896fff]/30">
+                <Mail className="h-6 w-6" />
               </div>
-              <h3 className="text-base font-bold text-white">Email Resmi</h3>
-              <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-                Pengiriman dokumen resmi, berkas permohonan PKL, atau inquiry proposal teknis.
+              <h3 className="text-lg font-bold text-white">Email Resmi</h3>
+              <p className="mt-2 text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                Pengiriman dokumen resmi, berkas permohonan PKL, pengujian shop drawing, atau inquiry proposal teknis.
               </p>
-              <div className="mt-4 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-2.5 font-mono text-xs text-zinc-200 truncate">
+              <div className="mt-5 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-3 font-mono text-xs sm:text-sm text-zinc-200">
                 {profileData.contacts.email}
               </div>
             </div>
 
-            <div className="mt-6 flex items-center gap-2">
+            <div className="mt-6 flex items-center gap-3">
               <a
                 href={`mailto:${profileData.contacts.email}?subject=Inquiry%20Portofolio%20Khayyis`}
                 onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full bg-white text-black px-4 text-xs font-bold transition-all hover:bg-[#896fff] hover:text-white"
+                className="flex min-h-[46px] flex-1 items-center justify-center gap-2 rounded-full bg-white text-black px-5 text-xs sm:text-sm font-bold transition-all hover:bg-[#896fff] hover:text-white shadow-md"
               >
-                <span>Tulis Email</span>
-                <ExternalLink className="h-3.5 w-3.5" />
+                <span>Tulis Email Resmi</span>
+                <ExternalLink className="h-4 w-4" />
               </a>
               <button
                 type="button"
                 onClick={() => handleCopy(profileData.contacts.email, 'Alamat Email', 'email')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
+                className="flex min-h-[46px] min-w-[46px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
                 title="Salin Alamat Email"
                 aria-label="Salin Alamat Email"
               >

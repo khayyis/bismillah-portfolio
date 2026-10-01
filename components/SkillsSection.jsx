@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { profileData } from '../lib/portfolioData';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useProjectModal } from './ProjectModalProvider';
 import { Wrench, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 
 export default function SkillsSection() {
-  const { openProjectById } = useTelegramWebApp();
+  const { openProjectById } = useProjectModal();
 
   // Map categories to real related projects
   const categoryProjectMap = {

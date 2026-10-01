@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { profileData } from '../lib/portfolioData';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useProjectModal } from './ProjectModalProvider';
 import { Briefcase, GraduationCap, MapPin, Calendar, ArrowUpRight } from 'lucide-react';
 
 export default function ExperienceSection() {
-  const { openProjectById } = useTelegramWebApp();
+  const { openProjectById } = useProjectModal();
 
   return (
     <section id="pengalaman" className="border-b border-white/[0.08] bg-[#07080b] py-14 md:py-24">

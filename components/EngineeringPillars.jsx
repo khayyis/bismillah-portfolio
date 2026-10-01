@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { profileData } from '../lib/portfolioData';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useProjectModal } from './ProjectModalProvider';
 import { Bot, Cpu, Eye, Gauge, CheckCircle2, ArrowRight } from 'lucide-react';
 
 const icons = {
@@ -20,7 +20,7 @@ const pillarProjectMap = {
 };
 
 export default function EngineeringPillars() {
-  const { openProjectById } = useTelegramWebApp();
+  const { openProjectById } = useProjectModal();
 
   return (
     <section id="pilar" className="border-b border-white/[0.08] bg-[#07080b] py-14 md:py-24">

@@ -34,9 +34,10 @@ def test_home_page():
     assert "SMKN 4 Jakarta" in html, "School not found in HTML"
     assert "PT Bumi Alam Segar" in html, "Company experience not found in HTML"
     assert "Autonomous Mobile Robot" in html, "Robotics project not found in HTML"
-    assert "telegram-web-app.js" in html, "Telegram WebApp SDK script missing"
+    assert "telegram-web-app.js" not in html, "Telegram WebApp SDK must be completely deleted"
+    assert "telegram" not in html.lower(), "Zero Telegram references must exist in rendered HTML"
     assert "fix-hydration-mismatch.js" not in html, "Forbidden hack script detected in HTML"
-    print(" -> PASSED: Home page renders 100% valid HTML with all engineering metadata.")
+    print(" -> PASSED: Home page renders 100% valid HTML with zero Telegram footprint.")
     return html
 
 def test_anti_slop_r02(html):
@@ -56,38 +57,22 @@ def test_api_data():
     assert "profile" in data or "name" in data, "Invalid API payload structure"
     profile = data.get("profile", data)
     assert profile["name"] == "Khayyis Billawal Rozikin"
-    assert profile["contacts"]["telegram"] == "KhayyisBillawal"
+    assert "telegram" not in profile["contacts"], "Telegram contact must be deleted from API"
+    assert "telegramUrl" not in profile["contacts"], "Telegram URL must be deleted from API"
     assert len(data.get("projects", [])) >= 6, "Expected at least 6 projects"
-    print(f" -> PASSED: /api/data returned {len(data.get('projects', []))} verified engineering projects.")
+    print(f" -> PASSED: /api/data returned {len(data.get('projects', []))} verified engineering projects without Telegram.")
 
-def test_tma_hmac_crypto():
-    print("[TEST 4] Testing Telegram Mini App Cryptographic HMAC-SHA256 Auth...")
-    test_bot_token = "123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
-    user_payload = {"id": 987654321, "first_name": "Khayyis", "username": "KhayyisBillawal"}
+def test_zero_telegram_cleanliness():
+    print("[TEST 4] Testing Total Deletion of Telegram Footprint...")
+    with open('/mnt/c/billawal/portofolio/lib/portfolioData.js') as f:
+        c = f.read()
+    assert "telegram" not in c.lower(), "Telegram reference still found in portfolioData.js"
     
-    # Construct valid data_check_string
-    params = {
-        "auth_date": "1727500000",
-        "query_id": "AAHdF6IQAAAAAN0XohCQaYxV",
-        "user": json.dumps(user_payload)
-    }
-    sorted_items = sorted(params.items())
-    data_check_string = "\n".join([f"{k}={v}" for k, v in sorted_items])
-    
-    # 1. secret_key = HMAC_SHA256("WebAppData", botToken)
-    secret_key = hmac.new(b"WebAppData", test_bot_token.encode("utf-8"), hashlib.sha256).digest()
-    
-    # 2. calculated_hash = HMAC_SHA256(secret_key, data_check_string)
-    valid_hash = hmac.new(secret_key, data_check_string.encode("utf-8"), hashlib.sha256).hexdigest()
-    
-    # Verify match
-    check_hash = hmac.new(secret_key, data_check_string.encode("utf-8"), hashlib.sha256).hexdigest()
-    assert hmac.compare_digest(valid_hash, check_hash), "HMAC hash calculation failed"
-    
-    # Verify rejection of tampered hash
-    tampered_hash = valid_hash[:-4] + "ffff"
-    assert not hmac.compare_digest(valid_hash, tampered_hash), "Tampered signature was improperly accepted"
-    print(" -> PASSED: Telegram Mini App HMAC-SHA256 signature generator & verifier mathematically verified.")
+    with open('/mnt/c/billawal/portofolio/app/layout.js') as f:
+        l = f.read()
+    assert "telegram" not in l.lower(), "Telegram reference still found in app/layout.js"
+    assert "TelegramWebAppProvider" not in l, "TelegramWebAppProvider still referenced in layout.js"
+    print(" -> PASSED: Zero Telegram references verified across codebase.")
 
 def test_wcag_contrast():
     print("[TEST 5] Testing WCAG AA Color Contrast Ratio...")
@@ -127,7 +112,7 @@ if __name__ == "__main__":
     html_content = test_home_page()
     test_anti_slop_r02(html_content)
     test_api_data()
-    test_tma_hmac_crypto()
+    test_zero_telegram_cleanliness()
     test_wcag_contrast()
     print("=" * 60)
     print("ALL 5 EMPIRICAL TEST SUITES PASSED (100% SUCCESS)")

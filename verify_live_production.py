@@ -25,8 +25,9 @@ def verify_live_khayyis():
     assert "PT Bumi Alam Segar" in html, "Pengalaman PT BAS tidak ditemukan di live HTML"
     assert "Autonomous Mobile Robot" in html, "Proyek LKS Robotika tidak ditemukan di live HTML"
     assert "Dokumentasi Proyek Rekayasa" in html, "Section Proyek redrawn tidak ditemukan di live HTML"
-    assert "telegram-web-app.js" in html, "Telegram TMA SDK tidak ditemukan di live HTML"
-    print(" -> PASSED: Seluruh data rekayasa dan pilar kompetensi live 100%.")
+    assert "telegram-web-app.js" not in html, "Telegram TMA SDK still present in live HTML"
+    assert "telegram" not in html.lower(), "Telegram reference still present in live HTML"
+    print(" -> PASSED: Seluruh data rekayasa live 100% dan bebas dari jejak Telegram.")
 
     print("[TEST 3] Verifikasi Anti-Slop Rule R-02 (Zero Em Dash '—') di Live...")
     em_dashes = [m.start() for m in re.finditer(r"—", html)]

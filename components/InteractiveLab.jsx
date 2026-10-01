@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useTelegramWebApp } from './TelegramWebAppProvider';
+import { useProjectModal } from './ProjectModalProvider';
 import { Play, RotateCcw, Cpu, Activity, Sliders, Sparkles } from 'lucide-react';
 
 export default function InteractiveLab() {
-  const { triggerHaptic } = useTelegramWebApp();
+  const { triggerHaptic } = useProjectModal();
   const [activeTab, setActiveTab] = useState('pid'); // 'pid' | 'ecu'
   
   // PID state

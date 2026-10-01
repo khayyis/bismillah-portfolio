@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { profileData } from '../lib/portfolioData';
-import { ArrowUp, Cpu, ShieldCheck } from 'lucide-react';
+import { ArrowUp, Cpu } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -32,7 +32,7 @@ export default function Footer() {
         {/* Technical standards badge */}
         <div className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-zinc-900/80 px-4 py-2 font-mono text-[11px] text-zinc-300">
           <Cpu className="h-3.5 w-3.5 text-[#896fff] shrink-0" />
-          <span>Next.js 16 / Tailwind CSS / Telegram TMA</span>
+          <span>Next.js 16 / Tailwind CSS / Vercel Edge</span>
         </div>
 
         {/* Studio coordinates & Back to top button */}
