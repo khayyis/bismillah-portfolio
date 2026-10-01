@@ -90,7 +90,7 @@ export default function ProjectsSection() {
               katalog proyek rekayasa & sistem otonom.
             </h2>
             <p className="mt-1.5 text-xs text-zinc-400">
-              Dokumentasi praktis industri manufaktur, kompetisi robotika LKS, dan infrastruktur edge serverless.
+              Dokumentasi Proyek Rekayasa hasil perancangan praktis industri manufaktur, kompetisi robotika LKS, dan infrastruktur edge serverless.
             </p>
           </div>
 
