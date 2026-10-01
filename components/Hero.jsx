@@ -27,12 +27,8 @@ export default function Hero() {
           {/* Main Statement */}
           <div className="flex flex-col lg:col-span-8">
             
-            {/* Status dot */}
+            {/* Status badge */}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-950/30 px-3 py-1 font-mono text-[11px] text-emerald-300 w-fit">
-              <span className="dot--bounce h-1.5 w-1.5 text-emerald-400">
-                <span className="pulse-ring"></span>
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              </span>
               <span>{profileData.status}</span>
               <span className="text-zinc-600">/</span>
               <span className="text-zinc-400">SMKN 4 Jakarta</span>
@@ -40,21 +36,8 @@ export default function Hero() {
 
             {/* Editorial Title */}
             <h1 className="headline-big text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-light text-white tracking-tight lowercase">
-              autonomous engineering & mechanics.
+              Khayyis Billawal Roikin
             </h1>
-
-            {/* Profile identity */}
-            <div className="mt-6 flex flex-wrap items-center gap-2 text-sm sm:text-base text-zinc-300">
-              <span className="font-semibold text-white">{profileData.name}</span>
-              <span className="text-zinc-600">/</span>
-              <span className="text-[#896fff] font-mono text-xs uppercase tracking-wider">{profileData.tagline}</span>
-              <span className="text-zinc-600">/</span>
-              <span className="text-zinc-400 text-xs sm:text-sm">CAD Inventor & Otomasi PLC</span>
-            </div>
-
-            <p className="mt-4 max-w-xl text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              {profileData.bio}
-            </p>
 
             {/* Action Buttons */}
             <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
@@ -83,18 +66,18 @@ export default function Hero() {
 
           </div>
 
-          {/* Minimalist Portrait Frame */}
+          {/* Minimalist Portrait Frame - Centered face framing */}
           <div className="flex justify-center lg:col-span-4 lg:justify-end">
             <div className="relative">
               <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-zinc-950 p-2 shadow-2xl">
-                <div className="relative h-60 w-60 sm:h-72 sm:w-72 overflow-hidden rounded-xl bg-zinc-900">
+                <div className="relative h-64 w-64 sm:h-72 sm:w-72 overflow-hidden rounded-xl bg-zinc-900">
                   <Image
-                    src={profileData.avatar}
+                    src={profileData.avatarSmall || profileData.avatar}
                     alt={profileData.name}
                     fill
                     priority
-                    sizes="(max-width: 640px) 240px, 288px"
-                    className="object-cover object-top filter brightness-95 contrast-105"
+                    sizes="(max-width: 640px) 256px, 288px"
+                    className="object-cover object-[center_20%] filter brightness-95 contrast-105"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                   <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] font-mono text-zinc-300 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded">
