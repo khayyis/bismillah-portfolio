@@ -5,7 +5,7 @@ import { profileData } from '../lib/portfolioData';
 import { useTelegramWebApp } from './TelegramWebAppProvider';
 import { useToast } from './Toast';
 import TiltCard from './TiltCard';
-import { Send, MessageCircle, Mail, Copy, Check, ExternalLink } from 'lucide-react';
+import { Send, MessageCircle, Mail, Copy, Check, ExternalLink, ArrowRight } from 'lucide-react';
 
 function GithubIcon(props) {
   return (
@@ -42,52 +42,50 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="kontak" className="border-b border-zinc-800 bg-zinc-950 py-10 md:py-20 pb-28 sm:pb-32">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="kontak" className="border-b border-white/[0.08] bg-[#07080b] py-14 md:py-24 pb-28 sm:pb-36">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
-              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
-                Saluran Komunikasi
-              </span>
-            </div>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Hubungi Khayyis Billawal Rozikin
-            </h2>
+        {/* Makemepulse Big Contact Invitation Header */}
+        <div className="border-b border-white/[0.08] pb-10 mb-12">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#896fff]"></span>
+            <span className="cap-small text-[#896fff]">
+              [ 05 / INITIATE CONVERSATION / HUBUNGI STUDIO ]
+            </span>
           </div>
-          <p className="mt-1 text-[11px] sm:text-xs font-mono text-zinc-400 md:mt-0">
-            KOLABORASI: CAD SHOP DRAWING / ROBOTIK / AI SYSTEMS
+          <h2 className="headline-big text-3xl sm:text-5xl lg:text-6xl font-light tracking-tight text-white lowercase">
+            have a challenge in mind? let's build.
+          </h2>
+          <p className="mt-3 text-xs sm:text-sm text-zinc-400 max-w-2xl">
+            Tersedia untuk kesempatan magang, rekayasa gambar kerja CAD industri, pemrograman PLC, dan pengembangan sistem web otonom.
           </p>
         </div>
 
-        {/* Contact channels grid with 3D TiltCards */}
-        <div className="mt-6 sm:mt-10 grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Contact channels grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           
           {/* Telegram Card */}
-          <TiltCard className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-4 sm:p-6">
+          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 transition-all hover:border-[#896fff]/60 hover:bg-zinc-900/60">
             <div>
-              <div className="mb-3 sm:mb-4 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-blue-950 text-blue-400">
-                <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#896fff]/20 text-[#896fff] border border-[#896fff]/30">
+                <Send className="h-5 w-5" />
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white">Telegram Langsung</h3>
-              <p className="mt-1 text-xs text-zinc-400">
-                Respon tercepat untuk diskusi teknis, tanya jawab kode, dan review dokumen CAD.
+              <h3 className="text-base font-bold text-white">Telegram Langsung</h3>
+              <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
+                Respon cepat untuk diskusi teknis, review shop drawing CAD, dan kolaborasi kode.
               </p>
-              <div className="mt-3 sm:mt-4 rounded border border-zinc-800 bg-zinc-950 p-2 font-mono text-xs text-zinc-200 truncate">
+              <div className="mt-4 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-2.5 font-mono text-xs text-zinc-200 truncate">
                 @{profileData.contacts.telegram}
               </div>
             </div>
 
-            <div className="mt-4 sm:mt-6 flex items-center gap-2">
+            <div className="mt-6 flex items-center gap-2">
               <a
                 href={profileData.contacts.telegramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-lg bg-blue-600 px-3 sm:px-4 text-xs font-bold text-white transition-colors hover:bg-blue-500"
+                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full bg-[#896fff] px-4 text-xs font-bold text-white transition-all hover:bg-purple-600"
               >
                 <span>Buka Chat</span>
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -95,7 +93,7 @@ export default function ContactSection() {
               <button
                 type="button"
                 onClick={() => handleCopy(profileData.contacts.telegram, 'Username Telegram', 'telegram')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
                 title="Salin Username Telegram"
                 aria-label="Salin Username Telegram"
               >
@@ -105,71 +103,71 @@ export default function ContactSection() {
           </TiltCard>
 
           {/* WhatsApp Card */}
-          <TiltCard className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-4 sm:p-6">
+          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 transition-all hover:border-emerald-500/60 hover:bg-zinc-900/60">
             <div>
-              <div className="mb-3 sm:mb-4 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-emerald-950 text-emerald-400">
-                <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-950/50 text-emerald-400 border border-emerald-500/30">
+                <MessageCircle className="h-5 w-5" />
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white">WhatsApp Resmi</h3>
-              <p className="mt-1 text-xs text-zinc-400">
-                Saluran pesan instan dengan template otomatis untuk kebutuhan kolaborasi.
+              <h3 className="text-base font-bold text-white">WhatsApp Bisnis</h3>
+              <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
+                Saluran resmi pesan instan untuk jadwal wawancara magang kerja dan penawaran proyek.
               </p>
-              <div className="mt-3 sm:mt-4 rounded border border-zinc-800 bg-zinc-950 p-2 font-mono text-xs text-zinc-200 truncate">
-                +{profileData.contacts.whatsapp}
+              <div className="mt-4 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-2.5 font-mono text-xs text-zinc-200 truncate">
+                +62 895-3256-37890
               </div>
             </div>
 
-            <div className="mt-4 sm:mt-6 flex items-center gap-2">
+            <div className="mt-6 flex items-center gap-2">
               <a
                 href={profileData.contacts.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-3 sm:px-4 text-xs font-bold text-white transition-colors hover:bg-emerald-500"
+                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full bg-emerald-600 px-4 text-xs font-bold text-white transition-all hover:bg-emerald-500"
               >
-                <span>Chat WhatsApp</span>
+                <span>Kirim Pesan</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
               <button
                 type="button"
-                onClick={() => handleCopy(`+${profileData.contacts.whatsapp}`, 'Nomor WhatsApp', 'wa')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                onClick={() => handleCopy(profileData.contacts.whatsapp, 'Nomor WhatsApp', 'whatsapp')}
+                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
                 title="Salin Nomor WhatsApp"
                 aria-label="Salin Nomor WhatsApp"
               >
-                {copiedType === 'wa' ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+                {copiedType === 'whatsapp' ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
               </button>
             </div>
           </TiltCard>
 
-          {/* Email Card */}
-          <TiltCard className="border-caliper flex flex-col justify-between rounded-xl bg-zinc-900/60 p-4 sm:p-6 sm:col-span-2 lg:col-span-1">
+          {/* Email / Official Inquiries Card */}
+          <TiltCard className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-6 transition-all hover:border-blue-500/60 hover:bg-zinc-900/60">
             <div>
-              <div className="mb-3 sm:mb-4 inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-zinc-800 text-zinc-200">
-                <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-blue-950/50 text-blue-400 border border-blue-500/30">
+                <Mail className="h-5 w-5" />
               </div>
-              <h3 className="text-sm sm:text-base font-bold text-white">Surat Elektronik (Email)</h3>
-              <p className="mt-1 text-xs text-zinc-400">
-                Untuk pengiriman dokumen resmi, proposal magang, dan penawaran kerja sama.
+              <h3 className="text-base font-bold text-white">Email Resmi</h3>
+              <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
+                Pengiriman dokumen resmi, berkas permohonan PKL, atau inquiry proposal teknis.
               </p>
-              <div className="mt-3 sm:mt-4 truncate rounded border border-zinc-800 bg-zinc-950 p-2 font-mono text-xs text-zinc-200">
+              <div className="mt-4 rounded-xl border border-white/[0.08] bg-zinc-900/80 p-2.5 font-mono text-xs text-zinc-200 truncate">
                 {profileData.contacts.email}
               </div>
             </div>
 
-            <div className="mt-4 sm:mt-6 flex items-center gap-2">
+            <div className="mt-6 flex items-center gap-2">
               <a
-                href={`mailto:${profileData.contacts.email}?subject=Inquiry%20Portofolio%20Teknik%20Khayyis`}
+                href={`mailto:${profileData.contacts.email}?subject=Inquiry%20Portofolio%20Khayyis`}
                 onClick={() => triggerHaptic('medium')}
-                className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-lg border border-zinc-700 bg-zinc-900 px-3 sm:px-4 text-xs font-bold text-zinc-200 transition-colors hover:border-zinc-500 hover:text-white"
+                className="flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-full bg-white text-black px-4 text-xs font-bold transition-all hover:bg-[#896fff] hover:text-white"
               >
-                <span>Kirim Email</span>
+                <span>Tulis Email</span>
                 <ExternalLink className="h-3.5 w-3.5" />
               </a>
               <button
                 type="button"
                 onClick={() => handleCopy(profileData.contacts.email, 'Alamat Email', 'email')}
-                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-300 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-300 hover:text-white"
                 title="Salin Alamat Email"
                 aria-label="Salin Alamat Email"
               >
@@ -180,27 +178,32 @@ export default function ContactSection() {
 
         </div>
 
-        {/* Public profile footer badges */}
-        <div className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6 rounded-xl border border-zinc-800 bg-zinc-900/30 p-3 sm:p-4 text-xs text-zinc-400 sm:justify-start">
-          <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-zinc-300">Profil Publik:</span>
-          <a
-            href={profileData.contacts.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-h-[44px] items-center gap-2 text-zinc-300 hover:text-white transition-colors"
-          >
-            <GithubIcon className="h-4 w-4" />
-            <span className="font-mono text-[11px] sm:text-xs">github.com/{profileData.contacts.githubUsername}</span>
-          </a>
-          <a
-            href={profileData.contacts.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-h-[44px] items-center gap-2 text-zinc-300 hover:text-white transition-colors"
-          >
-            <InstagramIcon className="h-4 w-4" />
-            <span className="font-mono text-[11px] sm:text-xs">{profileData.contacts.instagramUsername}</span>
-          </a>
+        {/* Social channels row */}
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] pt-8">
+          <div className="flex items-center gap-3">
+            <a
+              href={profileData.contacts.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-zinc-950 px-4 py-2 text-xs font-mono text-zinc-300 hover:border-white hover:text-white transition-all"
+            >
+              <GithubIcon className="h-4 w-4" />
+              <span>github/{profileData.contacts.githubUsername}</span>
+            </a>
+            <a
+              href={profileData.contacts.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-zinc-950 px-4 py-2 text-xs font-mono text-zinc-300 hover:border-pink-500 hover:text-pink-400 transition-all"
+            >
+              <InstagramIcon className="h-4 w-4" />
+              <span>{profileData.contacts.instagramUsername}</span>
+            </a>
+          </div>
+
+          <div className="font-mono text-[11px] text-zinc-500">
+            RESPON CEPAT: 08:00 - 20:00 WIB
+          </div>
         </div>
 
       </div>

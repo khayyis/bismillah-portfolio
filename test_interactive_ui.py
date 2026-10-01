@@ -4,7 +4,11 @@ def test_interactive_ui():
     print("=" * 60)
     print("VERIFIKASI INTERAKTIVITAS & ARSITEKTUR UI LOKAL BUILD")
     print("=" * 60)
-    with open('/mnt/c/Users/user/Desktop/bismillah-portfolio/.next/server/app/index.html') as f:
+    import os
+    target_path = '/mnt/c/billawal/portofolio/.next/server/app/index.html'
+    if not os.path.exists(target_path):
+        target_path = '/mnt/c/Users/user/Desktop/bismillah-portfolio/.next/server/app/index.html'
+    with open(target_path) as f:
         html = f.read()
 
     # 1. Canvas Click Spark

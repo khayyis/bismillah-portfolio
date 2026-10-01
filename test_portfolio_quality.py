@@ -5,7 +5,21 @@ import hmac
 import hashlib
 from urllib.parse import urlencode
 
-BASE_URL = "http://localhost:8123"
+import os
+
+def get_base_url():
+    # Try localhost first, then default route host IP
+    for host in ["localhost", "127.0.0.1", "172.19.176.1"]:
+        try:
+            req = urllib.request.Request(f"http://{host}:8123/", headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=2) as resp:
+                if resp.status == 200:
+                    return f"http://{host}:8123"
+        except Exception:
+            continue
+    return "http://localhost:8123"
+
+BASE_URL = get_base_url()
 
 def test_home_page():
     print("[TEST 1] Testing Home Page HTTP 200 & HTML Content...")

@@ -12,7 +12,6 @@ const icons = {
   embedded: Cpu
 };
 
-// Map each pillar to its flagship project ID
 const pillarProjectMap = {
   cad: 'conveyor-bas',
   robotics: 'lks-robotics',
@@ -24,74 +23,80 @@ export default function EngineeringPillars() {
   const { openProjectById } = useTelegramWebApp();
 
   return (
-    <section id="pilar" className="border-b border-zinc-800 bg-zinc-900/30 py-10 md:py-16">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="pilar" className="border-b border-white/[0.08] bg-[#07080b] py-14 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         
-        {/* Section title */}
-        <div className="mb-6 sm:mb-10 flex flex-col md:flex-row md:items-end md:justify-between">
+        {/* Makemepulse Editorial Section Header */}
+        <div className="mb-10 sm:mb-14 flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/[0.08] pb-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
-              <span className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
-                Pilar Rekayasa
+              <span className="h-1.5 w-1.5 rounded-full bg-[#896fff]"></span>
+              <span className="cap-small text-[#896fff]">
+                [ 01 / PILAR REKAYASA & KOMPETENSI ]
               </span>
             </div>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Empat Pilar Keahlian Teknik
+            <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white lowercase">
+              disiplin rekayasa & standar presisi.
             </h2>
           </div>
-          <p className="mt-1 text-[11px] sm:text-xs font-mono text-zinc-400 md:mt-0">
-            KOMPETENSI: MEKANIKAL / PLC / COMPUTER VISION / EMBEDDED
+          <p className="mt-2 text-xs font-mono text-zinc-400 md:mt-0 tracking-wider">
+            KOMPETENSI: ISO 2768-1 / PLC MITSUBISHI / COMPUTER VISION / EMBEDDED
           </p>
         </div>
 
-        {/* Pillars grid with dynamic min-h and responsive stacking on mobile */}
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {profileData.pillars.map((pillar) => {
+        {/* Makemepulse Numbered Disciplines Grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {profileData.pillars.map((pillar, idx) => {
             const Icon = icons[pillar.id] || Bot;
-            const targetProjectId = pillarProjectMap[pillar.id];
+            const targetProjectId = pillarProjectMap[pillar.id] || 'conveyor-bas';
+            const indexNumber = `0${idx + 1}`;
 
             return (
               <div
                 key={pillar.id}
-                className="border-caliper flex min-h-[300px] sm:min-h-[360px] flex-col justify-between rounded-xl bg-zinc-950 p-4 sm:p-6 transition-all hover:bg-zinc-900/80"
+                className="group relative flex min-h-[360px] flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/60 p-6 transition-all duration-300 hover:border-[#896fff]/50 hover:bg-zinc-900/60"
               >
                 <div>
-                  <div className="mb-3 sm:mb-4 inline-flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-blue-400">
-                    <Icon className="h-5 w-5" />
+                  {/* Makemepulse index number & icon */}
+                  <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-4">
+                    <span className="font-mono text-2xl font-light text-zinc-600 group-hover:text-[#896fff] transition-colors">
+                      {indexNumber}
+                    </span>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] bg-zinc-900 text-[#896fff] group-hover:scale-110 transition-transform">
+                      <Icon className="h-5 w-5" />
+                    </div>
                   </div>
-                  <h3 className="text-base font-bold leading-snug text-white">
+
+                  <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#896fff] transition-colors">
                     {pillar.title}
                   </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-zinc-400">
+                  <p className="mt-2 text-xs leading-relaxed text-zinc-400">
                     {pillar.subtitle}
                   </p>
                 </div>
 
-                <div className="mt-4 sm:mt-5 border-t border-zinc-800/80 pt-3 sm:pt-4">
-                  <p className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
+                <div className="mt-6 border-t border-white/[0.08] pt-4">
+                  <div className="mb-2 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
                     SPESIFIKASI PROYEK:
-                  </p>
-                  <ul className="space-y-1.5">
-                    {pillar.highlights.map((hl, idx) => (
-                      <li key={idx} className="flex items-start gap-1.5 text-xs text-zinc-300">
-                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-blue-400" />
+                  </div>
+                  <ul className="space-y-1.5 mb-5">
+                    {pillar.highlights.map((hl, hIdx) => (
+                      <li key={hIdx} className="flex items-start gap-2 text-xs text-zinc-300">
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#896fff]" />
                         <span className="leading-tight">{hl}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* Fully Interactive Button */}
-                  <div className="mt-4 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => openProjectById(targetProjectId, profileData.projects)}
-                      className="flex min-h-[44px] w-full items-center justify-between rounded-lg border border-zinc-800 bg-zinc-900 px-3.5 text-xs font-semibold text-zinc-200 transition-colors hover:border-blue-500 hover:bg-blue-600/10 hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-                    >
-                      <span>Buka Spesifikasi</span>
-                      <ArrowRight className="h-3.5 w-3.5 text-blue-400" />
-                    </button>
-                  </div>
+                  {/* Open Specification Button */}
+                  <button
+                    type="button"
+                    onClick={() => openProjectById(targetProjectId, profileData.projects)}
+                    className="flex min-h-[44px] w-full items-center justify-between rounded-xl border border-white/[0.08] bg-zinc-900/80 px-4 text-xs font-semibold text-zinc-200 transition-all hover:border-[#896fff] hover:bg-[#896fff]/10 hover:text-white"
+                  >
+                    <span>Buka Spesifikasi</span>
+                    <ArrowRight className="h-3.5 w-3.5 text-[#896fff]" />
+                  </button>
                 </div>
               </div>
             );

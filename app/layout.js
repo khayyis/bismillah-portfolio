@@ -79,7 +79,6 @@ export default function RootLayout({ children }) {
                 "Kinematika Konveyor Industri",
                 "PLC Programming",
                 "Computer Vision & AI",
-                "Web Serial Firmware",
                 "Telegram Mini App"
               ],
               "sameAs": [

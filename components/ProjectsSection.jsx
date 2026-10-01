@@ -17,7 +17,8 @@ import {
   Compass,
   ArrowRight,
   Sparkles,
-  Award
+  Award,
+  ExternalLink
 } from 'lucide-react';
 
 export default function ProjectsSection() {
@@ -30,7 +31,7 @@ export default function ProjectsSection() {
     { id: 'all', label: 'Semua' },
     { id: 'cad', label: 'CAD & Kinematika' },
     { id: 'robotics', label: 'Robotika & PLC' },
-    { id: 'ai-vision', label: 'AI & Software' },
+    { id: 'ai-vision', label: 'AI & Rekayasa Web' },
     { id: 'embedded', label: 'Firmware & Quant' }
   ];
 
@@ -73,42 +74,42 @@ export default function ProjectsSection() {
   };
 
   return (
-    <section id="proyek" className="border-b border-zinc-800 bg-zinc-950 py-10 md:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section id="proyek" className="border-b border-white/[0.08] bg-[#07080b] py-14 md:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-8">
         
-        {/* Section Header with Attention Hook */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between">
+        {/* Makemepulse Editorial Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between border-b border-white/[0.08] pb-8">
           <div>
             <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-blue-500"></span>
-              <span className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-blue-400">
-                Portofolio Terverifikasi Industri
+              <span className="h-1.5 w-1.5 rounded-full bg-[#896fff]"></span>
+              <span className="cap-small text-[#896fff]">
+                [ 02 / SELECTED REPERTOIRE / DOKUMENTASI PROYEK REKAYASA ]
               </span>
             </div>
-            <h2 className="mt-1 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
-              Dokumentasi Proyek Rekayasa
+            <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white lowercase">
+              katalog proyek rekayasa & sistem otonom.
             </h2>
             <p className="mt-1.5 text-xs text-zinc-400">
-              Hasil perancangan praktis industri, kompetisi robotika LKS, dan sistem kecerdasan buatan.
+              Dokumentasi praktis industri manufaktur, kompetisi robotika LKS, dan infrastruktur edge serverless.
             </p>
           </div>
 
-          {/* Interactive Live Search Bar: 100% width on phone */}
-          <div className="mt-4 md:mt-0 w-full sm:w-72">
+          {/* Interactive Live Search Bar */}
+          <div className="mt-5 md:mt-0 w-full sm:w-80">
             <div className="relative w-full">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari proyek, CAD, atau instansi..."
-                className="w-full rounded-lg border border-zinc-800 bg-zinc-900/90 py-2.5 pl-9 pr-8 text-xs text-white placeholder-zinc-500 transition-colors focus:border-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                className="w-full rounded-full border border-white/[0.1] bg-zinc-950/80 py-2.5 pl-10 pr-9 text-xs text-white placeholder-zinc-500 transition-all focus:border-[#896fff] focus:outline-none focus:ring-1 focus:ring-[#896fff]"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500 hover:text-white p-1"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500 hover:text-white p-1"
                 >
                   <X className="h-3.5 w-3.5" />
                 </button>
@@ -117,9 +118,9 @@ export default function ProjectsSection() {
           </div>
         </div>
 
-        {/* Category filter tabs with horizontally scrollable pill container on phone */}
-        <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-zinc-800/80 pb-4">
-          <div className="flex overflow-x-auto pb-1 sm:pb-0 gap-1.5 no-scrollbar max-w-full">
+        {/* Category Filter Pills (Horizontally scrollable on mobile) */}
+        <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-white/[0.08] pb-5">
+          <div className="flex overflow-x-auto pb-1 sm:pb-0 gap-2 no-scrollbar max-w-full">
             {categories.map((cat) => {
               const count =
                 cat.id === 'all'
@@ -134,16 +135,16 @@ export default function ProjectsSection() {
                     triggerHaptic('light');
                     setSelectedCategory(cat.id);
                   }}
-                  className={`flex shrink-0 min-h-[38px] items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                  className={`flex shrink-0 min-h-[38px] items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold transition-all ${
                     selectedCategory === cat.id
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'border border-zinc-800 bg-zinc-900/80 text-zinc-300 hover:border-zinc-700 hover:text-white'
+                      ? 'bg-white text-black shadow-lg font-bold'
+                      : 'border border-white/[0.08] bg-zinc-950 text-zinc-300 hover:border-zinc-700 hover:text-white'
                   }`}
                 >
                   <span>{cat.label}</span>
                   <span
                     className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] ${
-                      selectedCategory === cat.id ? 'bg-blue-800 text-white' : 'bg-zinc-800 text-zinc-400'
+                      selectedCategory === cat.id ? 'bg-black text-white' : 'bg-zinc-800 text-zinc-400'
                     }`}
                   >
                     {count}
@@ -160,7 +161,7 @@ export default function ProjectsSection() {
 
         {/* Empty state if search returns zero */}
         {filteredProjects.length === 0 && (
-          <div className="my-12 flex flex-col items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-900/30 p-8 text-center">
+          <div className="my-14 flex flex-col items-center justify-center rounded-2xl border border-white/[0.08] bg-zinc-950 p-10 text-center">
             <Search className="h-8 w-8 text-zinc-600" />
             <h3 className="mt-3 text-sm font-bold text-white">Tidak ada proyek yang sesuai</h3>
             <p className="mt-1 text-xs text-zinc-400">
@@ -172,102 +173,95 @@ export default function ProjectsSection() {
                 setSearchQuery('');
                 setSelectedCategory('all');
               }}
-              className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500"
+              className="mt-4 rounded-full bg-white text-black px-5 py-2 text-xs font-bold hover:bg-[#896fff] hover:text-white transition-colors"
             >
               Reset Filter
             </button>
           </div>
         )}
 
-        {/* 3D Tilt Project Cards Grid: Stack to 1 column on phone, 2 on tablet, 3 on desktop */}
-        <div className="mt-6 sm:mt-8 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((project) => {
-            const isFlagship = project.id === 'conveyor-bas' || project.id === 'lks-robotics';
+        {/* Makemepulse Asymmetric Project Cards Grid */}
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredProjects.map((project, idx) => {
+            const isFlagship = project.id === 'conveyor-bas';
 
             return (
               <TiltCard
                 key={project.id}
                 onClick={() => openProjectModal(project)}
-                className={`border-caliper group flex cursor-pointer flex-col justify-between rounded-xl bg-zinc-900/40 p-0 transition-all hover:bg-zinc-900/80 ${
-                  isFlagship ? 'border-blue-500/50 shadow-md shadow-blue-950/20' : ''
+                className={`group flex cursor-pointer flex-col justify-between rounded-2xl border border-white/[0.08] bg-zinc-950/70 p-0 transition-all duration-300 hover:border-[#896fff]/60 hover:bg-zinc-900/60 overflow-hidden ${
+                  isFlagship ? 'sm:col-span-2 lg:col-span-2' : ''
                 }`}
               >
                 <div>
-                  {/* Project blueprint/photo view */}
-                  <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-zinc-950">
+                  {/* Card Visual / Thumbnail */}
+                  <div className={`relative w-full overflow-hidden bg-zinc-950 ${isFlagship ? 'h-64 sm:h-80' : 'h-52 sm:h-56'}`}>
                     <Image
                       src={project.image}
                       alt={project.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     />
                     
-                    {/* Category label */}
-                    <div className="absolute left-2.5 top-2.5 sm:left-3 sm:top-3 rounded border border-zinc-700 bg-zinc-950/90 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-[11px] font-mono font-bold text-blue-300 backdrop-blur-sm shadow-sm">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                    {/* Category label badge */}
+                    <div className="absolute left-3 top-3 rounded-full border border-white/[0.1] bg-black/60 backdrop-blur-md px-3 py-1 text-[10px] font-mono font-bold text-[#896fff]">
                       {project.categoryLabel}
                     </div>
 
-                    {/* Flagship Proof Badge for high retinal salience */}
+                    {/* Flagship Award Stamp */}
                     {isFlagship && (
-                      <div className="absolute left-2.5 bottom-2.5 sm:left-3 sm:bottom-3 inline-flex items-center gap-1 rounded bg-blue-600/90 px-2 py-0.5 font-mono text-[9px] sm:text-[10px] font-bold text-white shadow-md backdrop-blur-sm">
-                        <Award className="h-3 w-3" />
-                        <span>PROYEK UNGGULAN</span>
+                      <div className="absolute left-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-[#896fff] text-white px-3 py-1 font-mono text-[10px] font-bold shadow-lg backdrop-blur-sm">
+                        <Award className="h-3.5 w-3.5" />
+                        <span>KARYA UTAMA DRAFTER INDUSTRI</span>
                       </div>
                     )}
 
                     {/* Year tag */}
-                    <div className="absolute right-2.5 top-2.5 sm:right-3 sm:top-3 rounded border border-zinc-700 bg-zinc-950/90 px-2 py-0.5 font-mono text-[10px] sm:text-[11px] text-zinc-300 backdrop-blur-sm">
+                    <div className="absolute right-3 top-3 rounded-full border border-white/[0.1] bg-black/60 backdrop-blur-md px-2.5 py-1 font-mono text-[10px] text-zinc-300">
                       {project.year}
                     </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="p-4 sm:p-5">
-                    <div className="font-mono text-[10px] sm:text-[11px] font-bold text-blue-400">
+                  {/* Card Content & Meta */}
+                  <div className="p-5 sm:p-6">
+                    <div className="font-mono text-[10px] font-bold text-[#896fff] uppercase tracking-wider">
                       INSTANSI: {project.organization}
                     </div>
-                    <h3 className="mt-1 text-sm sm:text-base font-extrabold text-white group-hover:text-blue-300 transition-colors">
+                    <h3 className="mt-1 text-base sm:text-lg font-bold text-white group-hover:text-[#896fff] transition-colors leading-snug">
                       {project.title}
                     </h3>
-                    <p className="mt-1.5 sm:mt-2 text-xs leading-relaxed text-zinc-300">
+                    <p className="mt-2 text-xs leading-relaxed text-zinc-400">
                       {project.summary}
                     </p>
 
                     {/* Technical metrics preview */}
-                    <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2 border-t border-zinc-800/80 pt-3">
+                    <div className="mt-4 grid grid-cols-2 gap-2 border-t border-white/[0.08] pt-3.5">
                       {project.metrics.slice(0, 2).map((m, mIdx) => (
-                        <div key={mIdx} className="rounded border border-zinc-800/80 bg-zinc-950 p-2">
-                          <span className="block font-mono text-[9px] sm:text-[10px] text-zinc-500">{m.label}</span>
-                          <span className="block truncate font-mono text-xs font-bold text-zinc-100">
+                        <div key={mIdx} className="rounded-xl border border-white/[0.06] bg-zinc-900/60 p-2.5">
+                          <span className="block font-mono text-[9px] uppercase tracking-wider text-zinc-500">
+                            {m.label}
+                          </span>
+                          <span className="mt-0.5 block text-xs font-semibold text-zinc-200 truncate">
                             {m.value}
                           </span>
                         </div>
                       ))}
                     </div>
-
-                    {/* Technical tags */}
-                    <div className="mt-3 sm:mt-4 flex flex-wrap gap-1">
-                      {project.tags.slice(0, 3).map((tag, tIdx) => (
-                        <span
-                          key={tIdx}
-                          className="rounded border border-zinc-800 bg-zinc-950 px-2 py-0.5 font-mono text-[9px] sm:text-[10px] text-zinc-400"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 </div>
 
-                {/* Action footer with high-affordance button */}
-                <div className="border-t border-zinc-800/80 p-4 sm:p-5 pt-3">
-                  <div className="flex min-h-[44px] w-full items-center justify-between rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 sm:px-4 text-xs font-bold text-zinc-200 transition-colors group-hover:border-blue-500 group-hover:text-blue-300">
-                    <span className="flex items-center gap-2">
-                      <FileText className="h-3.5 w-3.5 text-blue-400" />
-                      <span>Buka Spesifikasi Teknis</span>
+                {/* Card Action Trigger Button */}
+                <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-0">
+                  <div className="flex items-center justify-between border-t border-white/[0.08] pt-3">
+                    <span className="text-xs font-semibold text-zinc-300 group-hover:text-white transition-colors">
+                      Buka Spesifikasi Lengkap
                     </span>
-                    <ArrowRight className="h-3.5 w-3.5 text-blue-400 transition-transform group-hover:translate-x-1" />
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-white/5 group-hover:bg-[#896fff] group-hover:text-white transition-all">
+                      <ArrowRight className="h-3.5 w-3.5 text-zinc-400 group-hover:text-white" />
+                    </div>
                   </div>
                 </div>
               </TiltCard>
@@ -277,173 +271,170 @@ export default function ProjectsSection() {
 
       </div>
 
-      {/* Interactive 3-Tab Engineering Specification Modal (Responsive Fullsheet on Phone) */}
+      {/* Deep-Dive Project Modal Dossier */}
       {activeModalProject && (
         <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md animate-toast"
+          role="dialog"
+          aria-modal="true"
           onClick={closeProjectModal}
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/85 p-0 sm:p-4 backdrop-blur-md"
         >
           <div
+            className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/[0.1] bg-zinc-950 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
-            className="border-caliper relative max-h-[85vh] sm:max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-t-2xl sm:rounded-2xl bg-zinc-950 p-5 sm:p-6 shadow-2xl"
           >
-            {/* Modal header */}
-            <div className="flex items-start justify-between border-b border-zinc-800 pb-3 sm:pb-4">
-              <div className="pr-4">
-                <div className="flex items-center gap-2">
-                  <span className="rounded border border-blue-800 bg-blue-950/60 px-2 py-0.5 font-mono text-[10px] sm:text-[11px] font-semibold text-blue-300">
-                    {activeModalProject.categoryLabel}
-                  </span>
-                  <span className="font-mono text-[11px] sm:text-xs text-zinc-400">
-                    TAHUN: {activeModalProject.year}
+            {/* Modal Header */}
+            <div className="flex items-center justify-between border-b border-white/[0.08] p-5 sm:p-6 bg-zinc-900/50">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#896fff]/20 text-[#896fff] border border-[#896fff]/30">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-white leading-tight">
+                    {activeModalProject.title}
+                  </h3>
+                  <span className="font-mono text-xs text-[#896fff]">
+                    {activeModalProject.organization} ({activeModalProject.year})
                   </span>
                 </div>
-                <h3 className="mt-1.5 sm:mt-2 text-lg sm:text-xl font-extrabold text-white">
-                  {activeModalProject.title}
-                </h3>
-                <p className="font-mono text-[11px] sm:text-xs text-zinc-400">
-                  INSTANSI: {activeModalProject.organization}
-                </p>
               </div>
 
               <button
                 type="button"
                 onClick={closeProjectModal}
-                className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-lg border border-zinc-800 text-zinc-400 hover:bg-zinc-900 hover:text-white"
-                aria-label="Tutup Dialog Spesifikasi"
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/[0.1] bg-zinc-900 text-zinc-400 hover:text-white"
+                aria-label="Tutup Dialog Modal"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
-            {/* Modal Navigation Tabs: Scrollable on mobile */}
-            <div className="mt-3 sm:mt-4 flex overflow-x-auto no-scrollbar gap-1.5 sm:gap-2 border-b border-zinc-800 pb-2">
+            {/* Modal Navigation Tabs */}
+            <div className="flex border-b border-white/[0.08] bg-zinc-900/30 px-6">
               <button
                 type="button"
                 onClick={() => setModalTab('specs')}
-                className={`flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
+                className={`py-3 text-xs font-semibold border-b-2 mr-6 transition-all ${
                   modalTab === 'specs'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-zinc-400 hover:text-white'
+                    ? 'border-[#896fff] text-white'
+                    : 'border-transparent text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                <Layers className="h-3.5 w-3.5" />
-                <span>Ringkasan</span>
+                Spesifikasi Teknis
               </button>
               <button
                 type="button"
                 onClick={() => setModalTab('kinematics')}
-                className={`flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
+                className={`py-3 text-xs font-semibold border-b-2 mr-6 transition-all ${
                   modalTab === 'kinematics'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-zinc-400 hover:text-white'
+                    ? 'border-[#896fff] text-white'
+                    : 'border-transparent text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                <Settings className="h-3.5 w-3.5" />
-                <span>Analisis Rekayasa</span>
+                Analisis Kinematika
               </button>
               <button
                 type="button"
                 onClick={() => setModalTab('standards')}
-                className={`flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${
+                className={`py-3 text-xs font-semibold border-b-2 transition-all ${
                   modalTab === 'standards'
-                    ? 'bg-blue-600 text-white'
-                    : 'text-zinc-400 hover:text-white'
+                    ? 'border-[#896fff] text-white'
+                    : 'border-transparent text-zinc-400 hover:text-zinc-200'
                 }`}
               >
-                <ShieldCheck className="h-3.5 w-3.5" />
-                <span>Standar & Software</span>
+                Standar Manufaktur
               </button>
             </div>
 
-            {/* Modal Tab Content */}
-            <div className="mt-4 sm:mt-5 space-y-4 sm:space-y-5">
+            {/* Modal Body */}
+            <div className="overflow-y-auto p-5 sm:p-6 space-y-6">
               
-              {/* Tab 1: Specs */}
               {modalTab === 'specs' && (
-                <>
-                  <p className="text-xs sm:text-sm leading-relaxed text-zinc-300">
-                    {activeModalProject.summary}
-                  </p>
-
-                  <div>
-                    <h4 className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
-                      Parameter & Metrik Desain
-                    </h4>
-                    <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
-                      {activeModalProject.metrics.map((m, idx) => (
-                        <div key={idx} className="rounded-lg border border-zinc-800 bg-zinc-900/90 p-2.5 sm:p-3">
-                          <span className="block font-mono text-[9px] sm:text-[10px] text-zinc-500">{m.label}</span>
-                          <span className="block font-mono text-[11px] sm:text-xs font-bold text-zinc-100">{m.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {/* Tab 2: Kinematics / Engineering */}
-              {modalTab === 'kinematics' && (
                 <div>
-                  <h4 className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
-                    Rincian Implementasi & Solusi Masalah
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-[#896fff] mb-3">
+                    Parameter Kuantitatif & Matriks:
                   </h4>
-                  <ul className="mt-2.5 space-y-2 sm:space-y-2.5">
-                    {activeModalProject.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-xs leading-relaxed text-zinc-300">
-                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" />
-                        <span>{detail}</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {activeModalProject.metrics.map((m, idx) => (
+                      <div key={idx} className="rounded-xl border border-white/[0.08] bg-zinc-900/50 p-3.5">
+                        <span className="font-mono text-[10px] uppercase text-zinc-500 block">
+                          {m.label}
+                        </span>
+                        <span className="text-xs sm:text-sm font-bold text-white block mt-0.5">
+                          {m.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-[#896fff] mt-6 mb-3">
+                    Uraian Implementasi Rekayasa:
+                  </h4>
+                  <ul className="space-y-2">
+                    {activeModalProject.details.map((d, idx) => (
+                      <li key={idx} className="flex items-start gap-2.5 text-xs text-zinc-300">
+                        <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#896fff]" />
+                        <span className="leading-relaxed">{d}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {/* Tab 3: Standards & Software */}
-              {modalTab === 'standards' && (
-                <div>
-                  <h4 className="font-mono text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-blue-400">
-                    Perangkat Lunak, Toleransi & Standar Manufaktur
-                  </h4>
-                  <div className="mt-2.5 flex flex-wrap gap-1.5 sm:gap-2">
-                    {activeModalProject.tags.map((t, idx) => (
-                      <span
-                        key={idx}
-                        className="rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 font-mono text-[10px] sm:text-xs text-zinc-300"
-                      >
-                        {t}
+              {modalTab === 'kinematics' && (
+                <div className="space-y-4">
+                  <div className="p-4 rounded-xl border border-white/[0.08] bg-zinc-900/40">
+                    <span className="font-mono text-xs text-[#896fff] font-bold block mb-1">
+                      Mekanisme & Simulasi Dinamika:
+                    </span>
+                    <p className="text-xs text-zinc-300 leading-relaxed">
+                      Sistem dirancang untuk menjamin kontinuitas aliran kerja tanpa hambatan. Analisis kinematika rotasi dan kendali loop tertutup diuji untuk meminimalkan inersia dan getaran mekanik.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {activeModalProject.tags.map((tag, idx) => (
+                      <span key={idx} className="rounded-full border border-white/[0.1] bg-zinc-900 px-3 py-1 font-mono text-[11px] text-zinc-300">
+                        #{tag}
                       </span>
                     ))}
-                  </div>
-
-                  <div className="mt-3 sm:mt-4 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3 sm:p-4">
-                    <p className="font-mono text-xs font-bold text-white">Standar Mutu Rekayasa:</p>
-                    <p className="mt-1 text-xs text-zinc-300 leading-relaxed">
-                      Seluruh gambar kerja shop drawing disajikan dalam format standar ISO (A3/A4) dengan toleransi geometrik ISO 2768-1 kelas teliti, toleransi kekasaran permukaan N8, dan material sanitari stainless steel SS304/SS316.
-                    </p>
                   </div>
                 </div>
               )}
 
-              {/* Inquire on WhatsApp Footer */}
-              <div className="border-t border-zinc-800 pt-3 sm:pt-4">
-                <a
-                  href={`https://wa.me/${profileData.contacts.whatsapp}?text=Halo%20Khayyis%2C%20saya%20tertarik%20dengan%20proyek%20${encodeURIComponent(
-                    activeModalProject.title
-                  )}%20di%20portofolio%20Anda.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-4 text-xs font-bold text-white transition-colors hover:bg-emerald-500"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  <span>Diskusikan Proyek Ini via WhatsApp</span>
-                </a>
-              </div>
+              {modalTab === 'standards' && (
+                <div className="p-4 rounded-xl border border-white/[0.08] bg-zinc-900/40 space-y-3">
+                  <div className="flex items-center gap-2 text-xs font-mono text-emerald-400">
+                    <ShieldCheck className="h-4 w-4" />
+                    <span>VERIFIKASI INTEGRITAS REKAYASA</span>
+                  </div>
+                  <p className="text-xs text-zinc-300 leading-relaxed">
+                    Setiap gambar kerja mematuhi standar ISO 2768-1 untuk toleransi geometri, simbol proyeksi Eropa, serta etiket standar fabrikasi bengkel PT Bumi Alam Segar (Wings Group).
+                  </p>
+                </div>
+              )}
+
+            </div>
+
+            {/* Modal Footer */}
+            <div className="border-t border-white/[0.08] p-4 sm:p-5 bg-zinc-900/50 flex items-center justify-between">
+              <span className="font-mono text-[11px] text-zinc-400">
+                STATUS: TERVERIFIKASI
+              </span>
+              <a
+                href={profileData.contacts.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-full bg-[#896fff] px-5 py-2 text-xs font-bold text-white hover:bg-purple-600 transition-colors"
+              >
+                <span>Tanya Detail Proyek</span>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
             </div>
 
           </div>
         </div>
       )}
+
     </section>
   );
 }
