@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, ArrowUpRight, Radio } from 'lucide-react';
-import { profileData } from '../lib/portfolioData';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,7 +16,6 @@ export default function Navbar() {
           timeZone: 'Asia/Jakarta',
           hour: '2-digit',
           minute: '2-digit',
-          second: '2-digit',
           hour12: false
         })
       );
@@ -31,73 +29,73 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#07080b]/90 backdrop-blur-xl transition-all">
       <div className="mx-auto flex h-14 sm:h-16 max-w-7xl items-center justify-between px-4 sm:px-8">
         
-        {/* Brand identity: makemepulse lowercase editorial style */}
+        {/* Brand identity */}
         <Link
           href="#beranda"
-          className="group flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-purple-500"
+          className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-none"
         >
-          <div className="flex items-center gap-1.5 font-bold tracking-tight text-white text-base sm:text-lg">
+          <div className="flex items-center gap-1.5 font-bold tracking-tight text-white text-base">
             <span>khayyis</span>
-            <span className="h-2 w-2 rounded-full bg-[#896fff] shadow-[0_0_8px_#896fff]"></span>
+            <span className="h-1.5 w-1.5 rounded-full bg-[#896fff] shadow-[0_0_8px_#896fff]"></span>
           </div>
-          <span className="hidden sm:inline-block font-mono text-[10px] tracking-widest uppercase text-zinc-500 border-l border-zinc-800 pl-3">
-            SMKN 4 JKT / MEKATRONIKA
+          <span className="hidden sm:inline-block font-mono text-[10px] tracking-widest uppercase text-zinc-500 border-l border-zinc-800 pl-2.5">
+            SMKN 4 JKT
           </span>
         </Link>
 
-        {/* Studio Live Telemetry Ticker (Makemepulse characteristic) */}
-        <div className="hidden lg:flex items-center gap-3 font-mono text-[11px] text-zinc-400 border border-zinc-800/80 rounded-full px-3 py-1 bg-zinc-950/60">
+        {/* Studio Live Telemetry Ticker */}
+        <div className="hidden lg:flex items-center gap-2.5 font-mono text-[11px] text-zinc-400 border border-zinc-800/80 rounded-full px-3 py-1 bg-zinc-950/60">
           <span className="flex items-center gap-1.5 text-emerald-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>JAKARTA {timeString || '10:48:00'} (UTC+7)</span>
+            <span>JAKARTA {timeString || '10:48'} (UTC+7)</span>
           </span>
           <span className="text-zinc-600">/</span>
-          <span className="text-zinc-300">TERSEDIA MAGANG & KERJA</span>
+          <span className="text-zinc-300">TERSEDIA MAGANG</span>
         </div>
 
-        {/* Desktop Navigation: dash hover effect */}
+        {/* Desktop Navigation */}
         <nav className="hidden items-center gap-6 xl:gap-8 lg:flex">
           <Link
             href="#pilar"
-            className="dash-link text-xs font-medium tracking-wide text-zinc-300 transition-colors hover:text-white"
+            className="dash-link text-xs font-medium text-zinc-300 hover:text-white transition-colors"
           >
-            <span>Pilar Rekayasa</span>
+            <span>Pilar</span>
             <u></u>
           </Link>
           <Link
             href="#proyek"
-            className="dash-link text-xs font-medium tracking-wide text-zinc-300 transition-colors hover:text-white"
+            className="dash-link text-xs font-medium text-zinc-300 hover:text-white transition-colors"
           >
-            <span>Proyek Pilihan</span>
+            <span>Proyek</span>
             <u></u>
           </Link>
           <Link
             href="#lab"
-            className="dash-link text-xs font-medium tracking-wide text-purple-300 transition-colors hover:text-purple-200"
+            className="dash-link text-xs font-medium text-purple-300 hover:text-purple-200 transition-colors"
           >
             <span className="flex items-center gap-1">
-              <span>Lab Interaktif</span>
+              <span>Lab</span>
               <span className="h-1.5 w-1.5 rounded-full bg-[#896fff]"></span>
             </span>
             <u></u>
           </Link>
           <Link
             href="#neuro"
-            className="dash-link text-xs font-medium tracking-wide text-cyan-300 transition-colors hover:text-cyan-200"
+            className="dash-link text-xs font-medium text-cyan-300 hover:text-cyan-200 transition-colors"
           >
             <span>Data Sains</span>
             <u></u>
           </Link>
           <Link
             href="#keahlian"
-            className="dash-link text-xs font-medium tracking-wide text-zinc-300 transition-colors hover:text-white"
+            className="dash-link text-xs font-medium text-zinc-300 hover:text-white transition-colors"
           >
             <span>Keahlian</span>
             <u></u>
           </Link>
           <Link
             href="#pengalaman"
-            className="dash-link text-xs font-medium tracking-wide text-zinc-300 transition-colors hover:text-white"
+            className="dash-link text-xs font-medium text-zinc-300 hover:text-white transition-colors"
           >
             <span>Pengalaman</span>
             <u></u>
@@ -127,70 +125,63 @@ export default function Navbar() {
 
       {/* Mobile Curtain Drawer */}
       {mobileMenuOpen && (
-        <div className="border-b border-zinc-800 bg-[#07080b] px-5 py-6 lg:hidden animate-toast">
-          <div className="mb-4 pb-3 border-b border-zinc-800/80 flex items-center justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-zinc-400">
-              STUDIO TELEMETRI: JAKARTA {timeString}
-            </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-          </div>
-
-          <nav className="flex flex-col space-y-2">
+        <div className="border-b border-zinc-800 bg-[#07080b] px-5 py-5 lg:hidden animate-toast">
+          <nav className="flex flex-col space-y-1.5">
             <Link
               href="#beranda"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-medium text-zinc-200 hover:text-white hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-medium text-zinc-200 hover:text-white"
             >
               Beranda
             </Link>
             <Link
               href="#pilar"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-medium text-zinc-200 hover:text-white hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-medium text-zinc-200 hover:text-white"
             >
               Pilar Rekayasa
             </Link>
             <Link
               href="#proyek"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-medium text-zinc-200 hover:text-white hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-medium text-zinc-200 hover:text-white"
             >
               Proyek Pilihan
             </Link>
             <Link
               href="#lab"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-medium text-purple-300 hover:text-purple-200 hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-medium text-purple-300"
             >
-              Lab Interaktif (Kinematika & Waveform)
+              Lab Interaktif
             </Link>
             <Link
               href="#neuro"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-medium text-cyan-300 hover:text-cyan-200 hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-medium text-cyan-300"
             >
-              Data Sains (Neuron Telemetri)
+              Data Sains
             </Link>
             <Link
               href="#keahlian"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-medium text-zinc-200 hover:text-white hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-medium text-zinc-200 hover:text-white"
             >
               Keahlian Teknis
             </Link>
             <Link
               href="#pengalaman"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-medium text-zinc-200 hover:text-white hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-medium text-zinc-200 hover:text-white"
             >
-              Pengalaman Industri & PKL
+              Pengalaman & PKL
             </Link>
             <Link
               href="#kontak"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex min-h-[44px] items-center text-sm font-bold text-purple-300 hover:text-white hover:pl-2 transition-all"
+              className="flex min-h-[40px] items-center text-sm font-bold text-purple-300"
             >
-              Hubungi Studio
+              Kontak
             </Link>
           </nav>
         </div>
