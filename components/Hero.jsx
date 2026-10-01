@@ -36,7 +36,7 @@ export default function Hero() {
 
             {/* Editorial Title */}
             <h1 className="headline-big text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-light text-white tracking-tight lowercase">
-              Khayyis Billawal Roikin
+              Khayyis Billawal Rozikin
             </h1>
 
             {/* Action Buttons */}
