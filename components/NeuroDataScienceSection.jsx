@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Brain, Activity, Eye, Zap, Cpu, Gauge, Info, MousePointer2 } from 'lucide-react';
+import { Brain, Activity, Eye, Zap, Cpu, Gauge, Info, MousePointer2, Users, Database, Globe2, ShieldCheck, RefreshCw } from 'lucide-react';
 import TiltCard from './TiltCard';
 import neuroData from '../lib/neuroData.json';
 
@@ -47,6 +47,31 @@ export default function NeuroDataScienceSection() {
   });
   const [reduceMotion, setReduceMotion] = useState(false);
   const stateRef = useRef({ lastY: 0, lastT: 0, fixations: 0, rafId: 0, pending: false });
+
+  // Real Visitor Telemetry State
+  const [visitorStats, setVisitorStats] = useState(null);
+  const [visitorLogs, setVisitorLogs] = useState([]);
+  const [loadingLogs, setLoadingLogs] = useState(false);
+
+  const fetchLiveTelemetry = useCallback(async () => {
+    try {
+      setLoadingLogs(true);
+      const res = await fetch('/api/telemetry?limit=25');
+      const data = await res.json();
+      if (data.success) {
+        setVisitorStats(data.analytics);
+        setVisitorLogs(data.logs || []);
+      }
+    } catch (err) {
+      console.error('Failed fetching live visitor telemetry:', err);
+    } finally {
+      setLoadingLogs(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchLiveTelemetry();
+  }, [fetchLiveTelemetry]);
 
   // Hormati preferensi aksesibilitas pengguna
   useEffect(() => {
@@ -335,6 +360,116 @@ export default function NeuroDataScienceSection() {
             {neuroData.meta.disclaimer} Parameter bersumber dari literatur publik
             (MICrONS/H01 Science 2024; FlyWire Nature 2024) dan bersifat edukatif.
           </p>
+        </div>
+
+        {/* Live Public Visitor Telemetry Log Panel */}
+        <div className="mt-12 rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-zinc-800 pb-4">
+            <div className="flex items-center gap-2.5">
+              <Database className="h-5 w-5 text-indigo-400" />
+              <div>
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  Live Public Visitor Telemetry &amp; Log Ingestion
+                  <span className="rounded bg-indigo-500/20 px-2 py-0.5 font-mono text-[10px] text-indigo-300">
+                    {visitorStats?.storageEngine || 'KV Database'}
+                  </span>
+                </h3>
+                <p className="text-xs text-zinc-400">
+                  Data stream pengunjung publik yang teregistrasi langsung ke database telemetri.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={fetchLiveTelemetry}
+              disabled={loadingLogs}
+              className="flex items-center gap-2 self-start rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-1.5 font-mono text-xs text-zinc-200 transition hover:bg-zinc-700 disabled:opacity-50"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${loadingLogs ? 'animate-spin' : ''}`} />
+              Refresh Stream
+            </button>
+          </div>
+
+          {/* Quick Metrics */}
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="rounded-lg bg-zinc-950/70 p-3 border border-zinc-800/80">
+              <span className="font-mono text-[10px] uppercase text-zinc-500">Total Sesi Ingest</span>
+              <span className="mt-1 block font-mono text-lg font-bold text-indigo-400">
+                {visitorStats?.totalVisits ?? 0}
+              </span>
+            </div>
+            <div className="rounded-lg bg-zinc-950/70 p-3 border border-zinc-800/80">
+              <span className="font-mono text-[10px] uppercase text-zinc-500">Rata-rata Dwell Time</span>
+              <span className="mt-1 block font-mono text-lg font-bold text-emerald-400">
+                {visitorStats?.averageDwellSeconds ?? 0}s
+              </span>
+            </div>
+            <div className="rounded-lg bg-zinc-950/70 p-3 border border-zinc-800/80">
+              <span className="font-mono text-[10px] uppercase text-zinc-500">Rata-rata Scroll Depth</span>
+              <span className="mt-1 block font-mono text-lg font-bold text-cyan-400">
+                {visitorStats?.averageScrollDepth ?? 0}%
+              </span>
+            </div>
+            <div className="rounded-lg bg-zinc-950/70 p-3 border border-zinc-800/80">
+              <span className="font-mono text-[10px] uppercase text-zinc-500">Device Breakdown</span>
+              <span className="mt-1 block font-mono text-xs font-semibold text-zinc-300">
+                {visitorStats?.devices ? Object.entries(visitorStats.devices).map(([k, v]) => `${k}: ${v}`).join(' | ') : '-'}
+              </span>
+            </div>
+          </div>
+
+          {/* Tabular Log Stream */}
+          <div className="mt-4 overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-950">
+            <table className="w-full text-left font-mono text-xs">
+              <thead className="border-b border-zinc-800 bg-zinc-900/60 text-[10px] uppercase text-zinc-400">
+                <tr>
+                  <th className="px-3 py-2">Timestamp</th>
+                  <th className="px-3 py-2">Client IP</th>
+                  <th className="px-3 py-2">Lokasi</th>
+                  <th className="px-3 py-2">Device / Screen</th>
+                  <th className="px-3 py-2">Scroll</th>
+                  <th className="px-3 py-2">Dwell</th>
+                  <th className="px-3 py-2">Referrer</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-800/60 text-zinc-300">
+                {visitorLogs.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="px-4 py-6 text-center text-zinc-500">
+                      Belum ada log telemetri yang tercatat. Refresh atau buka halaman dari perangkat lain.
+                    </td>
+                  </tr>
+                ) : (
+                  visitorLogs.map((log) => (
+                    <tr key={log.id} className="hover:bg-zinc-900/40">
+                      <td className="whitespace-nowrap px-3 py-2 text-zinc-400 text-[11px]">
+                        {new Date(log.timestamp).toLocaleTimeString()}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2 font-mono text-indigo-300">
+                        {log.ip}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2 text-[11px]">
+                        {log.city}, {log.country}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2 text-[11px]">
+                        <span className="text-zinc-200">{log.deviceType}</span>{' '}
+                        <span className="text-zinc-500">({log.screen})</span>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2 text-cyan-400 font-bold">
+                        {log.scrollDepth}%
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2 text-emerald-400">
+                        {log.dwellSeconds}s
+                      </td>
+                      <td className="max-w-[140px] truncate px-3 py-2 text-zinc-500 text-[11px]">
+                        {log.referer}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>

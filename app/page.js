@@ -57,6 +57,67 @@ function PortfolioContent() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showToast]);
 
+  // Non-blocking visitor telemetry beacon
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const startTime = Date.now();
+    let maxScroll = 0;
+
+    const onScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0) {
+        const pct = Math.min(100, Math.round((window.scrollY / total) * 100));
+        if (pct > maxScroll) maxScroll = pct;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const sendTelemetry = () => {
+      const dwellSeconds = Math.round((Date.now() - startTime) / 1000);
+      const payload = JSON.stringify({
+        scrollDepth: maxScroll,
+        dwellSeconds,
+        screen: `${window.innerWidth}x${window.innerHeight}`,
+        deviceType: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+        referrer: document.referrer || 'Direct',
+      });
+
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/api/telemetry', new Blob([payload], { type: 'application/json' }));
+      } else {
+        fetch('/api/telemetry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: payload,
+          keepalive: true,
+        }).catch(() => {});
+      }
+    };
+
+    // Initial ping
+    fetch('/api/telemetry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        scrollDepth: 0,
+        dwellSeconds: 0,
+        screen: `${window.innerWidth}x${window.innerHeight}`,
+        deviceType: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+        referrer: document.referrer || 'Direct',
+      }),
+    }).catch(() => {});
+
+    window.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') sendTelemetry();
+    });
+    window.addEventListener('beforeunload', sendTelemetry);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('beforeunload', sendTelemetry);
+    };
+  }, []);
+
   return (
     <ClickSpark sparkColor="#896fff" sparkCount={8} duration={400}>
       <main className="relative min-h-screen bg-[#07080b] text-zinc-100">

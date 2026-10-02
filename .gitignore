@@ -41,6 +41,8 @@ next-env.d.ts
 # local archives & tests
 legacy_archive/
 node_modules_ln
+.next-telemetry-cache/
+test_telemetry.py
 
 # env (secrets)
 vercel.env
