@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-// Memory / Local file fallback buffer when Upstash env vars are not set
 const LOCAL_LOG_DIR = path.join(process.cwd(), '.next-telemetry-cache');
 const LOCAL_LOG_FILE = path.join(LOCAL_LOG_DIR, 'visitor-logs.json');
 
@@ -26,7 +25,6 @@ function saveLocalLog(entry) {
   try {
     const logs = getLocalLogs();
     logs.unshift(entry);
-    // keep max 500 records locally
     const trimmed = logs.slice(0, 500);
     fs.writeFileSync(LOCAL_LOG_FILE, JSON.stringify(trimmed, null, 2));
     return trimmed;
@@ -44,11 +42,58 @@ async function getUpstashClient() {
   return new Redis({ url, token });
 }
 
+function formatAsciiDashboard(analytics, logs) {
+  const line = '═'.repeat(68);
+  const sep = '─'.repeat(68);
+  
+  const devStr = Object.entries(analytics.devices || {})
+    .map(([k, v]) => `${k}:${v}`)
+    .join(' | ') || 'N/A';
+  const geoStr = Object.entries(analytics.geography || {})
+    .map(([k, v]) => `${k}:${v}`)
+    .join(' | ') || 'N/A';
+
+  let tableRows = '';
+  if (!logs || logs.length === 0) {
+    tableRows = '  No logs recorded yet.\n';
+  } else {
+    tableRows = logs.map((l) => {
+      const timeStr = new Date(l.timestamp).toLocaleTimeString('id-ID', { hour12: false });
+      const ip = (l.ip || 'unknown').padEnd(15);
+      const loc = `${l.city || '?'}, ${l.country || '?'}`.padEnd(16).slice(0, 16);
+      const dev = (l.deviceType || 'PC').padEnd(8).slice(0, 8);
+      const sc = `${l.scrollDepth || 0}%`.padStart(5);
+      const dw = `${l.dwellSeconds || 0}s`.padStart(5);
+      return `│ ${timeStr} │ ${ip} │ ${loc} │ ${dev} │ ${sc} │ ${dw} │`;
+    }).join('\n');
+  }
+
+  return `
+╔${line}╗
+║           KHAYYIS PORTFOLIO // TELEMETRY COMMAND CENTER            ║
+║           Engine: ${(analytics.storageEngine || 'Serverless').padEnd(46)} ║
+╠${line}╣
+║ METRICS SUMMARY                                                    ║
+║   • Total Visits      : ${String(analytics.totalVisits ?? 0).padEnd(43)}║
+║   • Sample Streamed   : ${String(analytics.sampleSize ?? 0).padEnd(43)}║
+║   • Avg Dwell Time    : ${String((analytics.averageDwellSeconds ?? 0) + 's').padEnd(43)}║
+║   • Avg Scroll Depth  : ${String((analytics.averageScrollDepth ?? 0) + '%').padEnd(43)}║
+║   • Devices           : ${devStr.padEnd(43).slice(0, 43)}║
+║   • Demographics      : ${geoStr.padEnd(43).slice(0, 43)}║
+╠${line}╣
+║ RECENT VISITOR STREAM                                              ║
+╟────────────────────────────────────────────────────────────────────╢
+│ Time     │ IP              │ Location         │ Device   │ Scrl  │ Dwell │
+╟────────────────────────────────────────────────────────────────────╢
+${tableRows}
+╚${line}╝
+[Hint: Tambahkan &format=json untuk raw JSON]
+\n`;
+}
+
 export async function POST(req) {
   try {
     const body = await req.json().catch(() => ({}));
-    
-    // Invariant extraction: IP & Geolocation headers from Vercel / Edge
     const clientIp = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
                      req.headers.get('x-real-ip') || 
                      '127.0.0.1';
@@ -77,12 +122,10 @@ export async function POST(req) {
 
     const redis = await getUpstashClient();
     if (redis) {
-      // Push to Upstash Redis list & sorted set for time-series analytics
       await redis.lpush('khayyis_portfolio_logs', JSON.stringify(logEntry));
-      await redis.ltrim('khayyis_portfolio_logs', 0, 999); // Retain top 1000 logs
+      await redis.ltrim('khayyis_portfolio_logs', 0, 999);
       await redis.incr('khayyis_portfolio_total_visits');
     } else {
-      // Local fallback for offline / dev without credentials
       saveLocalLog(logEntry);
     }
 
@@ -96,6 +139,9 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '50', 10), 200);
+    const format = searchParams.get('format');
+    const userAgent = req.headers.get('user-agent') || '';
+    const isCli = userAgent.startsWith('curl') || userAgent.startsWith('Wget') || format === 'text';
 
     const redis = await getUpstashClient();
     let logs = [];
@@ -110,7 +156,6 @@ export async function GET(req) {
       totalVisits = logs.length;
     }
 
-    // Statistical & Data Science Aggregation for NeuroDataScienceSection
     const deviceCounts = {};
     const sectionCounts = {};
     const countryCounts = {};
@@ -142,6 +187,14 @@ export async function GET(req) {
       geography: countryCounts,
       storageEngine: redis ? 'Upstash Redis (Serverless KV)' : 'Local File Buffer (Fallback)',
     };
+
+    // If accessed via CLI (curl / cmd) and not explicitly asking for JSON, return ASCII HUD
+    if (isCli && format !== 'json') {
+      return new Response(formatAsciiDashboard(analytics, logs), {
+        status: 200,
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+      });
+    }
 
     return NextResponse.json({
       success: true,
