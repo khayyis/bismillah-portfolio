@@ -44,7 +44,6 @@ async function getUpstashClient() {
 
 function formatAsciiDashboard(analytics, logs) {
   const line = '═'.repeat(68);
-  const sep = '─'.repeat(68);
   
   const devStr = Object.entries(analytics.devices || {})
     .map(([k, v]) => `${k}:${v}`)
@@ -52,6 +51,21 @@ function formatAsciiDashboard(analytics, logs) {
   const geoStr = Object.entries(analytics.geography || {})
     .map(([k, v]) => `${k}:${v}`)
     .join(' | ') || 'N/A';
+
+  // Format Section Engagement Heatmap
+  const allSections = ['beranda', 'pilar', 'proyek', 'lab', 'neuro', 'keahlian', 'pengalaman', 'kontak'];
+  const secStats = analytics.sectionHeatmap || {};
+  const maxSecTime = Math.max(...Object.values(secStats).map(s => s.totalSeconds), 1);
+
+  const sectionRows = allSections.map((sec) => {
+    const data = secStats[sec] || { views: 0, totalSeconds: 0 };
+    const barLen = Math.round((data.totalSeconds / maxSecTime) * 20);
+    const bar = '█'.repeat(barLen).padEnd(20, '░');
+    const name = sec.toUpperCase().padEnd(11);
+    const timeStr = `${data.totalSeconds}s`.padStart(5);
+    const viewStr = `${data.views} hits`.padStart(7);
+    return `│ ${name} │ [${bar}] │ ${timeStr} │ ${viewStr} │`;
+  }).join('\n');
 
   let tableRows = '';
   if (!logs || logs.length === 0) {
@@ -80,6 +94,13 @@ function formatAsciiDashboard(analytics, logs) {
 ║   • Avg Scroll Depth  : ${String((analytics.averageScrollDepth ?? 0) + '%').padEnd(43)}║
 ║   • Devices           : ${devStr.padEnd(43).slice(0, 43)}║
 ║   • Demographics      : ${geoStr.padEnd(43).slice(0, 43)}║
+╠${line}╣
+║ SECTION ENGAGEMENT HEATMAP (WAKTU BACA & MINAT PENGUNJUNG)         ║
+║ Top: ${(analytics.mostViewedSection || 'None').toUpperCase().padEnd(20)} | Least: ${(analytics.leastViewedSection || 'None').toUpperCase().padEnd(31)}║
+╟────────────────────────────────────────────────────────────────────╢
+│ Section     │ Visual Intensity     │ Dwell │ Views   │
+╟────────────────────────────────────────────────────────────────────╢
+${sectionRows}
 ╠${line}╣
 ║ RECENT VISITOR STREAM                                              ║
 ╟────────────────────────────────────────────────────────────────────╢
@@ -112,8 +133,8 @@ export async function POST(req) {
       country,
       city,
       referer,
-      sectionViews: body.sectionViews || [],
-      currentSection: body.currentSection || 'hero',
+      currentSection: body.currentSection || 'beranda',
+      sectionDwell: body.sectionDwell || {},
       scrollDepth: Number(body.scrollDepth) || 0,
       dwellSeconds: Number(body.dwellSeconds) || 0,
       deviceType: body.deviceType || (userAgent.includes('Mobile') ? 'Mobile' : 'Desktop'),
@@ -157,8 +178,11 @@ export async function GET(req) {
     }
 
     const deviceCounts = {};
-    const sectionCounts = {};
     const countryCounts = {};
+    const allSections = ['beranda', 'pilar', 'proyek', 'lab', 'neuro', 'keahlian', 'pengalaman', 'kontak'];
+    const sectionHeatmap = {};
+    allSections.forEach(s => { sectionHeatmap[s] = { views: 0, totalSeconds: 0 }; });
+
     let totalDwell = 0;
     let totalDepth = 0;
 
@@ -166,14 +190,42 @@ export async function GET(req) {
       const dev = log.deviceType || 'Desktop';
       deviceCounts[dev] = (deviceCounts[dev] || 0) + 1;
 
-      const sec = log.currentSection || 'hero';
-      sectionCounts[sec] = (sectionCounts[sec] || 0) + 1;
-
       const ctry = log.country || 'ID';
       countryCounts[ctry] = (countryCounts[ctry] || 0) + 1;
 
       totalDwell += log.dwellSeconds || 0;
       totalDepth += log.scrollDepth || 0;
+
+      // Section Dwell aggregation
+      if (log.sectionDwell && typeof log.sectionDwell === 'object') {
+        Object.entries(log.sectionDwell).forEach(([sec, secTime]) => {
+          if (sectionHeatmap[sec]) {
+            sectionHeatmap[sec].totalSeconds += Number(secTime) || 0;
+            if (Number(secTime) > 0) sectionHeatmap[sec].views += 1;
+          }
+        });
+      } else if (log.currentSection && sectionHeatmap[log.currentSection]) {
+        sectionHeatmap[log.currentSection].views += 1;
+        sectionHeatmap[log.currentSection].totalSeconds += log.dwellSeconds || 0;
+      }
+    });
+
+    // Find most and least viewed sections
+    let mostViewed = null;
+    let leastViewed = null;
+    let maxTime = -1;
+    let minTime = Infinity;
+
+    allSections.forEach((s) => {
+      const t = sectionHeatmap[s].totalSeconds;
+      if (t > maxTime) {
+        maxTime = t;
+        mostViewed = s;
+      }
+      if (t < minTime) {
+        minTime = t;
+        leastViewed = s;
+      }
     });
 
     const count = logs.length || 1;
@@ -183,12 +235,13 @@ export async function GET(req) {
       averageDwellSeconds: Math.round(totalDwell / count),
       averageScrollDepth: Math.round(totalDepth / count),
       devices: deviceCounts,
-      sections: sectionCounts,
       geography: countryCounts,
+      sectionHeatmap,
+      mostViewedSection: mostViewed,
+      leastViewedSection: leastViewed,
       storageEngine: redis ? 'Upstash Redis (Serverless KV)' : 'Local File Buffer (Fallback)',
     };
 
-    // If accessed via CLI (curl / cmd) and not explicitly asking for JSON, return ASCII HUD
     if (isCli && format !== 'json') {
       return new Response(formatAsciiDashboard(analytics, logs), {
         status: 200,

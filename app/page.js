@@ -57,11 +57,47 @@ function PortfolioContent() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showToast]);
 
-  // Non-blocking visitor telemetry beacon
+  // Non-blocking visitor telemetry beacon with section intersection tracking
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const startTime = Date.now();
     let maxScroll = 0;
+    const sectionDwell = {
+      beranda: 0,
+      pilar: 0,
+      proyek: 0,
+      lab: 0,
+      neuro: 0,
+      keahlian: 0,
+      pengalaman: 0,
+      kontak: 0,
+    };
+    let currentActiveSection = 'beranda';
+    let lastSectionSwitch = Date.now();
+
+    const sections = ['beranda', 'pilar', 'proyek', 'lab', 'neuro', 'keahlian', 'pengalaman', 'kontak'];
+    
+    // Intersection Observer untuk melacak section yang sedang aktif di viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const now = Date.now();
+            if (currentActiveSection && sectionDwell[currentActiveSection] !== undefined) {
+              sectionDwell[currentActiveSection] += Math.round((now - lastSectionSwitch) / 1000);
+            }
+            currentActiveSection = entry.target.id;
+            lastSectionSwitch = now;
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
     const onScroll = () => {
       const total = document.documentElement.scrollHeight - window.innerHeight;
@@ -73,10 +109,17 @@ function PortfolioContent() {
     window.addEventListener('scroll', onScroll, { passive: true });
 
     const sendTelemetry = () => {
-      const dwellSeconds = Math.round((Date.now() - startTime) / 1000);
+      const now = Date.now();
+      if (currentActiveSection && sectionDwell[currentActiveSection] !== undefined) {
+        sectionDwell[currentActiveSection] += Math.round((now - lastSectionSwitch) / 1000);
+        lastSectionSwitch = now;
+      }
+      const dwellSeconds = Math.round((now - startTime) / 1000);
       const payload = JSON.stringify({
         scrollDepth: maxScroll,
         dwellSeconds,
+        currentSection: currentActiveSection,
+        sectionDwell,
         screen: `${window.innerWidth}x${window.innerHeight}`,
         deviceType: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
         referrer: document.referrer || 'Direct',
@@ -101,6 +144,8 @@ function PortfolioContent() {
       body: JSON.stringify({
         scrollDepth: 0,
         dwellSeconds: 0,
+        currentSection: 'beranda',
+        sectionDwell,
         screen: `${window.innerWidth}x${window.innerHeight}`,
         deviceType: /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
         referrer: document.referrer || 'Direct',
@@ -113,6 +158,7 @@ function PortfolioContent() {
     window.addEventListener('beforeunload', sendTelemetry);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('beforeunload', sendTelemetry);
     };
